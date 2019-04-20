@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">src/Renderer.js | core</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Font.js~Font.html">Font</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Renderer.js~Renderer.html">Renderer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Scale.js~Scale.html">Scale</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/World.js~World.html">World</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/WorldElement.js~WorldElement.html">WorldElement</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-calcStepSize">calcStepSize</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-clamp">clamp</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-cos">cos</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-distSquared">distSquared</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-fixId">fixId</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatValue">formatValue</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-gaussian">gaussian</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPixelRatio">getPixelRatio</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isCoordInside">isCoordInside</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isFunction">isFunction</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isObject">isObject</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isString">isString</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-loadOptions">loadOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-rad">rad</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-round">round</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sin">sin</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ANGLE_STYLE">ANGLE_STYLE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-AVOGADRO">AVOGADRO</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-BOLTZMANN">BOLTZMANN</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-BOX_COLORS">BOX_COLORS</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-CM3_TO_M3">CM3_TO_M3</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-CM_TO_M">CM_TO_M</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-COLORS">COLORS</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-COS30">COS30</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-COS60">COS60</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-CURSOR">CURSOR</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-DEG_TO_RAD">DEG_TO_RAD</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-DRAG_NOTHING">DRAG_NOTHING</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-E0">E0</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FIFTH_PI">FIFTH_PI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FONT">FONT</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FONT_ALIGN">FONT_ALIGN</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FONT_BASELINE">FONT_BASELINE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FONT_COLOR">FONT_COLOR</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FONT_SIZE">FONT_SIZE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FOURTH_PI">FOURTH_PI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-GRAVITY">GRAVITY</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-HALF_PI">HALF_PI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-K">K</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-LOG10">LOG10</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-MOVE_STYLE">MOVE_STYLE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-M_TO_CM">M_TO_CM</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-OVER_NOTHING">OVER_NOTHING</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-PA_TO_ATM">PA_TO_ATM</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-PI">PI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-RAD_TO_DEG">RAD_TO_DEG</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-SHAPE_STYLE">SHAPE_STYLE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-SIN30">SIN30</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-SIN60">SIN60</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-SIXTH_PI">SIXTH_PI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-SYMBOL">SYMBOL</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-THIRD_PI">THIRD_PI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-TWO_PI">TWO_PI</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#dom">dom</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/Slider.js~Slider.html">Slider</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Button.html">Button</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~DOMElement.html">DOMElement</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Option.html">Option</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Options.html">Options</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Select.html">Select</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#figures">figures</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Axis.js~Axis.html">Axis</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Ball.js~Ball.html">Ball</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Box.js~Box.html">Box</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Picture.js~Picture.html">Picture</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Plot.js~Plot.html">Plot</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Shape.js~Shape.html">Shape</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Vector.js~Vector.html">Vector</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#figures-box">figures/box</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/box/Box.Graph.js~Graph.html">Graph</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/box/Box.Label.js~Label.html">Label</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/box/Box.Text.js~Text.html">Text</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/Renderer.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import * as utils from &quot;./Utils&quot;;
+import World from &quot;./World&quot;;
+
+/**
+ * Enables an element to be prerendered in a hidden canvas. Once an element is prerendered it can be drawn to the main canvas faster.
+ * If an element has not changed, then prerendered version will be used, thus optimizing the application.
+ * @private
+ * @class Renderer
+ */
+export default class Renderer {
+
+  /**
+   * @constructor
+   * @param {object} [opts] Object that contains valid Renderer properties with values. Their values will be assigned at the end of the constructor. If an invalid property is passed then the value will be ignored.
+   */
+  constructor(opts) {
+
+    /**
+     * Sets if the target object is an axis. It is important to set this property for all axis objects.
+     * Default value is false.
+     * @type {boolean}
+     */
+    this.isAxis = false;
+
+    /**
+     * Sets the object that will be prerendered.
+     * Default value is undefined.
+     * @type {object}
+     */
+    this.parent = undefined;
+
+    /**
+     * Flag for signaling when then object has been drawn in the hidden canvas.
+     * Default value is false.
+     * @type {boolean}
+     */
+    this.rendered = false;
+
+    /**
+     * Flag for switching the renderer on or off. If it is set to false, then the object will
+     * be drawn normally on the main canvas.
+     * Default value is true.
+     * @type {boolean}
+     */
+    this.enabled = true;
+
+    /**
+     * Sets the reference to the world object. 
+     * Default value is undefined.
+     * @type {World}
+     */
+    this.world = undefined;
+
+    /**
+     * Sets if the rendered image will be drawn with respect to the axis of the world or not.
+     * Default value is false.
+     * @type {boolean}
+     */
+    this.absolute = false;
+
+    /**
+     * Canvas element where the object will be prerendered.
+     * @type {object}
+     */
+    this.canvas = document.createElement(&quot;canvas&quot;);
+
+    /**
+     * Context of the canvas element where the object will be prerendered.
+     * @type {object}
+     */
+    this.ctx = this.canvas.getContext(&quot;2d&quot;);
+
+    /**
+     * Function used to set the drawing procedure for the renderer.
+     * @type {function}
+     */
+    this.callback = undefined;
+
+    /**
+     * Arguments passed to the callback function used to draw onto the renderer.
+     * @type {*}
+     */
+    this.callbackArgs = undefined;
+
+    // Apply user settings.
+    utils.loadOptions(this, opts);
+
+  }
+
+  /**
+   * Sets the world object used by the renderer. It is automatically set by the world
+   * when the element is added to the world.
+   * @private
+   * @param {World} world World object where the renderer will draw the render.
+   */
+  setWorld(world) {
+    this.world = world;
+    this.resize();
+  }
+
+  /**
+   * Sets the callback function for when the renderer is drawn.
+   * @param {function} f Callback function.
+   * @param {*} args Arguments passed to the callback function when called.
+   */
+  setCallback(f, args) {
+    this.resize();
+    this.render();
+    this.callback = f;
+    this.callbackArgs = args;
+  }
+
+  /**
+   * Set the flags required to start the rendering process.
+   * The flag {@link Renderer.enabled} is set to true and the flag {@link Renderer.rendered} is set to false.
+   * @public
+   */
+  render() {
+    this.enabled = true;
+    this.rendered = false;
+  }
+
+  /**
+   * Resizes the rendered canvas to match the size of the world&apos;s canvas.
+   * It is automatically called when the canvas gets resized.
+   * @private
+   */
+  resize() {
+    const { pxRatio, canvas } = this.world;
+    this.canvas.width = canvas.width;
+    this.canvas.height = canvas.height;
+    this.ctx.scale(pxRatio, pxRatio);
+    this.rendered = false;
+  }
+
+  /**
+   * Starts the drawing process of the rendered canvas on the world canvas.
+   * It sets the translation depending on the value of {@link Renderer.absolute}.
+   * @public
+   */
+  begin() {
+    const { width, height } = this.world;
+    this.ctx.save();
+    this.ctx.clearRect(0, 0, width, height);
+    if (!this.absolute) {
+      const axis = this.isAxis ? this.parent : this.world.axis;
+      this.ctx.translate(axis.position.x, axis.position.y);
+    }
+  }
+
+  /**
+   * Finishes the drawing process of the rendered canvas on the world canvas.
+   * @public
+   */
+  end() {
+    this.ctx.restore();
+    this.rendered = true;
+  }
+
+  /**
+   * Draws the rendered canvas onto the world canvas.
+   * @private
+   */
+  draw() {
+    const { width, height, ctx } = this.world;
+    if (this.absolute) {
+      ctx.drawImage(this.canvas, 0, 0, width, height);
+    } else {
+      const axis = this.isAxis ? this.parent : this.world.axis;
+      ctx.drawImage(
+        this.canvas,
+        -axis.position.x,
+        -axis.position.y,
+        width,
+        height
+      );
+    }
+  }
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

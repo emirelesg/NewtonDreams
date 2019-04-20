@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/figures/Vector.js | core</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Font.js~Font.html">Font</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Renderer.js~Renderer.html">Renderer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Scale.js~Scale.html">Scale</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/World.js~World.html">World</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/WorldElement.js~WorldElement.html">WorldElement</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-calcStepSize">calcStepSize</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-clamp">clamp</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-cos">cos</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-distSquared">distSquared</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-fixId">fixId</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatValue">formatValue</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-gaussian">gaussian</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPixelRatio">getPixelRatio</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isCoordInside">isCoordInside</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isFunction">isFunction</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isObject">isObject</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isString">isString</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-loadOptions">loadOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-rad">rad</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-round">round</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sin">sin</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ANGLE_STYLE">ANGLE_STYLE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-AVOGADRO">AVOGADRO</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-BOLTZMANN">BOLTZMANN</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-BOX_COLORS">BOX_COLORS</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-CM3_TO_M3">CM3_TO_M3</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-CM_TO_M">CM_TO_M</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-COLORS">COLORS</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-COS30">COS30</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-COS60">COS60</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-CURSOR">CURSOR</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-DEG_TO_RAD">DEG_TO_RAD</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-DRAG_NOTHING">DRAG_NOTHING</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-E0">E0</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FIFTH_PI">FIFTH_PI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FONT">FONT</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FONT_ALIGN">FONT_ALIGN</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FONT_BASELINE">FONT_BASELINE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FONT_COLOR">FONT_COLOR</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FONT_SIZE">FONT_SIZE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FOURTH_PI">FOURTH_PI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-GRAVITY">GRAVITY</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-HALF_PI">HALF_PI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-K">K</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-LOG10">LOG10</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-MOVE_STYLE">MOVE_STYLE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-M_TO_CM">M_TO_CM</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-OVER_NOTHING">OVER_NOTHING</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-PA_TO_ATM">PA_TO_ATM</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-PI">PI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-RAD_TO_DEG">RAD_TO_DEG</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-SHAPE_STYLE">SHAPE_STYLE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-SIN30">SIN30</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-SIN60">SIN60</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-SIXTH_PI">SIXTH_PI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-SYMBOL">SYMBOL</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-THIRD_PI">THIRD_PI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-TWO_PI">TWO_PI</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#dom">dom</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/Slider.js~Slider.html">Slider</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Button.html">Button</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~DOMElement.html">DOMElement</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Option.html">Option</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Options.html">Options</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Select.html">Select</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#figures">figures</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Axis.js~Axis.html">Axis</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Ball.js~Ball.html">Ball</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Box.js~Box.html">Box</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Picture.js~Picture.html">Picture</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Plot.js~Plot.html">Plot</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Shape.js~Shape.html">Shape</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Vector.js~Vector.html">Vector</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#figures-box">figures/box</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/box/Box.Graph.js~Graph.html">Graph</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/box/Box.Label.js~Label.html">Label</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/box/Box.Text.js~Text.html">Text</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/figures/Vector.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import * as utils from &quot;../Utils&quot;;
+import * as constants from &quot;../Constants&quot;;
+import WorldElement from &quot;../WorldElement&quot;;
+
+/**
+ * The Vector class is used for handling vector quantities and for drawing them onto the world.
+ * @public
+ * @class Vector
+ */
+export default class Vector extends WorldElement {
+
+  /**
+   * 
+   * @param {object} [opts] Object that contains valid Vector properties with values. Their values will be assigned at the end of the constructor. If an invalid property is passed then the value will be ignored.
+   */
+  constructor(opts) {
+
+    // Extend WorldElement.
+    super();
+
+    /**
+     * Sets the -x magnitude of the vector.
+     * Default value is 0.
+     * @type {number}
+     */
+    this.x = 0;
+
+    /**
+     * Sets the -y magnitude of the vector.
+     * Default value is 0.
+     * @type {number}
+     */
+    this.y = 0;
+
+    /**
+     * Flag for enabling the drawing of the vector&apos;s components.
+     * Default value is false.
+     * @type {boolean}
+     */
+    this.components = false;
+
+    /**
+     * Color of the components.
+     * Default value is {@link COLORS}.COMPONENT.
+     * @type {string}
+     */
+    this.componentColor = constants.COLORS.COMPONENT;
+
+    /**
+     * Flag for drawing the components at the starting point of the vector.
+     * Default value is true.
+     * @type {boolean}
+     */
+    this.componentsAtOrigin = true;
+
+    /**
+     * Flag for setting the angle style of the vector.
+     * Default value is {@link ANGLE_STYLE}.DEG.
+     * @type {number}
+     */
+    this.angleStyle = constants.ANGLE_STYLE.DEG;
+
+    // Apply user settings.
+    utils.loadOptions(this, opts);
+
+  }
+
+  /**
+   * Tests if the mouse is over the vector.
+   * @private
+   * @returns {boolean} True if the mouse is over the vector, false otherwise.
+   */
+  isMouseOver() {
+    return (
+      utils.distSquared(
+        this.world.mouse.rx,
+        this.world.mouse.ry,
+        this.position.x,
+        this.position.y
+      ) &lt; 1
+    );
+  }
+
+  /**
+   * Draws a vector between two points. The vector is a line with an equilateral triangle at
+   * the tip of the vector.
+   * @private
+   * @param {number} x0 Start -x coordinate of the vector in pixels.
+   * @param {number} y0 Start -y coordinate of the vector in pixels.
+   * @param {number} x1 End -x coordinate of the vector in pixels.
+   * @param {number} y1 End -y coordinate of the vector in pixels.
+   * @param {string} color Color of the vector in HEX format.
+   * @param {boolean} dashed Flag for drawing the vector with a dashed line.
+   */
+  drawLine(x0, y0, x1, y1, color, dashed) {
+    const { ctx } = this.world;
+    const dx = x1 - x0;
+    const dy = y1 - y0;
+    const mag = Math.sqrt(dx ** 2 + dy ** 2);
+    const a1 = Math.atan2(dy, dx);
+    const a2 = constants.FIFTH_PI;
+    const headlen = mag &gt; 10 ? 10 : mag;
+
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+
+    ctx.beginPath();
+    if (dashed) ctx.setLineDash([7, 7]);
+    ctx.moveTo(x0, y0);
+    ctx.lineTo(x1, y1);
+    ctx.stroke();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    if (dashed) ctx.setLineDash([]);
+    ctx.lineTo(
+      x1 - Math.floor(headlen * Math.cos(a1 - a2)),
+      y1 - Math.floor(headlen * Math.sin(a1 - a2))
+    );
+    ctx.lineTo(
+      x1 - Math.floor(headlen * Math.cos(a1 + a2)),
+      y1 - Math.floor(headlen * Math.sin(a1 + a2))
+    );
+    ctx.lineTo(x1, y1);
+    ctx.fill();
+    ctx.stroke();
+    ctx.closePath();
+  }
+  
+  /**
+   * Main draw function for the vector called by the World automatically.
+   * @private
+   */
+  draw() {
+    if (this.x === 0 &amp;&amp; this.y === 0) return;
+    const { scaleX, scaleY, ctx } = this.world;
+    const fromX = Math.floor(this.position.x * scaleX.toPx);
+    const toX = Math.floor(fromX + this.x * scaleX.toPx * this.scale);
+    const fromY = Math.floor(this.position.y * scaleY.toPx);
+    const toY = Math.floor(fromY + this.y * scaleY.toPx * this.scale);
+    const prevLineWidth = ctx.lineWidth;
+    ctx.lineWidth = 2;
+    if (this.components) {
+      this.drawLine(fromX, fromY, toX, fromY, this.componentColor, true);
+      this.drawLine(
+        this.componentsAtOrigin ? fromX : toX,
+        fromY,
+        this.componentsAtOrigin ? fromX : toX,
+        toY,
+        this.componentColor,
+        true
+      );
+    }
+    this.drawLine(fromX, fromY, toX, toY, this.color, false);
+    ctx.lineWidth = prevLineWidth;
+  }
+
+  /**
+   * Set the vector&apos;s magnitude and angle.
+   * @public
+   * @param {number} mag Magnitude of the vector.
+   * @param {number} angle Angle of the vector.
+   */
+  setMag(mag, angle) {
+    this.x = mag * utils.cos(angle, this.angleStyle);
+    this.y = mag * utils.sin(angle, this.angleStyle);
+  }
+
+  /**
+   * Set the -x and -y components of the vector.
+   * @public
+   * @param {number|object} x -x component of the vector. If x is another vector, the components of this vector are used to set the target vector.
+   * @param {number} [y] -y component of the vector.
+   */
+  set(x, y) {
+    if (utils.isObject(x)) {
+      this.x = x.x || 0;
+      this.y = x.y || 0;
+    } else {
+      this.x = x || 0;
+      this.y = y || 0;
+    }
+  }
+
+  /**
+   * Add a value to the -x and -y components of the vector.
+   * @public
+   * @param {number|object} x Value to add to the -x component of the vector. If x is another vector, the components of this vector are added to the target vector.
+   * @param {number} [y] Value to add to the -y component of the vector.
+   */
+  add(x, y) {
+    if (utils.isObject(x)) {
+      this.x += x.x || 0;
+      this.y += x.y || 0;
+    } else {
+      this.x += x || 0;
+      this.y += y || 0;
+    }
+  }
+
+  /**
+   * Subtract a value to the -x and -y components of the vector.
+   * @public
+   * @param {number|object} x Value to subtract to the -x component of the vector. If x is another vector, the components of this vector are subtracted to the target vector.
+   * @param {number} [y] Value to subtract to the -y component of the vector.
+   */
+  sub(x, y) {
+    if (utils.isObject(x)) {
+      this.x -= x.x || 0;
+      this.y -= x.y || 0;
+    } else {
+      this.x -= x || 0;
+      this.y -= y || 0;
+    }
+  }
+
+ /**
+   * Multiply the -x and -y components of the vector by a constant value.
+   * @public
+   * @param {number|object} x Value that multiplies the -x component of the vector. If x is another vector, the components of this vector are multiplied with the target vector.
+   * @param {number} [y] Value that multiplies the -y component of the vector.
+   */
+  mult(x, y) {
+    if (utils.isObject(x)) {
+      this.x *= x.x || 0;
+      this.y += x.y || 0;
+    } else if (y === undefined) {
+      this.x *= x || 0;
+      this.y *= x || 0;
+    } else {
+      this.x *= x || 0;
+      this.y *= y || 0;
+    }
+  }
+
+  /**
+   * Get a readable format of the vector&apos;s components.
+   * @public
+   * @returns {string} Readable string with the vector&apos;s -x and -y components.
+   */
+  print() {
+    return `x: ${this.x} y: ${this.y}`;
+  }
+
+  /**
+   * Dot product between two vectors.
+   * @public
+   * @param {number|object} x -x component of the vector used for calculating the dot product. If x is another vector, the dot product is calculated between x and the target vector.
+   * @param {number} [y]  -y component of the vector used for calculating the dot product.
+   * @return {number} The dot product between the two vector.
+   */
+  dot(x, y) {
+    if (utils.isObject(x)) {
+      return this.dot(x.x, x.y);
+    }
+    return this.x * x + this.y * y;
+  }
+
+  /**
+   * Get the magnitude of the vector.
+   * @public
+   * @returns {number} The magnitude of the vector.
+   */
+  mag() {
+    return Math.sqrt(this.x ** 2 + this.y ** 2);
+  }
+
+  /**
+   * Get the angle of the vector. The type of angle depends on the value of
+   * {@link Vector.angleStyle}.
+   * @public
+   * @returns {number} The angle of the vector.
+   */
+  angle() {
+    if (this.angleStyle === constants.ANGLE_STYLE.DEG) {
+      return Math.atan2(this.y, this.x) * constants.RAD_TO_DEG;
+    }
+    return Math.atan2(this.y, this.x);
+  }
+
+  /**
+   * Gets the standard angle of the vector. This means that the angle
+   * ranges from 0 to 360&#xB0;. Only works when the angleStyle is in degrees.
+   * @public
+   * @returns {number} The standard angle.
+   */
+  standardAngle() {
+    const a = this.angle();
+    if (a &lt; 0) {
+      return a + 360;
+    }
+    return a;
+  }
+
+  /**
+   * Get the magnitude squared of the vector.
+   * @public
+   * @returns {number} The magnitude squared of the vector.
+   */
+  magSquared() {
+    return this.x ** 2 + this.y ** 2;
+  }
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

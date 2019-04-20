@@ -1,0 +1,39 @@
+{
+  "name": "core",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/app.js",
+  "scripts": {
+    "tsc": "tsc",
+    "build": "webpack",
+    "watch": "webpack --watch",
+    "docs": "esdoc -c .esdoc.json"
+  },
+  "keywords": [],
+  "author": "Enrique Mireles Gutierrez",
+  "license": "",
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
+    "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.5",
+    "esdoc": "^1.1.0",
+    "esdoc-standard-plugin": "^1.0.0",
+    "eslint": "^5.12.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "^3.5.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "jsdoc": "^3.5.5",
+    "jsdoc-export-default-interop": "^0.3.1",
+    "minami": "^1.2.3",
+    "prettier": "^1.15.3",
+    "webpack": "^4.28.4",
+    "webpack-cli": "^3.2.1",
+    "webpack-dev-server": "^3.1.14",
+    "webpack-livereload-plugin": "^2.2.0"
+  },
+  "dependencies": {
+    "docdash": "^1.0.2"
+  }
+}

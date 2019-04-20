@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">src/WorldElement.js | core</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Font.js~Font.html">Font</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Renderer.js~Renderer.html">Renderer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Scale.js~Scale.html">Scale</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/World.js~World.html">World</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/WorldElement.js~WorldElement.html">WorldElement</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-calcStepSize">calcStepSize</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-clamp">clamp</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-cos">cos</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-distSquared">distSquared</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-fixId">fixId</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatValue">formatValue</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-gaussian">gaussian</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPixelRatio">getPixelRatio</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isCoordInside">isCoordInside</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isFunction">isFunction</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isObject">isObject</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isString">isString</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-loadOptions">loadOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-rad">rad</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-round">round</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sin">sin</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ANGLE_STYLE">ANGLE_STYLE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-AVOGADRO">AVOGADRO</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-BOLTZMANN">BOLTZMANN</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-BOX_COLORS">BOX_COLORS</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-CM3_TO_M3">CM3_TO_M3</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-CM_TO_M">CM_TO_M</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-COLORS">COLORS</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-COS30">COS30</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-COS60">COS60</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-CURSOR">CURSOR</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-DEG_TO_RAD">DEG_TO_RAD</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-DRAG_NOTHING">DRAG_NOTHING</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-E0">E0</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FIFTH_PI">FIFTH_PI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FONT">FONT</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FONT_ALIGN">FONT_ALIGN</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FONT_BASELINE">FONT_BASELINE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FONT_COLOR">FONT_COLOR</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FONT_SIZE">FONT_SIZE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FOURTH_PI">FOURTH_PI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-GRAVITY">GRAVITY</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-HALF_PI">HALF_PI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-K">K</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-LOG10">LOG10</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-MOVE_STYLE">MOVE_STYLE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-M_TO_CM">M_TO_CM</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-OVER_NOTHING">OVER_NOTHING</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-PA_TO_ATM">PA_TO_ATM</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-PI">PI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-RAD_TO_DEG">RAD_TO_DEG</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-SHAPE_STYLE">SHAPE_STYLE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-SIN30">SIN30</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-SIN60">SIN60</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-SIXTH_PI">SIXTH_PI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-SYMBOL">SYMBOL</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-THIRD_PI">THIRD_PI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-TWO_PI">TWO_PI</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#dom">dom</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/Slider.js~Slider.html">Slider</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Button.html">Button</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~DOMElement.html">DOMElement</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Option.html">Option</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Options.html">Options</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Select.html">Select</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#figures">figures</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Axis.js~Axis.html">Axis</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Ball.js~Ball.html">Ball</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Box.js~Box.html">Box</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Picture.js~Picture.html">Picture</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Plot.js~Plot.html">Plot</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Shape.js~Shape.html">Shape</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Vector.js~Vector.html">Vector</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#figures-box">figures/box</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/box/Box.Graph.js~Graph.html">Graph</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/box/Box.Label.js~Label.html">Label</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/box/Box.Text.js~Text.html">Text</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/WorldElement.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* eslint-disable class-methods-use-this */
+import * as constants from &quot;./Constants&quot;;
+import * as utils from &quot;./Utils&quot;;
+import World from &quot;./World&quot;;
+import Font from &quot;./Font&quot;;
+import Renderer from &quot;./Renderer&quot;;
+
+/**
+ * Parent class for all elements added to the world. Sets the basic properties
+ * and methods all objects need.
+ * @private
+ * @class WorldElement
+ */
+export default class WorldElement {
+
+  /**
+   * @constructor
+   */
+  constructor() {
+
+    /**
+     * Sets the world where this element is found. It is automatically set when added to the world.
+     * @type {World}
+     */
+    this.world = null;
+
+    /**
+     * Flag for enabling or diabling this element.
+     * Default value is true.
+     * @type {boolean}
+     */
+    this.display = true;
+
+    /**
+     * Sets the z-index of the element.
+     * Default value is 0.
+     * @type {number}
+     */
+    this.zIndex = 0;
+
+    /**
+     * A copy of the z-index value is stored here. When the element is dragged around, 
+     * the element moves as a topmost element (only if {@link WorldElement.topmostOnDrag} 
+     * is set to true). Therefore, the z-index of the element is increased and must 
+     * be restored when the mouse gets released. 
+     * The default value is 0.
+     * @type {number}
+     */
+    this.savedZIndex = 0;
+
+    /**
+     * Sets the position of the element. The units can be in pixels or in units.
+     * Must look at the value of {@link WorldElement.mouseMoveStyle}.
+     * @type {object}
+     * @property {number} x=0 -x coordinate.
+     * @property {number} y=0 -y coordinate.
+     */
+    this.position = { x: 0, y: 0 };
+
+    /**
+     * Flag for determining if the element will be a top-most element when dragged around.
+     * This means the element can be behind other objects, but when its dragged it will
+     * temporarily have a higher z-index.
+     * Default value is false.
+     * @type {boolean}
+     */
+    this.topmostOnDrag = false;
+
+    /**
+     * Flag for allowing the element to be dragged around.
+     * Default value is false.
+     * @type {boolean}
+     */
+    this.isDraggable = false;
+
+    /**
+     * Flag set when the element is being dragged around.
+     * Default value is false.
+     * @type {boolean}
+     */
+    this.dragging = false;
+
+    /**
+     * Sets a callback function for when the element is dragged around.
+     * @type {function}
+     */
+    this.onMouseMove = undefined;
+
+    /**
+     * Flag set when the mouse is over the element.
+     * Default value is false.
+     * @type {boolean}
+     */
+    this.mouseOver = false;
+
+    /**
+     * Sets the move style of the element.
+     * Default value is {@link MOVE_STYLE}.BY_UNITS.
+     * @type {string}
+     */
+    this.mouseMoveStyle = constants.MOVE_STYLE.BY_UNITS;
+
+    /**
+     * Sets the cursor style when the mouse is over the element.
+     * Default value is {@link CURSOR}.POINTER.
+     * @type {string}
+     */
+    this.cursor = constants.CURSOR.POINTER;
+
+    /**
+     * Sets the color in HEX format of the element. The use of it depends on the type of element.
+     * Default value is {@link COLORS}.RED.
+     * @type {string}
+     */
+    this.color = constants.COLORS.RED;
+
+    /**
+     * Sets the drawing scale of the element. 
+     * Until now this property is only useful for {@link Picture} objects.
+     * Default value is 1.
+     * @type {number}
+     */
+    this.scale = 1;
+
+    /**
+     * Sets the rotation of the element. The units depend on the value of element&apos;s angle style.
+     * Default value is 0.
+     * @type {number}
+     */
+    this.rotation = 0;
+
+    /**
+     * Flag used to determine if an object is a child of WorldElement. 
+     * Only these objects have a {@link WorldElement.valid} flag.
+     * Default value is true.
+     * @type {boolean}
+     */
+    this.valid = true;
+
+    /**
+     * Sets the renderer used for the element.
+     * The default value is undefined.
+     * @type {Renderer}
+     */
+    this.renderer = undefined;
+
+    /**
+     * Sets the current width of the element.
+     * The default value is 0.
+     * @type {number}
+     */
+    this.width = 0;
+
+    /**
+     * Sets the current height of the element.
+     * The default value is 0.
+     * @type {number}
+     */
+    this.height = 0;
+
+    /**
+     * Sets the font of the element.
+     * The default value is Font().
+     * @type {Font}
+     */
+    this.font = new Font();
+  }
+
+  /**
+   * Sets the world object where element will be drawn. It is automatically set by the
+   * world when the element is added to it.
+   * @private
+   * @param {World} world World of the element.
+   */
+  setWorld(world) {
+    this.world = world;
+    this.resize();
+  }
+
+  /**
+   * Function called when the canvas gets resized. Enables the different element types to handle
+   * resize events differently depending on their needs. This is an empty resize function.
+   * @private
+   */
+  resize() {}
+
+  /**
+   * Function called when the mouse moves to check if the pointer is over the element.
+   * The function is later replaced by the different types of elements.
+   * @public
+   * @returns {boolean} Returns false by default.
+   */
+  isMouseOver() {
+    return false;
+  }
+
+  /**
+   * Sets the scale of the element.
+   * @public
+   * @param {number} s Scale value for the element. Must be between 1 and 0.
+   */
+  setScale(s) {
+    this.scale = s &gt;= 0 &amp;&amp; s &lt;= 1 ? s : 0;
+    if (this.renderer) this.renderer.rendered = false;
+  }
+
+  /**
+   * Sets the color in HEX format of the element.
+   * @public
+   * @param {string} c Desired color in HEX format.
+   */
+  setColor(c) {
+    this.color = c;
+    if (this.renderer) this.renderer.rendered = false;
+  }
+
+  /**
+   * Sets if the element is draggable.
+   * @public
+   * @param {boolean} s True sets the element as draggable, false otherwise.
+   */
+  draggable(s) {
+    this.isDraggable = s;
+  }
+
+  /**
+   * Sets the element as a topmost element.
+   * @private
+   * @param {boolean} state True sets the z-index to 1000, false sets the z-index to the saved z-index.
+   */
+  topmost(state) {
+    this.zIndex = state ? 1000 : this.savedZIndex;
+  }
+
+  /**
+   * Sets the z-index of the element. It is used to sort the drawing order of the element.
+   * Those with the lowest z-index are drawn first. The highest z-index is drawn last.
+   * @public
+   * @param {number} z Desired z-index.
+   */
+  setZ(z) {
+    this.zIndex = z;
+    this.savedZIndex = z;
+  }
+
+  /**
+   * Sets the position of the element.
+   * @public
+   * @param {number} x -x coordinate.
+   * @param {number} y -y coordinate.
+   */
+  setPosition(x, y) {
+    this.position.x = utils.round(x, 3);
+    this.position.y = utils.round(y, 3);
+    if (this.renderer) this.renderer.rendered = false;
+  }
+
+  /**
+   * Adds the provided coordinates to the position.
+   * @public
+   * @param {number} x -x coordinate.
+   * @param {number} y -y coordinate.
+   */
+  addPosition(x, y) {
+    this.position.x += utils.round(x, 3);
+    this.position.y += utils.round(y, 3);
+    if (this.renderer) this.renderer.rendered = false;
+  }
+
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

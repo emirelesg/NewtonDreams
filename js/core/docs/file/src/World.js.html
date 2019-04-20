@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">src/World.js | core</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Font.js~Font.html">Font</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Renderer.js~Renderer.html">Renderer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Scale.js~Scale.html">Scale</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/World.js~World.html">World</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/WorldElement.js~WorldElement.html">WorldElement</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-calcStepSize">calcStepSize</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-clamp">clamp</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-cos">cos</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-distSquared">distSquared</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-fixId">fixId</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-formatValue">formatValue</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-gaussian">gaussian</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPixelRatio">getPixelRatio</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isCoordInside">isCoordInside</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isFunction">isFunction</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isObject">isObject</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isString">isString</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-loadOptions">loadOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-rad">rad</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-round">round</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sin">sin</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ANGLE_STYLE">ANGLE_STYLE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-AVOGADRO">AVOGADRO</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-BOLTZMANN">BOLTZMANN</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-BOX_COLORS">BOX_COLORS</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-CM3_TO_M3">CM3_TO_M3</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-CM_TO_M">CM_TO_M</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-COLORS">COLORS</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-COS30">COS30</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-COS60">COS60</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-CURSOR">CURSOR</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-DEG_TO_RAD">DEG_TO_RAD</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-DRAG_NOTHING">DRAG_NOTHING</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-E0">E0</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FIFTH_PI">FIFTH_PI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FONT">FONT</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FONT_ALIGN">FONT_ALIGN</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FONT_BASELINE">FONT_BASELINE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FONT_COLOR">FONT_COLOR</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FONT_SIZE">FONT_SIZE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FOURTH_PI">FOURTH_PI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-GRAVITY">GRAVITY</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-HALF_PI">HALF_PI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-K">K</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-LOG10">LOG10</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-MOVE_STYLE">MOVE_STYLE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-M_TO_CM">M_TO_CM</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-OVER_NOTHING">OVER_NOTHING</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-PA_TO_ATM">PA_TO_ATM</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-PI">PI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-RAD_TO_DEG">RAD_TO_DEG</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-SHAPE_STYLE">SHAPE_STYLE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-SIN30">SIN30</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-SIN60">SIN60</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-SIXTH_PI">SIXTH_PI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-SYMBOL">SYMBOL</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-THIRD_PI">THIRD_PI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-TWO_PI">TWO_PI</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#dom">dom</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/Slider.js~Slider.html">Slider</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Button.html">Button</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~DOMElement.html">DOMElement</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Option.html">Option</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Options.html">Options</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Select.html">Select</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#figures">figures</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Axis.js~Axis.html">Axis</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Ball.js~Ball.html">Ball</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Box.js~Box.html">Box</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Picture.js~Picture.html">Picture</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Plot.js~Plot.html">Plot</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Shape.js~Shape.html">Shape</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Vector.js~Vector.html">Vector</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#figures-box">figures/box</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/box/Box.Graph.js~Graph.html">Graph</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/box/Box.Label.js~Label.html">Label</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/box/Box.Text.js~Text.html">Text</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/World.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import * as utils from &quot;./Utils&quot;;
+import * as constants from &quot;./Constants&quot;;
+import Scale from &quot;./Scale&quot;;
+import Axis from &quot;./figures/Axis&quot;;
+import Renderer from &quot;./Renderer&quot;;
+import WorldElement from &quot;./WorldElement&quot;;
+
+/**
+ * The World class handles the canvas and the drawing of elements. It manages all touch and mouse events,
+ * as well as the scaling and axis settings. All elements drawn to the canvas must go through a World object.
+ * @public
+ * @class World
+ */
+export default class World {
+
+  /**
+   * @constructor
+   * @param {string} id HTML id of the div where the World will be initiated.
+   * @param {function} drawCallback Function called every 60fps to draw animations.
+   * @param {function} resizeCallback Function called every time the canvas gets resized.
+   */
+  constructor(id, drawCallback, resizeCallback) {
+
+    /**
+     * jQuery reference to the div container of the canvas.
+     * @type {object}
+     */
+    this.container = $(utils.fixId(id));
+
+    /**
+     * HTML canvas created for the world. Important to note is that the canvas does not have an alpha
+     * channel. This is done to optimize the framerate.
+     * @type {object}
+     */
+    this.canvas = document.createElement(&quot;canvas&quot;, { alpha: false });
+
+    /**
+     * Context of the created canvas for the world.
+     * @type {object}
+     */
+    this.ctx = this.canvas.getContext(&quot;2d&quot;);
+
+    /**
+     * Pixel ratio of the device.
+     * @type {number}
+     */
+    this.pxRatio = utils.getPixelRatio(this.ctx);
+
+    /**
+     * Scale object for the -x axis.
+     * Default scale is 50px per 1 unit.
+     * @type {Scale}
+     */
+    this.scaleX = new Scale(50, 1);
+
+    /**
+     * Scale object for the -y axis.
+     * Default scale is 50px per 1 unit.
+     * @type {Scale}
+     */
+    this.scaleY = new Scale(50, -1);
+
+    /**
+     * Width of the canvas in pixels.
+     * @type {number}
+     */
+    this.width = 0;
+
+    /**
+     * Width before resizing the canvas to the new width. Used to determine if a change
+     * has occured in the width in order to continue with the resizing process.
+     * @type {number}
+     */
+    this.prevWidth = 0;
+
+    /**
+     * Height of the canvas in pixels.
+     * @type {number}
+     */
+    this.height = 0;
+
+    /**
+     * Array of elements added to the world.
+     * @type {WorldElement[]}
+     */
+    this.elements = [];
+
+    /**
+     * Axis object used to draw the main axis.
+     * @type {Axis}
+     */
+    this.axis = new Axis();
+
+    /**
+     * Callback function for when the elements are drawn to the canvas.
+     * @type {function}
+     */
+    this.onDraw = utils.isFunction(drawCallback) ? drawCallback : null;
+
+    /**
+     * Callback function for when the canvas gets resized.
+     * @type {function}
+     */
+    this.onResize = utils.isFunction(resizeCallback) ? resizeCallback : null;
+
+    /**
+     * Callback function for when the mouse moves over the canvas.
+     * @type {function}
+     */
+    this.onMouseMove = null;
+
+    /**
+     * Simple background color for the canvas. If set to ther value than {@link COLORS}.WHITE the canvas
+     * will draw a rectangle with the new color at the beginning of every draw cycle. When the background
+     * renderer is enabled, the color value is no more relevant.
+     * @type {string}
+     */
+    this.color = constants.COLORS.WHITE;
+
+    /**
+     * Request id number from the requestAnimationFrame. Used to determine if the animation has
+     * started.
+     * @type {number}
+     */
+    this.started = null;
+
+    /**
+     * Mouse object containing all mouse properties and values.
+     * @type {object}
+     * @property {number} x Current -x position of the mouse in pixels.
+     * @property {number} y Current -y position of the mouse in pixels.
+     * @property {number} px Previous -x position of the mouse in pixels.
+     * @property {number} py Previous -y position of the mouse in pixels.
+     * @property {number} dx Change in the -x direction in pixels.
+     * @property {number} dy Change in the -y direction in pixels.
+     * @property {number} rx Real -x position of the mouse with respect to the axis in units.
+     * @property {number} ry Real -y position of the mouse with respect to the axis in units.
+     * @property {boolean} down Flag for when the mouse is pressed down over the canvas.
+     * @property {boolean} inCanvas Flag for when the mouse is over the canvas.
+     * @property {object} dragging Contains the currently dragged {@link WorldElement}. If no element is dragged then the value is equal to {@link DRAG_NOTHING}.
+     * @property {object} over Contains the element that the mouse is currently over. If no element is under the mouse then the value is equal to {@link OVER_NOTHING}.
+     * @property {string} cursor Current cursor of the canvas. Changes depending if it is over an element.
+     */
+    this.mouse = {
+      x: 0,
+      y: 0,
+      px: 0,
+      py: 0,
+      dx: 0,
+      dy: 0,
+      rx: 0,
+      ry: 0,
+      down: false,
+      inCanvas: false,
+      dragging: constants.DRAG_NOTHING,
+      over: constants.OVER_NOTHING,
+      cursor: constants.CURSOR.DEFAULT
+    };
+
+    /**
+     * Background renderer object. It is disabled by default. 
+     * @type {Renderer}
+     */
+    this.background = new Renderer({
+      absolute: true,
+      enabled: false,
+      world: this
+    });
+
+    // Add the canvas to the container.
+    this.container.append(this.canvas);
+
+    // Add the axis to the list of elements.
+    this.add(this.axis);
+
+    // Bind all events to the canvas and force a resize event.
+    this.bindEventListeners();
+    this.resize();
+
+  }
+
+  /**
+   * Once it has been determined that the mouse is over an element and a dragging process has begun,
+   * the position of the object must be updated to follow the mouse. The function looks at the value of 
+   * {@link WorldElement.mouseMoveStyle} to determine if the position should be updated in pixels or in
+   * real values. The position is updated by adding the change in the mouse&apos;s position to the element.
+   * This creates a smoother movement. Finally, the callback function {@link WorldElement.onMouseMove} is
+   * called.
+   * @private
+   */
+  moveElements() {
+    const element = this.mouse.dragging;
+    if (element) {
+      if (this.mouse.inCanvas) {
+        if (element.mouseMoveStyle === constants.MOVE_STYLE.BY_PX) {
+          element.addPosition(this.mouse.dx, this.mouse.dy);
+        } else {
+          element.addPosition(this.mouse.rdx, this.mouse.rdy);
+          if (!this.axis.negative) {
+            if (element.position.x &lt; 0) element.position.x = 0;
+            if (element.position.y &lt; 0) element.position.y = 0;
+          }
+        }
+        if (element.renderer) element.renderer.rendered = false;
+        if (utils.isFunction(element.onMouseMove)) element.onMouseMove(element);
+      }
+      element.dragging = this.mouse.down &amp;&amp; this.mouse.inCanvas;
+      element.mouse_over = element.dragging;
+      this.mouse.dragging = element.dragging
+        ? this.mouse.dragging
+        : constants.DRAG_NOTHING;
+      element.topmost(element.dragging &amp;&amp; element.topmostOnDrag);
+    }
+  }
+
+  /**
+   * Obtain the mouse or touch coordinates from the event data obtained from the callback. The data
+   * is obtained in pixels, howevere it is also converted to real units using the scale provided. It
+   * also calcualtes the previous positio and the change in position in both units (pixels and real units).
+   * @private
+   */
+  getMousePosition(e) {
+    const m = this.mouse;
+    const rect = this.canvas.getBoundingClientRect();
+    // Determine if it is a touch event or mouse event.
+    let evt;
+    if (e &amp;&amp; !e.clientX) {
+      if (e.touches) {
+        [evt] = e.touches;
+      } else if (e.changedTouches) {
+        [evt] = e.changedTouches;
+      }
+    } else {
+      evt = e;
+    }
+    // Save previous values
+    m.px = m.x;
+    m.py = m.y;
+    // Calculate position in pixels.
+    m.x = Math.floor(evt.clientX - rect.left);
+    m.y = Math.floor(evt.clientY - rect.top);
+    // Convert position to real units.
+    m.rx = (m.x - this.axis.position.x) * this.scaleX.toUnits;
+    m.ry = (m.y - this.axis.position.y) * this.scaleY.toUnits;
+    // Calculate the delta in pixels.
+    m.dx = m.x - m.px;
+    m.dy = m.y - m.py;
+    // Calculate the delta in real units.
+    m.rdx = m.dx * this.scaleX.toUnits;
+    m.rdy = m.dy * this.scaleY.toUnits;
+  }
+
+  /**
+   * Find if the mouse is over an element. It queries the method {@link WorldElement.isMouseOver} to check
+   * if the mouse is over the bounding box of the element.
+   * @private
+   */
+  isMouseOverElement() {
+    if (this.mouse.dragging !== constants.DRAG_NOTHING) return;
+    let found = constants.OVER_NOTHING;
+    for (let i = this.elements.length - 1; i &gt;= 0; i -= 1) {
+      if (
+        this.elements[i].isMouseOver() &amp;&amp;
+        this.elements[i].display &amp;&amp;
+        this.elements[i].isDraggable &amp;&amp;
+        found === constants.OVER_NOTHING
+      ) {
+        found = i;
+        this.elements[i].mouseOver = true;
+      } else {
+        this.elements[i].mouseOver = false;
+      }
+    }
+    this.setCursor(
+      found === constants.OVER_NOTHING
+        ? constants.CURSOR.DEFAULT
+        : this.elements[found].cursor
+    );
+    this.mouse.over = found;
+  }
+
+  /**
+   * Binds a callback function to the mouse, touch and resize event listeners.
+   * @private
+   */
+  bindEventListeners() {
+    const self = this;
+    const callbacks = {
+      mousemove(e) {
+        self.getMousePosition(e);
+        self.isMouseOverElement();
+        self.moveElements();
+        if (utils.isFunction(self.onMouseMove)) self.onMouseMove();
+      },
+      mouseenter(e) {
+        e.preventDefault();
+        self.mouse.inCanvas = true;
+      },
+      mouseleave(e) {
+        e.preventDefault();
+        self.mouse.inCanvas = false;
+      },
+      mousedown(e) {
+        e.preventDefault();
+        self.getMousePosition(e);
+        self.isMouseOverElement();
+        if (self.mouse.over !== constants.OVER_NOTHING) {
+          self.mouse.dragging = self.elements[self.mouse.over];
+          self.mouse.down = true;
+        }
+      },
+      mouseup(e) {
+        e.preventDefault();
+        self.mouse.down = false;
+        self.moveElements();
+      },
+      touchstart(e) {
+        self.getMousePosition(e);
+        self.isMouseOverElement();
+        if (self.mouse.over !== constants.OVER_NOTHING) {
+          if (e.cancelable) e.preventDefault();
+          self.mouse.dragging = self.elements[self.mouse.over];
+          self.mouse.down = true;
+          self.mouse.inCanvas = true;
+        }
+      },
+      touchend(e) {
+        if (self.mouse.dragging !== constants.DRAG_NOTHING) {
+          if (e.cancelable) e.preventDefault();
+          self.mouse.down = false;
+          self.mouse.inCanvas = false;
+          self.moveElements();
+        }
+      },
+      resize(e) {
+        self.resize(e);
+      }
+    };
+    window.addEventListener(&quot;resize&quot;, callbacks.resize, false);
+    window.addEventListener(&quot;mouseup&quot;, callbacks.mouseup, false);
+    this.canvas.addEventListener(&quot;mousemove&quot;, callbacks.mousemove, false);
+    this.canvas.addEventListener(&quot;mouseenter&quot;, callbacks.mouseenter, false);
+    this.canvas.addEventListener(&quot;mouseleave&quot;, callbacks.mouseleave, false);
+    this.canvas.addEventListener(&quot;mousedown&quot;, callbacks.mousedown, false);
+    this.canvas.addEventListener(&quot;touchmove&quot;, callbacks.mousemove, false);
+    this.canvas.addEventListener(&quot;touchstart&quot;, callbacks.touchstart, false);
+    this.canvas.addEventListener(&quot;touchend&quot;, callbacks.touchend, false);
+  }
+
+  /**
+   * Callback function for the resize event. It recalculates the width of the main canvas as well
+   * as all rendered canvases and their elements. It calls the callback function {@link World.onResize}.
+   * @private
+   */
+  resize(e) {
+    this.width = this.container.width();
+    const widthChange = Math.abs(this.prevWidth - this.width);
+    this.prevWidth = this.width;
+    this.height = this.container.height();
+    this.pxRatio = utils.getPixelRatio(this.ctx);
+    this.canvas.width = Math.floor(this.width * this.pxRatio);
+    this.canvas.height = Math.floor(this.height * this.pxRatio);
+    this.canvas.style.width = `${this.width}px`;
+    this.canvas.style.height = `${this.height}px`;
+    this.ctx.scale(this.pxRatio, this.pxRatio);
+    if (this.background.enabled) {
+      this.background.resize();
+    }
+    for (let i = 0; i &lt; this.elements.length; i++) {
+      if (utils.isFunction(this.elements[i].resize)) this.elements[i].resize();
+      if (this.elements[i].renderer) this.elements[i].renderer.resize();
+    }
+    if (this.started &amp;&amp; utils.isFunction(this.onResize) &amp;&amp; widthChange &gt; 0) this.onResize();
+  }
+
+  /**
+   * Sets a new cursor for when the mouse is over the canvas.
+   * @public
+   * @param {string} cursor Valid cursor type.
+   */
+  setCursor(cursor) {
+    if (cursor !== this.mouse.cursor) {
+      this.canvas.style.cursor = cursor;
+      this.mouse.cursor = cursor;
+    }
+  }
+
+  /**
+   * Main draw function. Runs at 60fps and can&apos;t be stopped once the world is started.
+   * Therefore it is constantly drawing to the canvas. This further optimizes the code needed
+   * to run simulations.
+   * Looks at the background object to check if it&apos;s enabled. If so, it draws the prerendered image
+   * to the main canvas, thus avoiding to draw the background every time from scratch.
+   * The draw method {@link WorldElement.draw} is called for every element added to the world.
+   * @private
+   */
+  draw() {
+    this.onDraw();
+    this.ctx.lineCap = &quot;round&quot;;
+    this.ctx.lineJoin = &quot;round&quot;;
+    this.ctx.clearRect(0, 0, this.width, this.height);
+
+    // Background.
+    if (this.background.enabled) {
+      if (this.background.rendered) {
+        this.background.draw();
+      } else if (utils.isFunction(this.background.callback)) {
+        this.background.begin();
+        this.background.callback(
+          this.background.ctx,
+          this.background.callbackArgs
+        );
+        this.background.end();
+        this.background.draw();
+      }
+    } else if (this.color !== constants.COLORS.WHITE) {
+      this.ctx.fillStyle = this.color;
+      this.ctx.rect(0, 0, this.width, this.height);
+      this.ctx.fill();
+    }
+
+    this.ctx.save();
+    this.ctx.translate(this.axis.position.x, this.axis.position.y);
+    this.elements.sort((a, b) =&gt; a.zIndex - b.zIndex);
+    for (let i = 0; i &lt; this.elements.length; i++) {
+      if (utils.isFunction(this.elements[i].draw) &amp;&amp; this.elements[i].display)
+        this.elements[i].draw();
+    }
+    this.ctx.restore();
+    this.start();
+  }
+
+  /**
+   * Adds a {@link WorldElement} to the world. Multiple elements can be added in a
+   * single add function, they only need to be separated by comma.
+   * @public
+   * @param  {...WorldElement} args Elements to add to the world.
+   */
+  add(...args) {
+    for (let i = 0; i &lt; args.length; i++) {
+      if (
+        utils.isObject(args[i]) &amp;&amp;
+        Object.prototype.hasOwnProperty.call(args[i], &quot;valid&quot;)
+      ) {
+        args[i].setWorld(this);
+        if (args[i].renderer) args[i].renderer.setWorld(this);
+        this.elements.push(args[i]);
+      }
+    }
+  }
+
+  /**
+   * Remove a {@link WorldElement} from the world. Multiple elements can be removed
+   * in a single remove function, they only need to be separated by comma.
+   * @public
+   * @param {...WorldElement} args Elements to remove from the world.
+   */
+  remove(...args) {
+    for (let i = 0; i &lt; args.length; i++) {
+      const index = this.elements.indexOf(args[i]);
+      if (index &gt; -1) {
+        this.elements[index].world = undefined;
+        this.elements.splice(index, 1);
+      }
+    }
+  }
+
+  /**
+   * Starts the animation loop of 60fps.
+   * @private
+   */
+  start() {
+    const self = this;
+    if (this.started === null &amp;&amp; utils.isFunction(this.onResize)) {
+      this.onResize();
+    }
+    this.started = requestAnimationFrame(() =&gt; {
+      self.draw();
+    });
+  }
+
+  /**
+   * Creates a screenshot of the canvas and saves it as sc.png in the same folder
+   * as the main file from the simulation. The canvas data is passed to a php file 
+   * that only runs at localhost.
+   * @public
+   */
+  export() {
+    // Split url to get simulation path
+    // /newtondreams-bs4/fisica/sim/
+    const urlArray = window.location.pathname.split(&quot;/&quot;);
+    const simType = urlArray[2];
+    const simName = urlArray[3];
+    $.ajax({
+      data: {
+        data: this.canvas.toDataURL(),
+        path: `/${simType}/${simName}/`
+      },
+      url: &quot;../../php/export.php&quot;,
+      dataType: &quot;html&quot;,
+      type: &quot;post&quot;,
+      success(response) {
+        console.log(response);
+      }
+    });
+  }
+
+  /**
+   * Makes sure that a box of width (xMin + xMax) and height {yMin + yMax} fits in the canvas.
+   * This is used when the dimensions of objects changes dynamically.
+   * @public
+   * @param {number} xMin Minimum x value required to be displayed.
+   * @param {number} xMax Maximum x value required to be displayed.
+   * @param {number} yMin Minimum y value required to be displayed.
+   * @param {number} yMax Maximum y value required to be displayed.
+   * @param {number} scale Scale given to the range provided. If the scale is &gt; 1 then the bounding box will be larger than the data and thus will result in a better fit.
+   */
+  fit(xMin, xMax, yMin, yMax, scale) {
+    const xRange = Math.abs(xMin) + Math.abs(xMax);
+    const yRange = Math.abs(yMin) + Math.abs(yMax);
+    const xScale = utils.calcStepSize(
+      xRange * scale,
+      this.width / this.scaleX.px
+    );
+    const yScale = utils.calcStepSize(
+      yRange * scale,
+      this.height / this.scaleY.px
+    );
+    this.scaleX.set(
+      this.scaleX.px,
+      Number.isNaN(xScale) ? 1 : xScale,
+      this.scaleX.unit
+    );
+    this.scaleY.set(
+      this.scaleY.px,
+      Number.isNaN(yScale) ? -1 : -yScale,
+      this.scaleY.unit
+    );
+    const xCenter = Math.floor(
+      Math.abs(xMin) * this.scaleX.toPx +
+        (this.width - xRange * this.scaleX.toPx) / 2
+    );
+    const yCenter = Math.floor(
+      Math.abs(yMin) * this.scaleY.toPx +
+        (this.height - yRange * this.scaleY.toPx) / 2
+    );
+    this.axis.setPosition(xCenter, yCenter);
+  }
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

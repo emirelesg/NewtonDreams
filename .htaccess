@@ -1,0 +1,5 @@
+# Importante descomentar las siguientes lines para que el servidor redireccione
+# el trafico a HTTPS. En localhost no se requiere.
+# RewriteEngine On
+# RewriteCond %{SERVER_PORT} 80
+# RewriteRule ^(.*)$ https://www.newtondreams.com/$1 [R,L]
