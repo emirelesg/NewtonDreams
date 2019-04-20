@@ -202,7 +202,7 @@ export const E0 = 8.854e-12;
 export const BOLTZMANN = 1.38064852E-23;
 
 /**
- * Avogadro constants.
+ * Avogadro constant.
  * @type {number}
  * @see https://en.wikipedia.org/wiki/Avogadro_constant
  */
