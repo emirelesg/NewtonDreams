@@ -169,13 +169,13 @@
     $divyx_versions = array(
         array(
             "name"      => "2.2 (Windows 7) - 5.8 MB",
-            "ver"   => "2.2",
+            "ver"       => "2.2",
             "filename"  => "Divyx_2_2.zip",
             "date"      => "23/11/2016"
         ),
         array(
             "name"      => "1.0 (Windows XP) - 7.7 MB",
-            "ver"   => "1.0",
+            "ver"       => "1.0",
             "filename"  => "Divyx_1.zip",
             "date"      => ""
         )
