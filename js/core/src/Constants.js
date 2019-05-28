@@ -224,9 +224,9 @@ export const DRAG_NOTHING = null;
  * Defines the default font used for all simulations.
  */
 export const FONT =
-  "-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Arial";
+  "-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Arial, Sans Serif";
 
-/**
+/**s
  * Defines the default font size for all simulations.
  */
 export const FONT_SIZE = "12";

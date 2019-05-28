@@ -365,7 +365,6 @@ export default class Shape extends WorldElement {
     ctx.lineTo(x1, y1);
     this.end();
     if (dashed) this.lineDash(1);
-
     this.begin();
     if (angle !== 0) {
       this.save();
