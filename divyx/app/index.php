@@ -127,7 +127,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row d-none d-lg-flex">
+                <div class="row">
                     <div id="topControls" class="col controls clearfix">
                         <form class="form-inline">
                             <label class="btn btn-sm btn-primary">
@@ -166,7 +166,7 @@
                         </form>
                     </div> 
                 </div>
-                <div class="row d-none d-lg-flex">
+                <div class="row">
                     <div class="col-sm-8" id="canvasContainer">
                         <video id="video">
                             <source type="video/mp4" src="" muted preload="auto"></source>
@@ -199,7 +199,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row d-none d-lg-flex">
+                <div class="row">
                     <div id="bottomControls" class="col-sm-8 controls">
                         <button type="button" id="backward" class="btn btn-sm btn-outline-secondary">
                             <i data-feather="skip-back"></i>
