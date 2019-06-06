@@ -45,7 +45,7 @@ function setup() {
   // Configure the z index of all objects.
 
   // Add objects to world.
-  w.add(plot);
+  w.add(plot, box);
 
 }
 
