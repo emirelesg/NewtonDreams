@@ -19,6 +19,7 @@ var yVariable = 1;
 
 // p$ Objects
 var plot = new p$.Plot( { 'drawInvisiblePoints': true, 'color': p$.COLORS.BLUE } );
+var box = new p$.Box();
 var w;
 var controls = {};
 
