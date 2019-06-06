@@ -209,4 +209,16 @@ export class Options {
   
   }
 
+  /**
+   * Enables or disables the radio options.
+   * @param {boolean} state Desired state of the element.
+   */
+  enabled(state) {
+    if (state) {
+      this.obj.parent().removeClass('disabled')
+    } else {
+      this.obj.parent().addClass('disabled')     
+    }
+  }
+
 }

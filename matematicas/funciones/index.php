@@ -59,7 +59,7 @@
                         </div> <!-- end .row- -->
                         <div class="row">
                             <div class="col">
-                                <select class="form-control" id="fx" name="fx" required>
+                                <select class="form-control form-control-sm" id="fx" name="fx" required>
                                     <option selected disabled>Seleccione una función</option>
                                     <option value="1">a * cos(bt)</option>
                                     <option value="2">a * cos(bt) * exp^(ct)</option>
@@ -102,7 +102,7 @@
                         </div> <!-- end .row- -->
                         <div class="row">
                             <div class="col">
-                                <select class="form-control" id="fy" name="fy" required>
+                                <select class="form-control form-control-sm" id="fy" name="fy" required>
                                     <option selected disabled>Seleccione una función</option>
                                     <option value="1">a * cos(bt)</option>
                                     <option value="2">a * cos(bt) * exp^(ct)</option>

@@ -1548,6 +1548,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/dom/dom.js~options#enabled",
+    "class/src/dom/dom.js~Options.html#instance-method-enabled",
+    "src/dom/dom.js~Options#enabled",
+    "method"
+  ],
+  [
     "src/dom/dom.js~options#name",
     "class/src/dom/dom.js~Options.html#instance-member-name",
     "src/dom/dom.js~Options#name",

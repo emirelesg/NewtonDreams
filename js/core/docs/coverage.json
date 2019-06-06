@@ -1,7 +1,7 @@
 {
   "coverage": "100%",
-  "expectCount": 386,
-  "actualCount": 386,
+  "expectCount": 387,
+  "actualCount": 387,
   "files": {
     "src/Constants.js": {
       "expectCount": 37,
@@ -49,8 +49,8 @@
       "undocumentLines": []
     },
     "src/dom/dom.js": {
-      "expectCount": 18,
-      "actualCount": 18,
+      "expectCount": 19,
+      "actualCount": 19,
       "undocumentLines": []
     },
     "src/figures/Axis.js": {
