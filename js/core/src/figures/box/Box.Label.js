@@ -111,32 +111,36 @@ export default class Label extends WorldElement {
    * Sets the value of the label. Given any new value it is formated into a string with
    * the provided settings in the object.
    * @public
-   * @param {number} value New value for the label.
+   * @param {number|string} value New value for the label.
    */
   set(value) {
     let newValue = value;
-    const absValue = Math.abs(value);
-    let newUnits = this.units;
-    if (this.usePrefixes) {
-      if (absValue > 1e32) {
-        newValue = constants.SYMBOL.INF;
-      } else if (absValue > 1e9) {
-        newValue /= 1e9;
-        newUnits = `G${this.units}`;
-      } else if (absValue > 1e6) {
-        newValue /= 1e6;
-        newUnits = `M${this.units}`;
-      } else if (absValue > 1e3) {
-        newValue /= 1e3;
-        newUnits = `k${this.units}`;
+    if (utils.isString(newValue)) {
+      this.value = newValue;
+    } else {
+      const absValue = Math.abs(value);
+      let newUnits = this.units;
+      if (this.usePrefixes) {
+        if (absValue > 1e32) {
+          newValue = constants.SYMBOL.INF;
+        } else if (absValue > 1e9) {
+          newValue /= 1e9;
+          newUnits = `G${this.units}`;
+        } else if (absValue > 1e6) {
+          newValue /= 1e6;
+          newUnits = `M${this.units}`;
+        } else if (absValue > 1e3) {
+          newValue /= 1e3;
+          newUnits = `k${this.units}`;
+        }
       }
+      this.value = utils.formatValue(
+        newValue,
+        newUnits,
+        this.decPlaces,
+        this.fixPlaces
+      );
     }
-    this.value = utils.formatValue(
-      newValue,
-      newUnits,
-      this.decPlaces,
-      this.fixPlaces
-    );
   }
 
   /**

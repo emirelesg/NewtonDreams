@@ -162,7 +162,7 @@ export function isCoordInside(x, y, bx, by, bw, bh) {
  * @param {number|string} val Input number. Can also be a string or a symbol such as in {@link SYMBOL}.
  * @param {string} units Units of the input number.
  * @param {number} decPlaces Amount of decimal places to round.
- * @param {number} fixPlaces Fix the amount of decimal places. If the number doesn't have enough, zeros will be added.
+ * @param {boolean} fixPlaces Fix the amount of decimal places. If the number doesn't have enough, zeros will be added.
  * @returns {string} Formated number.
  */
 export function formatValue(val, units, decPlaces, fixPlaces) {
