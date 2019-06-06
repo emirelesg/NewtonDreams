@@ -191,8 +191,8 @@ function getDataFromTable() {
 function reset() {
 
   // Update box labels for displaying the currently selected variables.
-  labels.x.set("Var " + xVariable);
-  labels.y.set("Var " + yVariable);
+  labels.x.set("Var " + (xVariable + 1));
+  labels.y.set("Var " + (yVariable + 1));
 
   // In order to scale the axis for fitting the data correctly,
   // the dimensions of the data must be calculated. These variables
