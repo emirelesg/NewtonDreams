@@ -1,8 +1,8 @@
 <?php
     require '../../php/lang.php';
     require '../../php/data.php';
-    $active         = $nav_items['physics'];
-    $active_sim     = $active['sim']['operaciones_vectores'];
+    $active         = $nav_items['statistics'];
+    $active_sim     = $active['sim']['visualizacion_datos'];
 ?>
 <!doctype html>
 <html lang="es">

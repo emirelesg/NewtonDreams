@@ -129,10 +129,17 @@
     $statistics = array(
         "distribucion_normal" => array(
             "name"  => "Distribución Normal",
-            "desc"  => "Cmbia la media (&mu;) y desviación típica (&sigma;) de dos distribuciones normales.",
+            "desc"  => "Cambia la media (&mu;) y desviación típica (&sigma;) de dos distribuciones normales.",
             "url"   => "$base/estadistica/distribucion_normal/",
             "ver"   => "2.0.0",
             "date"  => "22/01/2019"
+        ),
+        "visualizacion_datos" => array(
+            "name"  => "Visualizador de Datos",
+            "desc"  => "Grafica datos en forma de dispersión, línea o histograma.",
+            "url"   => "$base/estadistica/visualizacion_datos/",
+            "ver"   => "1.0.0",
+            "date"  => "06/06/2019"
         )
     );
 

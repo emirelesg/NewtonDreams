@@ -7,7 +7,7 @@
     // Only run post requests.
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-        if (in_array($_SERVER['REMOTE_ADDR'], ['127.0.0.1', '::1'])) {
+        if ($_SERVER['SERVER_NAME'] == "localhost" || in_array($_SERVER['REMOTE_ADDR'], ['127.0.0.1', '::1'])) {
 
             // Get data from POST request.
             $path = '..' . $_POST['path'];

@@ -17,11 +17,7 @@
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
     <link href="../../css/nouislider.css" rel="stylesheet">
     <link href="../../css/index.css" rel="stylesheet">
-    <style>
-        #canvasContainer {
-            height: 300px;
-        }
-    </style>
+    <style></style>
 </head>
 
 <body>
