@@ -1,8 +1,8 @@
 <?php
     require '../../php/lang.php';
     require '../../php/data.php';
-    $active         = $nav_items['statistics'];
-    $active_sim     = $active['sim']['distribucion_normal'];
+    $active         = $nav_items['physics'];
+    $active_sim     = $active['sim']['operaciones_vectores'];
 ?>
 <!doctype html>
 <html lang="es">
@@ -18,8 +18,11 @@
     <link href="../../css/nouislider.css" rel="stylesheet">
     <link href="../../css/index.css" rel="stylesheet">
     <style>
-        #canvasContainer {
-            height: 300px;
+        input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+        }
+        input[type="number"] {
+            -moz-appearance: textfield;
         }
     </style>
 </head>
@@ -58,47 +61,112 @@
                 <div class="row">
                     <div class="col-lg-5 controls">
                         <div class="row">
-                            <div class="col">
-                                <h4>Distribución 1</h4>
+                            <div class="col clearfix">
+                                <h4 class="float-left">Controles</h4>
                             </div>
                         </div> <!-- end .row- -->
                         <div class="row">
                             <div class="col">
                                 <table class="table slider-table">
                                     <tr>
-                                        <td nowrap>σ<sub>1</sub></td>
-                                        <td class="w-100"><div id="s1_slider"></div></td>
-                                        <td><input id="s1_label" type="text" class="input-80 form-control form-control-sm text-center" readonly></td>
+                                        <td nowrap>Tipo</td>
+                                        <td colspan="2" class="w-100">
+                                            <select class="form-control form-control-sm" id="graphType" name="graphType" required>
+                                                <option value="line">Línea</option>
+                                                <option selected value="scatter">Dispersión</option>
+                                                <option value="histogram">Histograma</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr id="bins" class="d-none">
+                                        <td nowrap>Cajas</td>
+                                        <td class="w-100"><div id="bins_slider"></div></td>
+                                        <td><input id="bins_label" type="text" class="input-80 form-control form-control-sm text-center" readonly></td>
                                     </tr>
                                     <tr>
-                                        <td nowrap>μ<sub>1</sub></td>
-                                        <td class="w-100"><div id="u1_slider"></div></td>
-                                        <td><input id="u1_label" type="text" class="input-80 form-control form-control-sm text-center" readonly></td>
+                                        <td nowrap>Eje X</td>
+                                        <td colspan="2" class="w-100">
+                                            <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-sm w-100 btn-outline-primary active">
+                                                    <input type="radio" name="xAxis" value="0" autocomplete="off" checked> Var 1
+                                                </label>
+                                                <label class="btn btn-sm w-100 btn-outline-primary">
+                                                    <input type="radio" name="xAxis" value="1" autocomplete="off"> Var 2
+                                                </label>
+                                                <label class="btn btn-sm w-100 btn-outline-primary">
+                                                    <input type="radio" name="xAxis" value="2" autocomplete="off"> Var 3
+                                                </label>
+                                                <label class="btn btn-sm w-100 btn-outline-primary">
+                                                    <input type="radio" name="xAxis" value="3" autocomplete="off"> Var 4
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td nowrap>Eje Y</td>
+                                        <td colspan="2" class="w-100">
+                                            <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-sm w-100 btn-outline-primary">
+                                                    <input type="radio" name="yAxis" value="0" autocomplete="off"> Var 1
+                                                </label>
+                                                <label class="btn btn-sm w-100 btn-outline-primary active">
+                                                    <input type="radio" name="yAxis" value="1" autocomplete="off" checked> Var 2
+                                                </label>
+                                                <label class="btn btn-sm w-100 btn-outline-primary">
+                                                    <input type="radio" name="yAxis" value="2" autocomplete="off"> Var 3
+                                                </label>
+                                                <label class="btn btn-sm w-100 btn-outline-primary">
+                                                    <input type="radio" name="yAxis" value="3" autocomplete="off"> Var 4
+                                                </label>
+                                            </div>
+                                        </td>
                                     </tr>
                                 </table>
                             </div>
                         </div> <!-- end .row- -->
                         <div class="row">
                             <div class="col">
-                                <h4>Distribución 2</h4>
+                                <h4>Datos</h4>
                             </div>
                         </div> <!-- end .row- -->
-                        <div class="row">
-                            <div class="col">
-                                <table class="table slider-table">
-                                    <tr>
-                                        <td nowrap>σ<sub>2</sub></td>
-                                        <td class="w-100"><div id="s2_slider"></div></td>
-                                        <td><input id="s2_label" type="text" class="input-80 form-control form-control-sm text-center" readonly></td>
-                                    </tr>
-                                    <tr>
-                                        <td nowrap>μ<sub>2</sub></td>
-                                        <td class="w-100"><div id="u2_slider"></div></td>
-                                        <td><input id="u2_label" type="text" class="input-80 form-control form-control-sm text-center" readonly></td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div> <!-- end .row- -->
+                        <table class="table text-center data-table" id="varTable">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>
+                                        <span class="d-none d-sm-block">Var 1</span>
+                                        <span class="d-block d-sm-none">Var 1</span>
+                                    </th>
+                                    <th>
+                                        <span class="d-none d-sm-block">Var 2</span>
+                                        <span class="d-block d-sm-none">Var 2</span>
+                                    </th>
+                                    <th>
+                                        <span class="d-none d-sm-block">Var 3</span>
+                                        <span class="d-block d-sm-none">Var 3</span>
+                                    </th>
+                                    <th>
+                                        <span class="d-none d-sm-block">Var 4</span>
+                                        <span class="d-block d-sm-none">Var 4</span>
+                                    </th>
+                                    <th><i data-feather="settings"></i></span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="font-weight-bold text-secondary">1</td>
+                                    <td><input type="number" step="0.001" class="var var-1 form-control-sm form-control" placeholder="0"></td>
+                                    <td><input type="number" step="0.001" class="var var-2 form-control-sm form-control" placeholder="0"></td>
+                                    <td><input type="number" step="0.001" class="var var-3 form-control-sm form-control" placeholder="0"></td>
+                                    <td><input type="number" step="0.001" class="var var-4 form-control-sm form-control" placeholder="0"></td>
+                                    <td>
+                                        <button type="button" id="add" class="btn btn-sm btn-success btn-block">
+                                            <i data-feather="plus"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>                        
                     </div>
                     <div class="col-lg-7 mt-5 mt-lg-0" id="canvasContainer"></div>
                 </div>

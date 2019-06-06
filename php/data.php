@@ -6,7 +6,7 @@
     // Update base address if the site is on localhost.
     // This means that if the server is on localhost all webpages will start with /localhost/
     // If the server is on newtondreams.com all webpages will start with newtondreams.com.
-    $base = (in_array($_SERVER['REMOTE_ADDR'], ['127.0.0.1', '::1']) ? "/newtondreams-bs4" : "");
+    $base = (in_array($_SERVER['REMOTE_ADDR'], ['127.0.0.1', '::1']) ? "/NewtonDreams" : "");
     // $base = (filter_var($_SERVER['REMOTE_ADDR'], FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) ? "" : "/newtondreams-bs4");
 
     // Physics simulations.
