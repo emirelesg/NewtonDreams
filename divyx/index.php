@@ -176,7 +176,7 @@
                             DivYX 2 y 1 no se encuentran en desarrollo activo. La versión Web es la más actualizada.
                         </div>
                         <ul>
-                            <li>Para <strong>Windows 7</strong> en adelante se requiere la última versión (<?php echo $divyx_versions[0]['version']; ?>).</li>
+                            <li>Para <strong>Windows 7</strong> en adelante se requiere la última versión (<?php echo $divyx_versions[0]['ver']; ?>).</li>
                             <li>La versión para <strong>Windows 7</strong> no tiene instalador, solo es necesario abrir el archivo ejecutable.</li>
                             <li>Para <strong>Windows XP</strong> se require DivYX 1.
                             <li>DivYX 2 requiere de <a href="https://www.microsoft.com/download/details.aspx?id=17851" target="_blank">Net Framework 4.0</a>.</li>
