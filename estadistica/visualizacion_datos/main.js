@@ -45,8 +45,8 @@ function setup() {
   w = new p$.World("canvasContainer", draw, resize);
 
   // Configure box for displaying which variables are being plotted.
-  labels.x = box.addLabel(50, 14, { name: "X:", labelWidth: 20 });
-  labels.y = box.addLabel(50, 14, { name: "Y:", labelWidth: 20 });
+  labels.x = box.addLabel(55, 14, { name: "X:", labelWidth: 20 });
+  labels.y = box.addLabel(55, 14, { name: "Y:", labelWidth: 20 });
   labels.x.setPosition(0, 0);
   labels.y.setPosition(70, 0);
   box.calculateDimensions();
@@ -192,7 +192,11 @@ function reset() {
 
   // Update box labels for displaying the currently selected variables.
   labels.x.set("Var " + (xVariable + 1));
-  labels.y.set("Var " + (yVariable + 1));
+  if (mode == "histogram") {
+    labels.y.set("-");
+  } else {
+    labels.y.set("Var " + (yVariable + 1));
+  }
 
   // In order to scale the axis for fitting the data correctly,
   // the dimensions of the data must be calculated. These variables
