@@ -19,7 +19,7 @@ $(function() {
   setupControls();
   reset();
   w.start();
-  console.log(1);
+  console.log(2);
 });
 
 /**
