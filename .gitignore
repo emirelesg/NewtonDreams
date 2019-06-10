@@ -1,3 +1,4 @@
 .vscode
 divyx/descargas/*
 js/core/node_modules/*
+.DS_STORE
