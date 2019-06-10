@@ -3,7 +3,6 @@
     require 'php/data.php';
     $active = $nav_items['home'];
 ?>
-dsdf
 <!doctype html>
 <html lang="es">
 
