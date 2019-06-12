@@ -55,44 +55,31 @@
                     <div class="col-lg-5 controls">
                         <div class="row">
                             <div class="col clearfix">
-                                <h4 class="float-left">Vector A</h4>
-                                <div class="form-check form-check-inline float-right m-0 h-100">
-                                    <input class="form-check-input" type="checkbox" id="opcion" value="opcion">
-                                    <label class="form-check-label" for="opcion">Opción</label>
-                                </div>
+                                <h4 class="float-left">Variables</h4>
                             </div>
                         </div> <!-- end .row- -->
                         <div class="row">
                             <div class="col">
                                 <table class="table slider-table">
                                     <tr>
-                                        <td nowrap>Opciones</td>
-                                        <td colspan=2>
-                                            <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">
-                                                <label class="btn btn-sm w-100 btn-outline-primary active">
-                                                    <input type="radio" name="options" value="option1" autocomplete="off" checked> A
-                                                </label>
-                                                <label class="btn btn-sm w-100 btn-outline-primary">
-                                                    <input type="radio" name="options" value="option2" autocomplete="off"> B
-                                                </label>
-                                                <label class="btn btn-sm w-100 btn-outline-primary">
-                                                    <input type="radio" name="options" value="option3" autocomplete="off"> C
-                                                </label>
-                                                <label class="btn btn-sm w-100 btn-outline-primary">
-                                                    <input type="radio" name="options" value="option4" autocomplete="off"> D
-                                                </label>
-                                            </div>
-                                        </td>
+                                        <td nowrap>Ancho</td>
+                                        <td class="w-100"><div id="Bar_width_slider"></div></td>
+                                        <td><input id="Bar_width_label" type="text" class="input-80 form-control form-control-sm text-center" readonly></td>
                                     </tr>
                                     <tr>
-                                        <td nowrap>Var 1</td>
-                                        <td class="w-100"><div id="var1_slider"></div></td>
-                                        <td><input id="var1_label" type="text" class="input-80 form-control form-control-sm text-center" readonly></td>
+                                        <td nowrap>Diámetro</td>
+                                        <td class="w-100"><div id="Bar_height_slider"></div></td>
+                                        <td><input id="Bar_height_label" type="text" class="input-80 form-control form-control-sm text-center" readonly></td>
                                     </tr>
                                     <tr>
-                                        <td nowrap>Var 2</td>
-                                        <td class="w-100"><div id="var2_slider"></div></td>
-                                        <td><input id="var2_label" type="text" class="input-80 form-control form-control-sm text-center" readonly></td>
+                                        <td nowrap>T <sub>1</sub> </td>
+                                        <td class="w-100"><div id="T_1_slider"></div></td>
+                                        <td><input id="T_1_label" type="text" class="input-80 form-control form-control-sm text-center" readonly></td>
+                                    </tr>
+                                    <tr>
+                                        <td nowrap>T <sub>2</sub> </td>
+                                        <td class="w-100"><div id="T_2_slider"></div></td>
+                                        <td><input id="T_2_label" type="text" class="input-80 form-control form-control-sm text-center" readonly></td>
                                     </tr>
                                 </table>
                             </div>

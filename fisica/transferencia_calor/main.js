@@ -1,8 +1,8 @@
 // Constants
 var BOX_L = 2;
 var BOX_HL = BOX_L / 2;
-var X_OFFSET = 1;
 var Y_OFFSET = 0.5;
+var X_OFFSET = 0.5;
 
 // Variables
 
@@ -19,7 +19,7 @@ $(function() {
   setupControls();
   reset();
   w.start();
-  console.log(2);
+  //console.log(2);
 });
 
 /**
@@ -43,8 +43,11 @@ function setup() {
 function setupControls() {
 
   // Configure sliders.
-  controls.var1 = new p$.Slider({ id: "var1", start: 30, min: 0, max: 30, decPlaces: 1, units: "cm", callback: reset });
-  controls.var2 = new p$.Slider({ id: "var2", start: 0, min: 0, max: 360, decPlaces: 0, units: "°", callback: reset });
+  controls.Bar_width = new p$.Slider({ id: "Bar_width", start: 2, min: 0.5, max: 6, decPlaces: 1, units: "m", callback: reset });
+  controls.Bar_height = new p$.Slider({ id: "Bar_height", start: 0.5, min: 0.1, max: 2, decPlaces: 2, units: "m", callback: reset });
+  controls.T_1 = new p$.Slider({ id: "T_1", start: 30, min: 20, max: 100, decPlaces: 1, units: "C", callback: reset });
+  controls.T_2 = new p$.Slider({ id: "T_2", start: 20, min: 10, max: 80, decPlaces: 1, units: "C", callback: reset });
+  
   
   // Options options.
   controls.op = new p$.dom.Options("options", function(o) {
@@ -69,8 +72,37 @@ function reset() {
 }
 
 function drawSimulation() {
+  Bar_width = controls.Bar_width.value; //Gets bar width from slider
+  Bar_height = controls.Bar_height.value; //Gets bar height from slider
+  Bw_half = controls.Bar_width.value / 2;
+  Bh_half = controls.Bar_height.value / 2;
+  x_leftcube = -1*Bw_half-BOX_HL-0.3; //x-coordinate of the bottom left side of the cube
+  
+  /////Mariana
+  /* function drawBar() {
+    sim.rect(-1*Bw_half, -1 * Bh_half,Bar_width, Bar_height);
+  }
+  drawBar(Bar_width,Bar_height);
 
-  function drawCenteredRect(x, y, l) {
+  function drawCube(){
+    sim.save();
+    //sim.translate(x,y);
+    sim.translate((-1*Bw_half)-(l_cube/2)-0.5,0);
+    sim.rect(-l_cube/2, -l_cube/2,l_cube, l_cube);
+    sim.restore();
+  }
+  //drawCube(Bw_half-X_OFFSET,l_cube); //trasero
+  drawCube(Bw_half,l_cube); //delantero */
+
+//drawCenteredRect(X_OFFSET, Y_OFFSET, l);
+  //drawCenteredRect(0, 0, l);
+  /////Mariana
+
+
+
+  
+
+   function drawCenteredRect(x, y, l) {
     sim.rect(x - l / 2, y - l / 2, l, l);
   }
 
@@ -112,31 +144,29 @@ function drawSimulation() {
   }
 
   
-  var y = 1;
-
-  drawCube(-3, y, BOX_L, p$.BOX_COLORS.RED);
+  drawCube(x_leftcube, 0, BOX_L, p$.BOX_COLORS.RED); //Function to draw the first cube
   
   var d = 1;
-  sim.save();
-  sim.translate(-3 + BOX_HL + X_OFFSET / 2, y + Y_OFFSET / 2);
-  sim.fill(p$.BOX_COLORS.YELLOW.BACKGROUND);
-  sim.noStroke();
-  sim.rect(0, -d / 2, 6 - BOX_L - X_OFFSET / 2, d);
+  //sim.save();
+  //sim.translate(-3 + BOX_HL + X_OFFSET / 2, y + Y_OFFSET / 2);
+  //sim.fill(p$.BOX_COLORS.YELLOW.BACKGROUND);
+  //sim.noStroke();
+  //sim.rect(0, -d / 2, 6 - BOX_L - X_OFFSET / 2, d);
+  //sim.rect(0, -d / 2, 6 - BOX_L - X_OFFSET / 2, d);
   
   sim.stroke(p$.BOX_COLORS.YELLOW.BORDER);
   sim.fill(p$.BOX_COLORS.YELLOW.BACKGROUND);
-  sim.ellipse(0, 0, 0.25, d / 2, 90, 270);
+  //sim.ellipse(0, 0, 0.25, d / 2, 90, 270);
 
-  sim.line(0, d / 2, 6 - BOX_L - X_OFFSET / 2, d / 2);
-  sim.line(0, -d / 2, 6 - BOX_L - X_OFFSET / 2, -d / 2);
-
-
-
-  sim.restore();
+  //sim.line(0, d / 2, 6 - BOX_L - X_OFFSET / 2, d / 2);
+  //sim.line(0, -d / 2, 6 - BOX_L - X_OFFSET / 2, -d / 2);
+  //sim.restore();
   
   
-  drawCube(3, y, BOX_L, p$.BOX_COLORS.BLUE);
-
+  sim.ellipse(-1*Bw_half, 0, 0.18, Bh_half, 90, 270); //Draws the half ellipse of the stick
+  sim.rect(-1*Bw_half, -1 * Bh_half,Bar_width, Bar_height); //Draws the stick
+  
+  drawCube(Bw_half+BOX_HL, 0, BOX_L, p$.BOX_COLORS.BLUE); //Function to draw the second cube
     
 }
 
