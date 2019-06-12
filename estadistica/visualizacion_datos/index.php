@@ -24,6 +24,9 @@
         input[type="number"] {
             -moz-appearance: textfield;
         }
+        .w-1 {
+            width: 1% !important;
+        }
     </style>
 </head>
 
@@ -67,10 +70,11 @@
                         </div> <!-- end .row- -->
                         <div class="row">
                             <div class="col">
+                                <div class="alert alert-danger d-none" id="range-warning" role="alert"></div>
                                 <table class="table slider-table">
                                     <tr>
-                                        <td nowrap>Tipo</td>
-                                        <td colspan="2" class="w-100">
+                                        <td class="w-1" nowrap>Tipo</td>
+                                        <td colspan="3" class="w-100">
                                             <select class="form-control form-control-sm" id="graphType" name="graphType" required>
                                                 <option value="line">Línea</option>
                                                 <option selected value="scatter">Dispersión</option>
@@ -78,14 +82,9 @@
                                             </select>
                                         </td>
                                     </tr>
-                                    <tr id="bins" class="d-none">
-                                        <td nowrap>Cajas</td>
-                                        <td class="w-100"><div id="bins_slider"></div></td>
-                                        <td><input id="bins_label" type="text" class="input-80 form-control form-control-sm text-center" readonly></td>
-                                    </tr>
                                     <tr>
-                                        <td nowrap>Eje X</td>
-                                        <td colspan="2" class="w-100">
+                                        <td class="w-1" nowrap>Eje X</td>
+                                        <td colspan="3" class="w-100">
                                             <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">
                                                 <label class="btn btn-sm w-100 btn-outline-primary active">
                                                     <input type="radio" name="xAxis" value="0" autocomplete="off" checked> Var 1
@@ -102,9 +101,9 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td nowrap>Eje Y</td>
-                                        <td colspan="2" class="w-100">
+                                    <tr id="y-axis">
+                                        <td class="w-1" nowrap>Eje Y</td>
+                                        <td colspan="3" class="w-100">
                                             <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">
                                                 <label class="btn btn-sm w-100 btn-outline-primary">
                                                     <input type="radio" name="yAxis" value="0" autocomplete="off"> Var 1
@@ -121,12 +120,33 @@
                                             </div>
                                         </td>
                                     </tr>
+                                    <tr id="bins" class="d-none">
+                                        <td class="w-1" id="bins-label" nowrap>Cajas</td>
+                                        <td colspan="2" class="w-100"><div id="bins_slider"></div></td>
+                                        <td class="w-1"><input id="bins_label" type="text" class="input-80 form-control form-control-sm text-center" readonly></td>
+                                    </tr>
+                                </table>
+                                <table class="table slider-table">
+                                    <tr id="range" class="d-none">
+                                        <td id="min-label" nowrap>Min</td>
+                                        <td><input type="number" step="0.001" id="min" class="range form-control-sm form-control" placeholder="0"></td>
+                                        <td class="w-1" nowrap>Max</td>
+                                        <td><input type="number" step="0.001" id="max" class="range form-control-sm form-control" placeholder="0"></td>
+                                    </tr>
                                 </table>
                             </div>
                         </div> <!-- end .row- -->
                         <div class="row">
-                            <div class="col">
-                                <h4>Datos</h4>
+                            <div class="col clearfix">
+                                <h4 class="float-left">Datos</h4>
+                                <form class="form-inline float-right">
+                                    <label id="filename" class="text-secondary"></label>
+                                    <label id="fileBrowser" class="ml-3 d-none btn btn-sm btn-primary">
+                                        <i data-feather="upload"></i>
+                                        <span>Subir CSV</span>
+                                        <input type="file" name="files[]" accept=".csv" id="files" hidden>
+                                    </label>
+                                </form>
                             </div>
                         </div> <!-- end .row- -->
                         <table class="table text-center data-table" id="varTable">
@@ -183,6 +203,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="../../js/popper.min.js"></script>
     <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/jquery.csv.min.js"></script>
     <script src="../../js/footer-fix.js"></script>
     <script src="../../js/nouislider.min.js"></script>
     <script src="../../js/feather.min.js"></script>
