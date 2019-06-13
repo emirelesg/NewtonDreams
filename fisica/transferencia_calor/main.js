@@ -1,8 +1,21 @@
 // Constants
-var BOX_L = 2;
+var BOX_L = 2.5;
 var BOX_HL = BOX_L / 2;
 var Y_OFFSET = 0.5;
 var X_OFFSET = 0.5;
+var k_cu = 371; // conductividad termica [W/K m]
+var m = 1; // [kg]
+var c_cu = 385; //calor especifico Cu [J/kg K]
+
+
+var started = false;
+var t_end = 3;
+var t = 0;
+var t1_initial = 0;
+var t2_initial = 0;
+var t1 = 0;
+var t2 = 0;
+var t_diff = 0;
 
 // Variables
 
@@ -45,7 +58,7 @@ function setupControls() {
   // Configure sliders.
   controls.Bar_width = new p$.Slider({ id: "Bar_width", start: 2, min: 0.5, max: 6, decPlaces: 1, units: "m", callback: reset });
   controls.Bar_height = new p$.Slider({ id: "Bar_height", start: 0.5, min: 0.1, max: 2, decPlaces: 2, units: "m", callback: reset });
-  controls.T_1 = new p$.Slider({ id: "T_1", start: 30, min: 20, max: 100, decPlaces: 1, units: "C", callback: reset });
+  controls.T_1 = new p$.Slider({ id: "T_1", start: 30, min: 0, max: 100, decPlaces: 1, units: "C", callback: reset });
   controls.T_2 = new p$.Slider({ id: "T_2", start: 20, min: 10, max: 80, decPlaces: 1, units: "C", callback: reset });
   
   
@@ -61,13 +74,25 @@ function setupControls() {
 
   // Start button.
   controls.start = new p$.dom.Button("start", function() {
-    console.log("start");
+    reset();
+    started = true;
   });
   
 }
 
 // Set the initial state of all variables.
 function reset() {
+
+  t = 0;
+  t_final = 3;
+  started = false;
+
+  t1_initial = controls.T_1.value;
+  t1 = t1_initial;
+
+
+  t2_initial = controls.T_2.value;
+  t2 = t2_initial;
 
 }
 
@@ -100,7 +125,22 @@ function drawSimulation() {
 
 
 
-  
+  function tempColor(Temp){
+    var normalised_T = Temp/100.
+    if (normalised_T >1) {
+      normalised_T = 1;
+    } else if (normalised_T < 0){
+      normalised_T = 0;
+    }
+
+    var h = 240 + (normalised_T * 120);
+    //var b = 255 - 255*normalised_T;
+    return {
+      'BACKGROUND': "hsl("+h+",100%,90%)",
+      'BORDER': "hsl("+h+",100%,30%)",
+    }
+
+  }
 
    function drawCenteredRect(x, y, l) {
     sim.rect(x - l / 2, y - l / 2, l, l);
@@ -144,7 +184,7 @@ function drawSimulation() {
   }
 
   
-  drawCube(x_leftcube, 0, BOX_L, p$.BOX_COLORS.RED); //Function to draw the first cube
+  drawCube(x_leftcube, 0, BOX_L, tempColor(t1)); //Function to draw the first cube
   
   var d = 1;
   //sim.save();
@@ -154,26 +194,48 @@ function drawSimulation() {
   //sim.rect(0, -d / 2, 6 - BOX_L - X_OFFSET / 2, d);
   //sim.rect(0, -d / 2, 6 - BOX_L - X_OFFSET / 2, d);
   
+  sim.strokeWeight(2);
   sim.stroke(p$.BOX_COLORS.YELLOW.BORDER);
   sim.fill(p$.BOX_COLORS.YELLOW.BACKGROUND);
+
   //sim.ellipse(0, 0, 0.25, d / 2, 90, 270);
 
   //sim.line(0, d / 2, 6 - BOX_L - X_OFFSET / 2, d / 2);
   //sim.line(0, -d / 2, 6 - BOX_L - X_OFFSET / 2, -d / 2);
   //sim.restore();
   
-  
-  sim.ellipse(-1*Bw_half, 0, 0.18, Bh_half, 90, 270); //Draws the half ellipse of the stick
-  sim.rect(-1*Bw_half, -1 * Bh_half,Bar_width, Bar_height); //Draws the stick
-  
-  drawCube(Bw_half+BOX_HL, 0, BOX_L, p$.BOX_COLORS.BLUE); //Function to draw the second cube
-    
+  sim.save();
+  sim.translate(-1*Bw_half, Y_OFFSET/2);
+  sim.ellipse(0, 0, 0.2, Bh_half, 90, 270); //Draws the half ellipse of the stick
+  sim.line(0, -1 * Bh_half,Bar_width , -1*Bh_half);//Draws the bottom line of the stick
+  sim.line(0, Bh_half,Bar_width, Bh_half); //Draws the bottom top of the stick
+  sim.noStroke();
+  sim.rect(0, -1 * Bh_half,Bar_width, Bar_height); //Draws the stick
+  sim.restore();
+
+  drawCube(Bw_half+BOX_HL, 0, BOX_L, tempColor(t2)); //Function to draw the second cube
 }
 
 /**
  * Function gets called 60x per second.
  */
 function draw() {
+
+  if (started) {
+
+    if (Math.abs(t2 - t1) > 1) {
+
+      t_diff = t2 - t1;
+      t2 -= t_diff * 0.01;
+      t1 += t_diff * 0.01;
+  
+      console.log(t1, t2);
+      t += 1 / 60.0;
+  
+    } 
+    
+  }
+
 
 }
 
@@ -182,4 +244,9 @@ function draw() {
  */
 function resize() {
   w.axis.setPosition(w.width / 2, w.height / 2);
+
+  /* if (w.width<450){
+    w.scaleX.set(50,5,"");
+  } */
+
 }
