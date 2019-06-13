@@ -136,7 +136,7 @@
         ),
         "visualizacion_datos" => array(
             "name"  => "Visualizador de Datos",
-            "desc"  => "Grafica datos en forma de dispersión, línea o histograma.",
+            "desc"  => "Grafica datos en forma de histograma, dispersión o línea y realiza una regresión con ellos.",
             "url"   => "$base/estadistica/visualizacion_datos/",
             "ver"   => "1.0.0",
             "date"  => "06/06/2019"

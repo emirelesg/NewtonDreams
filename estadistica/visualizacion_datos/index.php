@@ -87,16 +87,20 @@
                                         <td colspan="3" class="w-100">
                                             <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">
                                                 <label class="btn btn-sm w-100 btn-outline-primary active">
-                                                    <input type="radio" name="xAxis" value="0" autocomplete="off" checked> Var 1
+                                                    <input type="radio" name="xAxis" value="0" autocomplete="off" checked>
+                                                    <span class="var-1-label">Var 1</span>
                                                 </label>
                                                 <label class="btn btn-sm w-100 btn-outline-primary">
-                                                    <input type="radio" name="xAxis" value="1" autocomplete="off"> Var 2
+                                                    <input type="radio" name="xAxis" value="1" autocomplete="off">
+                                                    <span class="var-2-label">Var 2</span>
                                                 </label>
                                                 <label class="btn btn-sm w-100 btn-outline-primary">
-                                                    <input type="radio" name="xAxis" value="2" autocomplete="off"> Var 3
+                                                    <input type="radio" name="xAxis" value="2" autocomplete="off">
+                                                    <span class="var-3-label">Var 3</span>
                                                 </label>
                                                 <label class="btn btn-sm w-100 btn-outline-primary">
-                                                    <input type="radio" name="xAxis" value="3" autocomplete="off"> Var 4
+                                                    <input type="radio" name="xAxis" value="3" autocomplete="off">
+                                                    <span class="var-4-label">Var 4</span>
                                                 </label>
                                             </div>
                                         </td>
@@ -106,18 +110,39 @@
                                         <td colspan="3" class="w-100">
                                             <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">
                                                 <label class="btn btn-sm w-100 btn-outline-primary">
-                                                    <input type="radio" name="yAxis" value="0" autocomplete="off"> Var 1
+                                                    <input type="radio" name="yAxis" value="0" autocomplete="off">
+                                                    <span class="var-1-label">Var 1</span>
                                                 </label>
                                                 <label class="btn btn-sm w-100 btn-outline-primary active">
-                                                    <input type="radio" name="yAxis" value="1" autocomplete="off" checked> Var 2
+                                                    <input type="radio" name="yAxis" value="1" autocomplete="off" checked>
+                                                    <span class="var-2-label">Var 2</span>
                                                 </label>
                                                 <label class="btn btn-sm w-100 btn-outline-primary">
-                                                    <input type="radio" name="yAxis" value="2" autocomplete="off"> Var 3
+                                                    <input type="radio" name="yAxis" value="2" autocomplete="off">
+                                                    <span class="var-3-label">Var 3</span>
                                                 </label>
                                                 <label class="btn btn-sm w-100 btn-outline-primary">
-                                                    <input type="radio" name="yAxis" value="3" autocomplete="off"> Var 4
+                                                    <input type="radio" name="yAxis" value="3" autocomplete="off">
+                                                    <span class="var-4-label">Var 4</span>
                                                 </label>
                                             </div>
+                                        </td>
+                                    </tr>
+                                    <tr id="regression">
+                                        <td class="w-1" nowrap>
+                                            <span class="d-none d-sm-block">Regresión</span>
+                                            <span class="d-block d-sm-none">Reg</span>
+                                        </td>
+                                        <td colspan="3" class="w-100">
+                                            <select class="form-control form-control-sm" id="regressionType" name="regressionType" required>
+                                                <option selected value="0">Ninguna</option>
+                                                <option value="1">Lineal</option>
+                                                <option value="2">Cuadrada</option>
+                                                <option value="3">Cúbica</option>
+                                                <!-- <option value="exp">Exponencial</option>
+                                                <option value="log">Logarítmica</option>
+                                                <option value="power">Potencial</option> -->
+                                            </select>
                                         </td>
                                     </tr>
                                     <tr id="bins" class="d-none">
@@ -154,20 +179,16 @@
                                 <tr>
                                     <th></th>
                                     <th>
-                                        <span class="d-none d-sm-block">Var 1</span>
-                                        <span class="d-block d-sm-none">Var 1</span>
+                                        <span class="var-1-label">Var 1</span>
                                     </th>
                                     <th>
-                                        <span class="d-none d-sm-block">Var 2</span>
-                                        <span class="d-block d-sm-none">Var 2</span>
+                                        <span class="var-2-label">Var 2</span>
                                     </th>
                                     <th>
-                                        <span class="d-none d-sm-block">Var 3</span>
-                                        <span class="d-block d-sm-none">Var 3</span>
+                                        <span class="var-3-label">Var 3</span>
                                     </th>
                                     <th>
-                                        <span class="d-none d-sm-block">Var 4</span>
-                                        <span class="d-block d-sm-none">Var 4</span>
+                                        <span class="var-4-label">Var 4</span>
                                     </th>
                                     <th><i data-feather="settings"></i></span></th>
                                 </tr>
@@ -207,6 +228,7 @@
     <script src="../../js/footer-fix.js"></script>
     <script src="../../js/nouislider.min.js"></script>
     <script src="../../js/feather.min.js"></script>
+    <script src="../../js/regression.min.js"></script>
     <script src="../../js/core/dist/app.bundle.js"></script>
     <script src="main.js"></script>
     <script>
