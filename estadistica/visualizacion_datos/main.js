@@ -30,7 +30,7 @@ var regressionType = "0";                     // Desired regression type.
 var plot = new p$.Plot( { drawInvisiblePoints: true, color: p$.COLORS.BLUE } );
 var regressionPlot = new p$.Plot( { drawInvisiblePoints: true, color: p$.COLORS.GRAY } ); 
 var box = new p$.Box( {debug: false, isDraggable: false, color: p$.BOX_COLORS.GRAY } );
-var regressionBox = new p$.Box( { debug: false, title: "Regresión", isDraggable: false, color: p$.BOX_COLORS.BLUE } );
+var regressionBox = new p$.Box( { debug: false, title: "", isDraggable: false, color: p$.BOX_COLORS.BLUE } );
 var w;
 var controls = {};
 var labels = {};
@@ -60,9 +60,9 @@ function setup() {
 
   // Configure box for displaying regression results.
   labels.formula = regressionBox.addLabel(120, 14, { name: "f(x)", units: "", labelWidth: 40 });
-  labels.formula.setPosition(0, 25);
+  labels.formula.setPosition(0, 0);
   labels.r2 = regressionBox.addLabel(120, 14, { name: "R²", units: "", decPlaces: 2, labelWidth: 40 });
-  labels.r2.setPosition(0, 50);
+  labels.r2.setPosition(0, 25);
   regressionBox.calculateDimensions();
 
   // Configure z-index.
@@ -359,6 +359,15 @@ function setupControls() {
     $('#fileBrowser').removeClass('d-none');
     $('#files').bind('change', readCSV);
   }
+
+}
+
+/**
+ * Calculate statistical parameters from the given data.
+ */
+function calculateStatistics() {
+
+  // 
 
 }
 
