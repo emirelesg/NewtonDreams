@@ -128,6 +128,29 @@
                                             </div>
                                         </td>
                                     </tr>
+                                    <tr id="stats">
+                                        <td class="w-1" nowrap>Stats</td>
+                                        <td colspan="3" class="w-100">
+                                            <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-sm w-100 btn-outline-primary active">
+                                                    <input type="radio" name="statsType" value="0" autocomplete="off" checked>
+                                                    <span class="var-1-label">Var 1</span>
+                                                </label>
+                                                <label class="btn btn-sm w-100 btn-outline-primary">
+                                                    <input type="radio" name="statsType" value="1" autocomplete="off">
+                                                    <span class="var-2-label">Var 2</span>
+                                                </label>
+                                                <label class="btn btn-sm w-100 btn-outline-primary">
+                                                    <input type="radio" name="statsType" value="2" autocomplete="off">
+                                                    <span class="var-3-label">Var 3</span>
+                                                </label>
+                                                <label class="btn btn-sm w-100 btn-outline-primary">
+                                                    <input type="radio" name="statsType" value="3" autocomplete="off">
+                                                    <span class="var-4-label">Var 4</span>
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
                                     <tr id="regression">
                                         <td class="w-1" nowrap>
                                             <span class="d-none d-sm-block">Regresión</span>

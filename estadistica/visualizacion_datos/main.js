@@ -25,11 +25,13 @@ var userHistMin = 0;                          // Min value for the histogram set
 var userHistMax = 0;                          // Max value for the histogram set by the user.
 var varLabels = DEFAULT_VAR_LABELS.slice();   // Array with the current labels.
 var regressionType = "0";                     // Desired regression type.
+var statsVariable = 0;                        // Defines which variable should be used to calculate the statistical values.
 
 // p$ Objects
 var plot = new p$.Plot( { drawInvisiblePoints: true, color: p$.COLORS.BLUE } );
 var regressionPlot = new p$.Plot( { drawInvisiblePoints: true, color: p$.COLORS.GRAY } ); 
 var box = new p$.Box( {debug: false, isDraggable: false, color: p$.BOX_COLORS.GRAY } );
+var statsBox = new p$.Box( {debug: false, isDraggable: false, color: p$.BOX_COLORS.GREEN } ); 
 var regressionBox = new p$.Box( { debug: false, title: "", isDraggable: false, color: p$.BOX_COLORS.BLUE } );
 var w;
 var controls = {};
@@ -65,14 +67,19 @@ function setup() {
   labels.r2.setPosition(0, 25);
   regressionBox.calculateDimensions();
 
+  // Configure stats labels.
+  labels.mean = statsBox.addLabel(55, 14, { name: "x̄:", labelWidth: 25, decPlaces: 3 });
+  labels.variance = statsBox.addLabel(55, 14, { name: "s²:", labelWidth: 25, decPlaces: 3 });
+
   // Configure z-index.
   plot.setZ(1);
   regressionPlot.setZ(2);
   box.setZ(3);
   regressionBox.setZ(4);
+  statsBox.setZ(5);
 
   // Add objects to world.
-  w.add(plot, box, regressionPlot, regressionBox);
+  w.add(plot, box, regressionPlot, regressionBox, statsBox);
 
 }
 
@@ -322,6 +329,12 @@ function setupControls() {
     reset();
   });
 
+  // Read the currently selected stats variable.
+  controls.stats = new p$.dom.Options("statsType", function(o) {
+    statsVariable = parseInt(o);
+    reset();
+  });
+
   // Histogram slider.
   controls.bins = new p$.Slider({ id: "bins", start: 5, min: 1, max: 20, decPlaces: 0, units: "", callback: reset });
 
@@ -365,9 +378,37 @@ function setupControls() {
 /**
  * Calculate statistical parameters from the given data.
  */
-function calculateStatistics() {
+function calculateStatistics(values) {
 
-  // 
+  // Mean
+  var mean = 0;
+  for (var i = 0; i < values.length; i++) {
+    mean += values[i];
+  }
+  mean /= values.length;
+
+  // Variance
+  var varianceP = 0;
+  var varianceS = 0;
+  for (var i = 0; i < values.length; i++) {
+    varianceP += Math.pow(values[i] - mean, 2);
+    varianceS = varianceP;
+  }
+  varianceP /= values.length;
+  varianceS /= values.length - 1;
+
+  // Set labels
+  labels.mean.set(mean);
+  labels.variance.set(varianceS);
+  labels.mean.font.toCtx(w.ctx);
+  var labelMeanWidth = w.ctx.measureText(labels.mean.value).width;
+  labels.variance.font.toCtx(w.ctx);
+  var labelVarianceWidth = w.ctx.measureText(labels.variance.value).width;
+  labels.mean.width = labels.mean.labelWidth + labelMeanWidth;
+  labels.variance.setPosition(labels.mean.width + 15, 0);
+  labels.variance.width = labels.variance.labelWidth + labelVarianceWidth;
+  statsBox.calculateDimensions();
+  statsBox.setPosition(20, w.height - statsBox.height - 20);
 
 }
 
@@ -497,6 +538,9 @@ function reset() {
   } else {
     labels.y.set(limitTextLength(varLabels[yVariable], 10));
   }
+
+  // Calculate statistics.
+  calculateStatistics(data[statsVariable]);
 
   // Calculate the width of the labels in pixels.
   labels.x.font.toCtx(w.ctx);
