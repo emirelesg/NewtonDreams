@@ -18,10 +18,15 @@ var t2 = 0;
 var t_diff = 0;
 
 // Variables
+var points = [];  // 2d arrays for the arrows
+
 
 // p$ Objects
 var sim = new p$.Shape(drawSimulation);
+var arrow = new p$.Shape(drawBaseArrow);
+var arrows_1 = new p$.Shape(drawArrows_1);
 var w;
+
 var controls = {};
 
 /**
@@ -46,7 +51,7 @@ function setup() {
   // Configure the z index of all objects.
 
   // Add objects to world.
-  w.add(sim);
+  w.add(sim, arrows_1);
 
 }
 
@@ -82,6 +87,8 @@ function setupControls() {
 
 // Set the initial state of all variables.
 function reset() {
+  Bar_width = controls.Bar_width.value; //Gets bar width from slider
+  Bh_half = controls.Bar_height.value / 2;
 
   t = 0;
   t_final = 3;
@@ -90,40 +97,20 @@ function reset() {
   t1_initial = controls.T_1.value;
   t1 = t1_initial;
 
-
   t2_initial = controls.T_2.value;
   t2 = t2_initial;
-
+  
+  //H un solo conductor
+  H_1 = k_cu * (Math.PI * Bh_half *Bh_half) * (t2-t1) /  Bar_width 
 }
 
 function drawSimulation() {
-  Bar_width = controls.Bar_width.value; //Gets bar width from slider
+  
   Bar_height = controls.Bar_height.value; //Gets bar height from slider
   Bw_half = controls.Bar_width.value / 2;
   Bh_half = controls.Bar_height.value / 2;
   x_leftcube = -1*Bw_half-BOX_HL-0.3; //x-coordinate of the bottom left side of the cube
   
-  /////Mariana
-  /* function drawBar() {
-    sim.rect(-1*Bw_half, -1 * Bh_half,Bar_width, Bar_height);
-  }
-  drawBar(Bar_width,Bar_height);
-
-  function drawCube(){
-    sim.save();
-    //sim.translate(x,y);
-    sim.translate((-1*Bw_half)-(l_cube/2)-0.5,0);
-    sim.rect(-l_cube/2, -l_cube/2,l_cube, l_cube);
-    sim.restore();
-  }
-  //drawCube(Bw_half-X_OFFSET,l_cube); //trasero
-  drawCube(Bw_half,l_cube); //delantero */
-
-//drawCenteredRect(X_OFFSET, Y_OFFSET, l);
-  //drawCenteredRect(0, 0, l);
-  /////Mariana
-
-
 
   function tempColor(Temp){
     var normalised_T = Temp/100.
@@ -187,23 +174,10 @@ function drawSimulation() {
   drawCube(x_leftcube, 0, BOX_L, tempColor(t1)); //Function to draw the first cube
   
   var d = 1;
-  //sim.save();
-  //sim.translate(-3 + BOX_HL + X_OFFSET / 2, y + Y_OFFSET / 2);
-  //sim.fill(p$.BOX_COLORS.YELLOW.BACKGROUND);
-  //sim.noStroke();
-  //sim.rect(0, -d / 2, 6 - BOX_L - X_OFFSET / 2, d);
-  //sim.rect(0, -d / 2, 6 - BOX_L - X_OFFSET / 2, d);
-  
   sim.strokeWeight(2);
   sim.stroke(p$.BOX_COLORS.YELLOW.BORDER);
   sim.fill(p$.BOX_COLORS.YELLOW.BACKGROUND);
 
-  //sim.ellipse(0, 0, 0.25, d / 2, 90, 270);
-
-  //sim.line(0, d / 2, 6 - BOX_L - X_OFFSET / 2, d / 2);
-  //sim.line(0, -d / 2, 6 - BOX_L - X_OFFSET / 2, -d / 2);
-  //sim.restore();
-  
   sim.save();
   sim.translate(-1*Bw_half, Y_OFFSET/2);
   sim.ellipse(0, 0, 0.2, Bh_half, 90, 270); //Draws the half ellipse of the stick
@@ -215,6 +189,17 @@ function drawSimulation() {
 
   drawCube(Bw_half+BOX_HL, 0, BOX_L, tempColor(t2)); //Function to draw the second cube
 }
+
+function drawBaseArrow() {
+  
+}
+
+function drawArrows_1() {
+
+
+}
+
+
 
 /**
  * Function gets called 60x per second.
@@ -231,6 +216,11 @@ function draw() {
   
       console.log(t1, t2);
       t += 1 / 60.0;
+      
+      if (H_1 > 0) {
+
+      }
+      
   
     } 
     
