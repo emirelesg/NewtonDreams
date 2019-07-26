@@ -86,9 +86,6 @@ Lines.prototype.draw = function(s) {
     s.rect(-this.arrowWidth/2 - this.arrowSide * p$.SIN60 / 2, -this.arrowHeight/2, this.arrowWidth, this.arrowHeight);
     s.equilateralTriangle(0, 0, this.arrowSide, 0);
     s.restore();
-
-    
-
   }
 }
 
@@ -122,9 +119,18 @@ var points = [];  // 2d arrays for the arrows
 var sim = new p$.Shape(drawSimulation);
 var arrow = new p$.Shape(drawBaseArrow);
 var arrows_1 = new p$.Shape(drawArrows_1);
+var position = new p$.Box( {debug: false, isDraggable: false, color: p$.BOX_COLORS.BLUE } );
 var w;
 
 var controls = {};
+var labels = {};
+
+// Configure position box.
+labels.Heat = position.addLabel(150, 30, { name: "H =  ", units: "W", decPlaces: 1, fixPlaces: true, labelWidth: 30 });
+labels.Heat.setPosition(0, -8);
+labels.k_var = position.addLabel(150, 30, { name: "k (Cu) =  ", units: "W/K m", decPlaces: 2, fixPlaces: true, labelWidth: 60 });
+labels.k_var.setPosition(0, 10);
+//position.calculateDimensions();
 
 /**
  * Function runs when document is completely loaded.
@@ -151,7 +157,7 @@ function setup() {
   // Configure the z index of all objects.
 
   // Add objects to world.
-  w.add(sim, arrows_1);
+  w.add(sim, arrows_1,position);
 
 }
 
@@ -210,6 +216,7 @@ function reset() {
   
   //H un solo conductor
   H_1 = k_cu * (Math.PI * Bh_half *Bh_half) * (t2-t1) /  Bar_width 
+  console.log(H_1);
 
 }
 
@@ -294,7 +301,7 @@ function drawSimulation() {
   sim.restore();
   
   lines1.draw(sim);
-  lines2.draw(sim);
+  //lines2.draw(sim);
 
   drawCube(Bw_half+BOX_HL, 0, BOX_L, tempColor(t2)); //Function to draw the second cube
   
@@ -302,7 +309,7 @@ function drawSimulation() {
 }
 
 function drawBaseArrow() {
-  
+
 }
 
 function drawArrows_1() {
@@ -316,7 +323,6 @@ function drawArrows_1() {
  * Function gets called 60x per second.
  */
 function draw() {
-
   if (started) {
 
     if (Math.abs(t2 - t1) > 1) {
@@ -334,7 +340,12 @@ function draw() {
   
       console.log(t1, t2);
       t += 1 / 60.0;
+
+      if (t_diff < 0.01) {
+        lines1.vel == 0;
+      }
       
+
       if (H_1 > 0) {
 
       }
@@ -343,7 +354,9 @@ function draw() {
     } 
     
   }
-
+  // Set position labels
+  labels.Heat.set(H_1); 
+  labels.k_var.set(k_cu);
 }
 
 /**
@@ -359,5 +372,5 @@ function resize() {
     w.scaleX.set(50, 1, "");
     w.scaleY.set(50, -1, "");
   }
-
+  position.setPosition(w.width - position.width - 20, 20);
 }

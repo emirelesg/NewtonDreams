@@ -2,7 +2,7 @@
     require '../../php/lang.php';
     require '../../php/data.php';
     $active         = $nav_items['physics'];
-    $active_sim     = $active['sim']['operaciones_vectores'];
+    $active_sim     = $active['sim']['transferencia_calor'];
 ?>
 <!doctype html>
 <html lang="es">
@@ -83,12 +83,8 @@
                                     </tr>
                                 </table>
                             </div>
-                        </div> <!-- end .row- -->
-                        <div class="row">
-                            <div class="col">
-                                <h4>Resultados</h4>
-                            </div>
-                        </div> <!-- end .row- -->
+                            </div> <!-- end .row- -->
+                        
                         <div class="row">
                             <div class="col">
                                 <button type="button" id="start" class="btn btn-sm btn-success btn-block">
@@ -97,26 +93,7 @@
                                 </button>
                             </div>
                         </div> <!-- end .row- -->
-                        <div class="row">
-                            <div class="col-4">
-                                <button type="button" id="start" class="btn btn-sm btn-success btn-block">
-                                    <i data-feather="play"></i>
-                                    <span class="d-none d-sm-inline">Simular</span>
-                                </button>
-                            </div>
-                            <div class="col-4">
-                                <button type="button" id="pause" class="btn btn-sm btn-primary btn-block">
-                                    <i data-feather="pause"></i>    
-                                    <span class="d-none d-sm-inline">Pausar</span>
-                                </button>
-                            </div>
-                            <div class="col-4">
-                                <button type="button" id="stop" class="btn btn-sm btn-danger btn-block">
-                                    <i data-feather="square"></i>
-                                    <span class="d-none d-sm-inline">Detener</span>
-                                </button>
-                            </div>
-                        </div> <!-- end .row- -->
+                        
                     </div>
                     <div class="col-lg-7 mt-5 mt-lg-0" id="canvasContainer"></div>
                 </div>
