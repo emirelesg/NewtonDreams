@@ -169,8 +169,8 @@ function setupControls() {
   // Configure sliders.
   controls.Bar_width = new p$.Slider({ id: "Bar_width", start: 2, min: 0.5, max: 6, decPlaces: 1, units: "m", callback: reset });
   controls.Bar_height = new p$.Slider({ id: "Bar_height", start: 0.5, min: 0.1, max: 2, decPlaces: 2, units: "m", callback: reset });
-  controls.T_1 = new p$.Slider({ id: "T_1", start: 30, min: 0, max: 100, decPlaces: 1, units: "C", callback: reset });
-  controls.T_2 = new p$.Slider({ id: "T_2", start: 20, min: 10, max: 80, decPlaces: 1, units: "C", callback: reset });
+  controls.T_1 = new p$.Slider({ id: "T_1", start: 30, min: -40, max: 100, decPlaces: 1, units: "C", callback: reset });
+  controls.T_2 = new p$.Slider({ id: "T_2", start: 20, min: -20, max: 90, decPlaces: 1, units: "C", callback: reset });
   
   
   // Options options.
@@ -227,7 +227,7 @@ function drawSimulation() {
   
 
   function tempColor(Temp){
-    var normalised_T = Temp/100.
+    var normalised_T = Temp/150.
     if (normalised_T >1) {
       normalised_T = 1;
     } else if (normalised_T < 0){
