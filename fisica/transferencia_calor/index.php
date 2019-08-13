@@ -62,6 +62,22 @@
                             <div class="col">
                                 <table class="table slider-table">
                                     <tr>
+                                        <td nowrap>Material</td>
+                                        <td colspan=2>
+                                            <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-sm w-100 btn-outline-primary active">
+                                                    <input type="radio" name="constant_type" value="Cu" autocomplete="off" checked> Cobre
+                                                </label>
+                                                <label class="btn btn-sm w-100 btn-outline-primary">
+                                                    <input type="radio" name="constant_type" value="Al" autocomplete="off"> Aluminio
+                                                </label>
+                                                <label class="btn btn-sm w-100 btn-outline-primary">
+                                                    <input type="radio" name="constant_type" value="Pb" autocomplete="off"> Plomo
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <td nowrap>Ancho</td>
                                         <td class="w-100"><div id="Bar_width_slider"></div></td>
                                         <td><input id="Bar_width_label" type="text" class="input-80 form-control form-control-sm text-center" readonly></td>

@@ -97,10 +97,6 @@ var BOX_L = 2.5;
 var BOX_HL = BOX_L / 2;
 var Y_OFFSET = 0.5;
 var X_OFFSET = 0.5;
-var k_cu = 371; // conductividad termica [W/K m]
-var m = 1; // [kg]
-var c_cu = 385; //calor especifico Cu [J/kg K]
-
 
 var started = false;
 var t_end = 3;
@@ -113,24 +109,23 @@ var t_diff = 0;
 
 // Variables
 var points = [];  // 2d arrays for the arrows
-
+var constant_type = "Cu";     // Sets the current type of conductivity constant.
 
 // p$ Objects
 var sim = new p$.Shape(drawSimulation);
 var arrow = new p$.Shape(drawBaseArrow);
 var arrows_1 = new p$.Shape(drawArrows_1);
-var position = new p$.Box( {debug: false, isDraggable: false, color: p$.BOX_COLORS.BLUE } );
+var position = new p$.Box( {debug: false, title: "Resultados", isDraggable: false, color: p$.BOX_COLORS.BLUE } );
 var w;
 
 var controls = {};
 var labels = {};
 
 // Configure position box.
-labels.Heat = position.addLabel(150, 30, { name: "H =  ", units: "W", decPlaces: 1, fixPlaces: true, labelWidth: 30 });
-labels.Heat.setPosition(0, -8);
-labels.k_var = position.addLabel(150, 30, { name: "k (Cu) =  ", units: "W/K m", decPlaces: 2, fixPlaces: true, labelWidth: 60 });
-labels.k_var.setPosition(0, 10);
-//position.calculateDimensions();
+labels.Heat = position.addLabel(150, 55, { name: "H =  ", units: "W", decPlaces: 1, fixPlaces: true, labelWidth: 30 });
+labels.Heat.setPosition(0, 0);
+labels.k_var = position.addLabel(150, 55, { name: "k =  ", units: "W/K m", decPlaces: 1, fixPlaces: true, labelWidth: 30 });
+labels.k_var.setPosition(0, 17);
 
 /**
  * Function runs when document is completely loaded.
@@ -140,7 +135,6 @@ $(function() {
   setupControls();
   reset();
   w.start();
-  //console.log(2);
 });
 
 /**
@@ -169,18 +163,13 @@ function setupControls() {
   // Configure sliders.
   controls.Bar_width = new p$.Slider({ id: "Bar_width", start: 2, min: 0.5, max: 6, decPlaces: 1, units: "m", callback: reset });
   controls.Bar_height = new p$.Slider({ id: "Bar_height", start: 0.5, min: 0.1, max: 2, decPlaces: 2, units: "m", callback: reset });
-  controls.T_1 = new p$.Slider({ id: "T_1", start: 30, min: -40, max: 100, decPlaces: 1, units: "C", callback: reset });
+  controls.T_1 = new p$.Slider({ id: "T_1", start: 70, min: -40, max: 100, decPlaces: 1, units: "C", callback: reset });
   controls.T_2 = new p$.Slider({ id: "T_2", start: 20, min: -20, max: 90, decPlaces: 1, units: "C", callback: reset });
-  
-  
-  // Options options.
-  controls.op = new p$.dom.Options("options", function(o) {
-    console.log(o);
-  });
 
-  // Option option.
-  controls.op2 = new p$.dom.Option("opcion", function(c) {
-    console.log(c);
+  // Select k type options.
+  controls.constant_type = new p$.dom.Options("constant_type", function(o) {
+    constant_type = o;
+    reset();
   });
 
   // Start button.
@@ -214,9 +203,20 @@ function reset() {
   t2_initial = controls.T_2.value;
   t2 = t2_initial;
   
-  //H un solo conductor
-  H_1 = k_cu * (Math.PI * Bh_half *Bh_half) * (t2-t1) /  Bar_width 
-  console.log(H_1);
+  switch(constant_type) {   
+    case "Cu": 
+      k_conductivity = 371;  // thermal conductivity [W/K m]
+      H_1 = k_conductivity * (Math.PI * Bh_half *Bh_half) * (t2-t1) /  Bar_width
+      break;
+    case "Al":
+      k_conductivity = 237; // thermal conductivity [W/K m]
+      H_1 = k_conductivity * (Math.PI * Bh_half *Bh_half) * (t2-t1) /  Bar_width
+      break;
+    case "Pb":
+      k_conductivity = 35; // thermal conductivity [W/K m]
+      H_1 = k_conductivity * (Math.PI * Bh_half *Bh_half) * (t2-t1) /  Bar_width
+      break;
+  }
 
 }
 
@@ -227,7 +227,7 @@ function drawSimulation() {
   
 
   function tempColor(Temp){
-    var normalised_T = Temp/150.
+    var normalised_T = Temp/60.
     if (normalised_T >1) {
       normalised_T = 1;
     } else if (normalised_T < 0){
@@ -356,7 +356,7 @@ function draw() {
   }
   // Set position labels
   labels.Heat.set(H_1); 
-  labels.k_var.set(k_cu);
+  labels.k_var.set(k_conductivity);
 }
 
 /**
