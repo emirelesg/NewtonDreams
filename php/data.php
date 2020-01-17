@@ -127,8 +127,8 @@
            "name"  => "Transferencia de calor",
            "desc"  => "Simula la transferencia de calor entre dos cuerpos.",
            "url"   => "$base/fisica/transferencia_calor/",
-           "ver"   => "2.0.0",
-           "date"  => "26/07/2019"
+           "ver"   => "1.0.0",
+           "date"  => "16/01/2020"
         )
     );
 
