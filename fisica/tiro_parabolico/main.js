@@ -1,14 +1,13 @@
+// Constants
+var TIME_STEP = 0.05;       // Step of time every iteration of the draw function.
+var STEPS = 6;              // Amount of balls.
+
 // Variables
-var t = 0;                // Current time in seconds.
-var t_final = 0;          // Final time to reach y = 0.
-var t_max = 0;            // Time where the ball reaches the highest point.
-var started = false;      // Has the start button been pressed?
-var vx0 = 0;              // Initial x velocity.
-var vy0 = 0;              // Initial y velocity.
-var y0 = 0;               // Initial height.
-var steps = 6;            // Amount of balls.
-var show_balls = false;
-var balls_i = 0;          // Amount of balls being currently displayed.
+var vx0 = 0;                // Initial x velocity.
+var points = [];            // 2d array with the values of the simulation.
+var current = 0;            // Current step of the simulation.
+var started = false;        // Determines if the simulations is running.
+var showRefPoints = false;
 
 // p$ Objeccts
 var w;
@@ -43,12 +42,12 @@ function setup() {
 
   // Add steps amount of balls.
   // Creates an object with obj, time and vy property.
-  for (var i = 0; i < steps; i++) {
-    var b = new p$.Ball(2.5, { color: p$.COLORS.GRAY, display: false, isDraggable: false });
-    b.setZ(2);
+  for (var i = 0; i < STEPS; i++) {
+    var b = new p$.Ball(2.5, { color: p$.COLORS.GRAY, display: true, isDraggable: false });
+    b.setZ(3);
     balls.push({
       obj: b,
-      time: 0,
+      t: 0,
       vy: 0
     });
     w.add(b);
@@ -59,11 +58,14 @@ function setup() {
   labels.vx.setPosition(0, 25);
   labels.vy = box.addLabel(110, 14, { name: "Vy", units: "m/s", labelWidth: 35 });
   labels.vy.setPosition(0, 50);
+  labels.t = box.addLabel(110, 14, { name: "t", units: "s", labelWidth: 35 });
+  labels.t.setPosition(0, 75);
   box.calculateDimensions();
 
   // Configure the z index of all objects.
-  vel.setZ(1);
-  ball.setZ(2);
+  path.setZ(1);
+  vel.setZ(2);
+  ball.setZ(4);
   box.setZ(10);
 
   // Add objects to world.
@@ -75,21 +77,34 @@ function setup() {
  */
 function setupControls() {
   
-  // Configure sliders.
+  // // Configure sliders.
   controls.v0 = new p$.Slider({ id: "v0", start: 30, min: 20, max: 40, decPlaces: 1, units: "m/s", callback: reset, color: p$.COLORS.RED });
   controls.y0 = new p$.Slider({ id: "y0", start: 0, min: 0, max: 30, decPlaces: 0, units: "m", callback: reset, color: p$.COLORS.BLUE });
   controls.angle = new p$.Slider({ id: "angle", start: 40, min: 0, max: 90, decPlaces: 0, units: "°", callback: reset, color: p$.COLORS.GREEN });
   
-  // Start button.
+  // Buttons.
   controls.start = new p$.dom.Button("start", function() {
-    reset();
+    // Reset the simulation only if the simulation has ended.
+    if (current >= points.length - 1) reset();
     started = true;
+  });
+  controls.pause = new p$.dom.Button("pause", function() {
+    started = false;
+  });
+  controls.forward = new p$.dom.Button("forward", function() {
+    started = false;
+    current += 1;
+    if (current >= points.length) current = points.length - 1;
+  });
+  controls.back = new p$.dom.Button("back", function() {
+    started = false;
+    current -= 1;
+    if (current < 0) current = 0;
   });
 
   // Show points option.
-  controls.show_points = new p$.dom.Option("showPoints", function(s) {
-    displayBalls(s);
-    show_balls = s;
+  controls.showRefPoints = new p$.dom.Option("showPoints", function(s) {
+    showRefPoints = s;
   });
 
 }
@@ -99,63 +114,65 @@ function setupControls() {
  * Called when any slider changes values.
  */
 function reset() {
-  // Hide all balls.
-  balls_i = 0;
-  for (var i = 0; i < steps; i++) {
-    balls[i].obj.display = false;
-    balls[i].obj.setPosition(0, 0);
-    balls[i].obj.r = 0;
-  }
 
-  // Reset time and simulation.
-  t = 0;
+  // Restart simulation.
+  current = 0;
   started = false;
 
-  // Reset graph.
-  path.clear();
-  
-  // Reset main ball and vector.
-  vel.setMag(controls.v0.value, controls.angle.value);
-  vel.setPosition(0, controls.y0.value);
-  ball.setPosition(0, controls.y0.value);
-
   // Save initial values.
+  vel.setMag(controls.v0.value, controls.angle.value);
+  var vy0 = vel.y;
+  var y0 = controls.y0.value;
   vx0 = vel.x;
-  vy0 = vel.y;
-  y0 = ball.position.y;
-  
-  // Reset labels.
-  labels.vy.set(vy0);
-  labels.vx.set(vx0);
   
   // Using the quadratic formula get the positive solution to the time
   // the ball takes to reach ground again.
   var t1 = (-vy0 + Math.sqrt(vy0 * vy0 - 4 * (-9.81/2) * y0)) / (-9.81);
   var t2 = (-vy0 - Math.sqrt(vy0 * vy0 - 4 * (-9.81/2) * y0)) / (-9.81);
-  t_final = t1 > 0 ? t1 : t2;
+  var tFinal = t1 > 0 ? t1 : t2;
 
-  // Calculate at which time the ball is at its highest.
-  t_max = vy0 / 9.81;
-}
-
-/**
- * Toggle the visibility of the balls.
- */
-function displayBalls(state) {
-  for (var i = 0; i < steps; i++) {
-    balls[i].obj.display = state;
+  // Simulate the throw and store all points.
+  points = [];
+  for (var t = 0; t <= tFinal; t += TIME_STEP) {
+    points.push([
+      t, 
+      vx0 * t, 
+      y0 + vy0 * t - 0.5 * 9.8 * t * t, 
+      vy0 - 9.8 * t 
+    ]);
   }
+  points.push([
+    tFinal, 
+    vx0 * tFinal, 
+    y0 + vy0 * tFinal - 0.5 * 9.8 * tFinal * tFinal, 
+    vy0 - 9.8 * tFinal 
+  ]);
+
+  // Position the reference balls. They must be equally spaced.
+  var tStep = tFinal / STEPS;
+  var placed = 0;
+  for (var i = 0; i < points.length; i++) {
+    if (points[i][0] >= tStep * (placed + 1)) {
+      balls[placed].obj.display = false;
+      balls[placed].obj.setPosition(points[i][1], points[i][2]);
+      balls[placed].t = points[i][0];
+      balls[placed].vy = points[i][3];
+      placed += 1;
+    }
+    
+  }
+
 }
 
 /**
  * Draw function for Shape Object: ball_labels.
  */
 function drawBallLabels() {
-  for (var i = 0; i < steps; i++) {
+  for (var i = 0; i < balls.length; i++) {
     var b = balls[i];
-    if (b.obj.display && b.obj.position.x !== 0) {
+    if (b.obj.display) {
       ball_labels.text("Vy: " + p$.utils.round(b.vy, 1) + " m/s", b.obj.position.x, b.obj.position.y + 4);
-      ball_labels.text(p$.utils.round(b.time, 1) + " s", b.obj.position.x, b.obj.position.y + 8);
+      ball_labels.text(p$.utils.round(b.t, 1) + " s", b.obj.position.x, b.obj.position.y + 8);
     }
   }
 }
@@ -164,32 +181,48 @@ function drawBallLabels() {
  * Function gets called 60x per second.
  */
 function draw() {
+
+  // Get the current time, position, and velocity values.
+  var t = points[current][0];
+  var x = points[current][1], y = points[current][2];
+  var vy = points[current][3];
+
+  // Draw plot til the current point.
+  path.clear();
+  for (var i = 0; i < current; i++) {
+    path.addPoint(points[i][1], points[i][2]);
+  }
+
+  // Draw reference balls til the current point.
+  for (var i = 0; i < balls.length; i++) {
+    balls[i].obj.display = t >= balls[i].t && showRefPoints;
+  }
+
+  // Update the position of the ball and velocity vector.
+  ball.setPosition(x, y);
+  vel.setPosition(x, y);
+  vel.set(vx0, vy);
+
+  // Update labels.
+  labels.vx.set(vx0)
+  labels.vy.set(vy);
+  labels.t.set(t);
+  
+  // Increase current frame only if the simulation has not started.
   if (started) {
-    var vy = vy0 - 9.8 * t;
-    var x = vx0 * t;
-    var y = y0 + vy0 * t - 0.5 * 9.8 * t * t;
-    vel.set(vx0, vy);
-    ball.setPosition(x, y);
-    vel.setPosition(ball.position.x, ball.position.y);
-    labels.vy.set(vy);
-    if (t > (balls_i + 1) * t_final / steps && balls_i < steps && ball.position.x !== 0) {
-      balls[balls_i].time = balls_i === 3 ? t_max : t;
-      balls[balls_i].vy = balls_i === 3 ? 0 : vy;
-      balls[balls_i].obj.display = show_balls;
-      balls[balls_i].obj.r = 2;
-      balls[balls_i].obj.setPosition(ball.position.x, ball.position.y);
-      balls_i++;
-    }
-    if (t < t_final) {
-      t += 0.05;
+    if (current < points.length - 1) {
+      current += 1;
     } else {
       started = false;
-      ball.setPosition(vx0 * t_final, y0 + vy0 * t_final - 0.5 * 9.81 * t_final * t_final);
-      vel.setPosition(ball.position.x, ball.position.y);
-      balls[balls.length - 1].obj.setPosition(ball.position.x, ball.position.y);
     }
-    path.addPoint(ball.position.x, ball.position.y);
   }
+
+  // Update the control buttons, depending on the current frame.
+  controls.back.enabled(current > 0);
+  controls.forward.enabled(current < points.length - 1);
+  controls.start.enabled(!started);
+  controls.pause.enabled(started);
+
 }
 
 /**

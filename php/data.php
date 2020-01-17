@@ -120,8 +120,8 @@
             "name"  => "Tiro Parabólico",
             "desc"  => "Simula el movimiento de un proyectil.",
             "url"   => "$base/fisica/tiro_parabolico/",
-            "ver"   => "2.0.0",
-            "date"  => "22/01/2019"
+            "ver"   => "2.1.0",
+            "date"  => "17/01/2020"
         )
     );
 
