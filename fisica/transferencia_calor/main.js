@@ -138,36 +138,73 @@ function draw() {
 /**
  * Draws a fake rectangular prism.
  */
-function draw3dRect(x, y, w, h, color) {
+function draw3dRect(x, y, width, height, color, color2) {
+
+  // Colors used to shade the cube.  
+  var cTop, cFront, cRight, cFrontBorder, cTopBorder, cRightBorder;
+  
+  // If color2 is defined, then create a gradient for the colors.
+  if (color2 !== undefined) {
+
+    // Create gradients for the cube's faces.
+    var barWidthPx = w.scaleX.toPx * width;
+    var barHeightPx = w.scaleY.toPx * height;
+    var ofxPx = w.scaleX.toPx * OFX;
+
+    // Top gradients.
+    cTop = w.ctx.createLinearGradient(ofxPx / 2, 0, barWidthPx, 0);
+    cTop.addColorStop(0, shadeColor(color, 85)); cTop.addColorStop(1, shadeColor(color2, 85));
+    cTopBorder = w.ctx.createLinearGradient(ofxPx / 2, 0, barWidthPx, 0);
+    cTopBorder.addColorStop(0, shadeColor(color, 50)); cTopBorder.addColorStop(1, shadeColor(color2, 50));
+    
+    // Front gradients.
+    cFront =  w.ctx.createLinearGradient(-barWidthPx / 2, -barHeightPx / 2, barWidthPx / 2, barHeightPx / 2);
+    cFront.addColorStop(0, shadeColor(color, 75)); cFront.addColorStop(1, shadeColor(color2, 75));
+    cFrontBorder =  w.ctx.createLinearGradient(-barWidthPx / 2, -barHeightPx / 2, barWidthPx / 2, barHeightPx / 2);
+    cFrontBorder.addColorStop(0, shadeColor(color, 50)); cFrontBorder.addColorStop(1, shadeColor(color2, 50));
+
+  } else {
+
+    // Shades with color 1.
+    cTop = shadeColor(color, 85);
+    cRight = shadeColor(color, 80);
+    cFront = shadeColor(color, 75);
+    cFrontBorder = cTopBorder = cRightBorder = shadeColor(color, 50);
+
+  }
 
   // Move to the desired position. The prism will be centered here.
   sim.save();
   sim.translate(x, y);
   
   // Draw the font facing rectangle.
-  sim.stroke(shadeColor(color, 50))
-  sim.fill(shadeColor(color, 75));
-  sim.rect(-w/2, -h/2, w, h)
-
-  // Draw the top face.
-  sim.fill(shadeColor(color, 85));
-  sim.translate(-w/2, h/2);
+  sim.fill(cFront);
+  sim.stroke(cFrontBorder);
   sim.begin();
-  sim.moveTo(0, 0);
-  sim.lineTo(OFX, OFY);
-  sim.lineTo(w+OFX, OFY);
-  sim.lineTo(w, 0);
-  sim.lineTo(0, 0)
+  sim.rect(-width/2, -height/2, width, height);
   sim.end();
 
-  // Draw the right face.
-  sim.fill(shadeColor(color, 80));
-  sim.translate(w, -h);
+  // Draw the top face.
+  sim.translate(-width/2, height/2);
+  sim.fill(cTop);
+  sim.stroke(cTopBorder);
   sim.begin();
   sim.moveTo(0, 0);
   sim.lineTo(OFX, OFY);
-  sim.lineTo(OFX, h + OFY);
-  sim.lineTo(0, h);
+  sim.lineTo(width+OFX, OFY);
+  sim.lineTo(width, 0);
+  sim.lineTo(0, 0);
+  sim.end();
+  
+  // Draw the right face.
+  sim.translate(width, -height);
+  sim.fill(cRight);
+  sim.stroke(cRightBorder);
+  sim.begin();
+  sim.moveTo(0, 0);
+  sim.lineTo(OFX, OFY);
+  sim.lineTo(OFX, height + OFY);
+  sim.lineTo(0, height);
   sim.lineTo(0, 0)
   sim.end();
 
@@ -178,6 +215,8 @@ function draw3dRect(x, y, w, h, color) {
  * Draws the simulation. This function is called automatically by the p$ lib.
  */
 function drawSimulation() {
+
+
   
   // Move the simulation to the left to compensate for perspective offset.
   // Therby centering the drawing.
@@ -185,22 +224,21 @@ function drawSimulation() {
   sim.translate(-OFX/2, 0);
   
   // Left block.
-  draw3dRect(-barLength / 2 - BLOCK_W / 2, 0, BLOCK_W, BLOCK_W, t1Color)
+  draw3dRect(-barLength / 2 - BLOCK_W / 2, 0, BLOCK_W, BLOCK_W, t1Color);
   sim.font.set({ size: 14, color: FONT_COLOR });
   sim.text('T1', -barLength/2 - BLOCK_W/2, 0.3);
   sim.font.set({ size: 16, color: shadeColor(t1Color, 40) });
   sim.text(controls.t1.label.val(), -barLength/2 - BLOCK_W/2, -0.3);
 
   // Middle bar.
-  draw3dRect(0, 0, barLength, barWidth, [0, 0, 0])
-  sim.rect(-barLength/2, -barWidth/2, barLength, barWidth);
+  draw3dRect(0, 0, barLength, barWidth, t1Color, t2Color);
 
   // Right block.
   draw3dRect(barLength / 2 + BLOCK_W / 2, 0, BLOCK_W, BLOCK_W, t2Color);
   sim.font.set({ size: 14, color: FONT_COLOR });
   sim.text('T2', barLength/2 + BLOCK_W/2, 0.3);
   sim.font.set({ size: 16, color: shadeColor(t2Color, 40) });
-  sim.text(controls.t2.label.val(), barLength/2 + BLOCK_W/2, -0.3)
+  sim.text(controls.t2.label.val(), barLength/2 + BLOCK_W/2, -0.3);
   
   // Restore the offset.
   sim.restore();
@@ -219,9 +257,9 @@ function drawSimulation() {
     // Draw the arrow body. The body is shifted slightly to cover the stroke of the arrow
     // head.
     sim.begin();
-    sim.moveTo(arrowBodyW + 0.01, -ARROW_BODY_H/2)
+    sim.moveTo(arrowBodyW + 0.01, -ARROW_BODY_H/2);
     sim.lineTo(0, -ARROW_BODY_H/2);
-    sim.lineTo(0, ARROW_BODY_H/2)
+    sim.lineTo(0, ARROW_BODY_H/2);
     sim.lineTo(arrowBodyW + 0.01, ARROW_BODY_H/2);
     sim.end();
 
@@ -231,7 +269,7 @@ function drawSimulation() {
       sim.translate(arrowBodyW / 2, 0);
       if (heatTransfer < 0) sim.rotate(-180);   
       sim.font.set({ size: 12, color: p$.BOX_COLORS.ORANGE.BORDER });
-      sim.text("calor", 0, 0)
+      sim.text("calor", 0, 0);
     }
 
     sim.restore();
