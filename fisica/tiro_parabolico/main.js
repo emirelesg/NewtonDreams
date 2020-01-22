@@ -1,6 +1,6 @@
 // Constants
 var TIME_STEP = 0.05;       // Step of time every iteration of the draw function.
-var STEPS = 6;              // Amount of balls.
+var BALL_AMOUNT = 4;              // Amount of balls.
 
 // Variables
 var vx0 = 0;                // Initial x velocity.
@@ -42,9 +42,10 @@ function setup() {
 
   // Add steps amount of balls.
   // Creates an object with obj, time and vy property.
-  for (var i = 0; i < STEPS; i++) {
+  for (var i = 0; i < BALL_AMOUNT; i++) {
     var b = new p$.Ball(2.5, { color: p$.COLORS.GRAY, display: true, isDraggable: false });
     b.setZ(3);
+    b.display = false;
     balls.push({
       obj: b,
       t: 0,
@@ -115,6 +116,16 @@ function setupControls() {
  */
 function reset() {
 
+  // Calculate the position and velocity of the projectile at a given time.
+  function calc(t, vx0, vy0, y0) {
+    return [
+      t, 
+      vx0 * t, 
+      y0 + vy0 * t - 0.5 * 9.81 * t * t, 
+      vy0 - 9.81 * t 
+    ];
+  }
+
   // Restart simulation.
   current = 0;
   started = false;
@@ -127,39 +138,44 @@ function reset() {
   
   // Using the quadratic formula get the positive solution to the time
   // the ball takes to reach ground again.
-  var t1 = (-vy0 + Math.sqrt(vy0 * vy0 - 4 * (-9.81/2) * y0)) / (-9.81);
-  var t2 = (-vy0 - Math.sqrt(vy0 * vy0 - 4 * (-9.81/2) * y0)) / (-9.81);
-  var tFinal = t1 > 0 ? t1 : t2;
+  var tFinal1 = (-vy0 + Math.sqrt(vy0 * vy0 - 4 * (-9.81/2) * y0)) / (-9.81);
+  var tFinal2 = (-vy0 - Math.sqrt(vy0 * vy0 - 4 * (-9.81/2) * y0)) / (-9.81);
+  var tFinal = tFinal1 > 0 ? tFinal1 : tFinal2;
 
-  // Simulate the throw and store all points.
+  // Simulate the throw and store all points in the array.
   points = [];
   for (var t = 0; t <= tFinal; t += TIME_STEP) {
-    points.push([
-      t, 
-      vx0 * t, 
-      y0 + vy0 * t - 0.5 * 9.8 * t * t, 
-      vy0 - 9.8 * t 
-    ]);
+    points.push(calc(t, vx0, vy0, y0));
   }
-  points.push([
-    tFinal, 
-    vx0 * tFinal, 
-    y0 + vy0 * tFinal - 0.5 * 9.8 * tFinal * tFinal, 
-    vy0 - 9.8 * tFinal 
-  ]);
+  var resultTFinal = calc(tFinal, vx0, vy0, y0);
+  points.push(resultTFinal);
 
-  // Position the reference balls. They must be equally spaced.
-  var tStep = tFinal / STEPS;
-  var placed = 0;
-  for (var i = 0; i < points.length; i++) {
-    if (points[i][0] >= tStep * (placed + 1)) {
-      balls[placed].obj.display = false;
-      balls[placed].obj.setPosition(points[i][1], points[i][2]);
-      balls[placed].t = points[i][0];
-      balls[placed].vy = points[i][3];
-      placed += 1;
-    }
-    
+  // Reference Ball 0 - t0
+  balls[0].obj.setPosition(points[0][1], points[0][2]);
+  balls[0].t = points[0][0];
+  balls[0].vy = points[0][3];
+
+  // Reference Ball 1 - tMax
+  var tMax = vy0 / 9.81;
+  var resultTMax = calc(tMax, vx0, vy0, y0);
+  balls[1].obj.setPosition(resultTMax[1], resultTMax[2]);
+  balls[1].t = resultTMax[0];
+  balls[1].vy = resultTMax[3];
+
+  // Reference Ball 2 - tFinal
+  balls[2].obj.setPosition(resultTFinal[1], resultTFinal[2]);
+  balls[2].t = resultTFinal[0];
+  balls[2].vy = resultTFinal[3];
+
+  // Reference Ball 3 - Cross y0 for a second time.
+  if (y0 > 0) {
+    var resultTy0 = calc(2 * tMax, vx0, vy0, y0);
+    balls[3].obj.setPosition(resultTy0[1], resultTy0[2]);
+    balls[3].t = resultTy0[0];
+    balls[3].vy = resultTy0[3];
+  } else {
+    // Hide ball by moving it to (0, -1000).
+    balls[3].obj.setPosition(0, -1000);
   }
 
 }
@@ -172,7 +188,7 @@ function drawBallLabels() {
     var b = balls[i];
     if (b.obj.display) {
       ball_labels.text("Vy: " + p$.utils.round(b.vy, 1) + " m/s", b.obj.position.x, b.obj.position.y + 4);
-      ball_labels.text(p$.utils.round(b.t, 1) + " s", b.obj.position.x, b.obj.position.y + 8);
+      ball_labels.text(p$.utils.round(b.t, 2) + " s", b.obj.position.x, b.obj.position.y + 8);
     }
   }
 }
