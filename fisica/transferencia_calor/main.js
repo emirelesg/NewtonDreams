@@ -4,7 +4,6 @@ var OFY = 0.3;                              // Offset in the -y axis for the 3d 
 var BOX_LABEL_WIDTH = 70;                   // Width of labels in the result box.
 var MIN_TEMP = -20, MAX_TEMP = 300;         // Define the temperature range.
 var FONT_COLOR = "#444444";                 // Default font color.
-var TEMP_GRADIENT = [[0, 0, 255], [0, 0, 100], [255, 0, 0], [255, 0, 0], [255, 50, 0]];   // Defines the colors in the gradient. They are equally spaced.
 var BLOCK_W = 2.5;                          // Width the blocks that will transfer heat.
 var ARROW_BODY_H = 0.3;                     // Height of the arrow's body.
 var ARROW_HEAD_L = 0.8;                     // Side length of the arrow's head.
@@ -78,33 +77,6 @@ function shadeColor(color, percent) {
   return '#' + (0x1000000 + (R < 255 ? R : 255) * 0x10000 + (G < 255 ? G : 255) * 0x100 + (B < 255 ? B : 255)).toString(16).slice(1);
 }
 
-/**
- * Converts a temperature to a color according to the defined gradient.
- */
-function tempToColor(t) {
-  
-  // Normalize temperature between 0 and 1.
-  var normT = (t + Math.abs(MIN_TEMP)) / (Math.abs(MIN_TEMP) + Math.abs(MAX_TEMP));
-  if (normT < 0) normT = 0;
-  if (normT > 1) normT = 1;
-
-  // Determine between which colors the temperature is.
-  var c1Idx = normT >= 1 ? TEMP_GRADIENT.length - 2 : Math.floor(normT * (TEMP_GRADIENT.length - 1));
-  var c2Idx = c1Idx + 1;
-
-  // Where between those colors is the current.
-  var percentStep = 1 / (TEMP_GRADIENT.length - 1);
-  var k = (normT - (percentStep * c1Idx)) / percentStep;
-
-  // Interpolate between those colors.
-  var r = Math.floor((TEMP_GRADIENT[c2Idx][0] - TEMP_GRADIENT[c1Idx][0]) * k + TEMP_GRADIENT[c1Idx][0]);
-  var g = Math.floor((TEMP_GRADIENT[c2Idx][1] - TEMP_GRADIENT[c1Idx][1]) * k + TEMP_GRADIENT[c1Idx][1]);
-  var b = Math.floor((TEMP_GRADIENT[c2Idx][2] - TEMP_GRADIENT[c1Idx][2]) * k + TEMP_GRADIENT[c1Idx][2]);
-  return [r, g, b];
-
-} 
-
-
 // Set the initial state of all variables.
 function reset() {
 
@@ -113,8 +85,13 @@ function reset() {
   labels.heatTransfer.set(heatTransfer);
 
   // Calculate the block's colors.
-  t1Color = tempToColor(controls.t1.value);
-  t2Color = tempToColor(controls.t2.value);
+  if (controls.t1.value === controls.t2.value) {
+    t1Color = [0,0,0];
+    t2Color = [0,0,0];
+  } else {
+    t1Color = controls.t1.value > controls.t2.value ? [255,0,0] : [0,0,255];
+    t2Color = controls.t1.value < controls.t2.value ? [255,0,0] : [0,0,255];
+  }
 
   // Set the sliders' color.
   controls.t1.setColor(shadeColor(t1Color, 40));
@@ -216,8 +193,6 @@ function draw3dRect(x, y, width, height, color, color2) {
  */
 function drawSimulation() {
 
-
-  
   // Move the simulation to the left to compensate for perspective offset.
   // Therby centering the drawing.
   sim.save();
