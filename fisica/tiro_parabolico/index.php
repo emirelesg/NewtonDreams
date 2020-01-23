@@ -84,10 +84,28 @@
                             </div>
                         </div> <!-- end .row- -->
                         <div class="row button-row">
-                            <div class="col">
+                            <div class="col-3">
+                                <button type="button" id="back" class="btn btn-sm btn-outline-secondary btn-block">
+                                    <i data-feather="skip-back"></i>
+                                    <!-- <span>Atras</span> -->
+                                </button>
+                            </div>
+                            <div class="col-3">
                                 <button type="button" id="start" class="btn btn-sm btn-success btn-block">
                                     <i data-feather="play"></i>
-                                    <span>Simular</span>
+                                    <!-- <span>Simular</span> -->
+                                </button>
+                            </div>
+                            <div class="col-3">
+                                <button type="button" id="pause" class="btn btn-sm btn-primary btn-block">
+                                    <i data-feather="pause"></i>
+                                    <!-- <span>Pausa</span> -->
+                                </button>
+                            </div>
+                            <div class="col-3">
+                                <button type="button" id="forward" class="btn btn-sm btn-outline-secondary btn-block">
+                                    <i data-feather="skip-forward"></i>
+                                    <!-- <span>Adelante</span> -->
                                 </button>
                             </div>
                         </div> <!-- end .row- -->
