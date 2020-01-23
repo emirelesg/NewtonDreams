@@ -122,6 +122,13 @@
             "url"   => "$base/fisica/tiro_parabolico/",
             "ver"   => "2.1.0",
             "date"  => "17/01/2020"
+        ),
+        "transferencia_calor" => array(
+           "name"  => "Transferencia de calor",
+           "desc"  => "Simula la transferencia de calor entre dos cuerpos.",
+           "url"   => "$base/fisica/transferencia_calor/",
+           "ver"   => "1.0.0",
+           "date"  => "16/01/2020"
         )
     );
 

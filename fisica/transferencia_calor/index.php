@@ -2,7 +2,7 @@
     require '../../php/lang.php';
     require '../../php/data.php';
     $active         = $nav_items['physics'];
-    $active_sim     = $active['sim']['operaciones_vectores'];
+    $active_sim     = $active['sim']['transferencia_calor'];
 ?>
 <!doctype html>
 <html lang="es">
@@ -55,79 +55,55 @@
                     <div class="col-lg-5 controls">
                         <div class="row">
                             <div class="col clearfix">
-                                <h4 class="float-left">Vector A</h4>
-                                <div class="form-check form-check-inline float-right m-0 h-100">
-                                    <input class="form-check-input" type="checkbox" id="opcion" value="opcion">
-                                    <label class="form-check-label" for="opcion">Opción</label>
-                                </div>
+                                <h4 class="float-left">Variables</h4>
                             </div>
                         </div> <!-- end .row- -->
                         <div class="row">
                             <div class="col">
                                 <table class="table slider-table">
-                                    <tr>
-                                        <td nowrap>Opciones</td>
+                                    <!-- <tr>
+                                        <td nowrap>Material</td>
                                         <td colspan=2>
                                             <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">
                                                 <label class="btn btn-sm w-100 btn-outline-primary active">
-                                                    <input type="radio" name="options" value="option1" autocomplete="off" checked> A
+                                                    <input type="radio" name="constant_type" value="Cu" autocomplete="off" checked> Cobre
                                                 </label>
                                                 <label class="btn btn-sm w-100 btn-outline-primary">
-                                                    <input type="radio" name="options" value="option2" autocomplete="off"> B
+                                                    <input type="radio" name="constant_type" value="Al" autocomplete="off"> Aluminio
                                                 </label>
                                                 <label class="btn btn-sm w-100 btn-outline-primary">
-                                                    <input type="radio" name="options" value="option3" autocomplete="off"> C
-                                                </label>
-                                                <label class="btn btn-sm w-100 btn-outline-primary">
-                                                    <input type="radio" name="options" value="option4" autocomplete="off"> D
+                                                    <input type="radio" name="constant_type" value="Pb" autocomplete="off"> Plomo
                                                 </label>
                                             </div>
                                         </td>
+                                    </tr> -->
+                                    <tr>
+                                        <td nowrap>Largo</td>
+                                        <td class="w-100"><div id="bar_length_slider"></div></td>
+                                        <td><input id="bar_length_label" type="text" class="input-90 form-control form-control-sm text-center" readonly></td>
                                     </tr>
                                     <tr>
-                                        <td nowrap>Var 1</td>
-                                        <td class="w-100"><div id="var1_slider"></div></td>
-                                        <td><input id="var1_label" type="text" class="input-80 form-control form-control-sm text-center" readonly></td>
+                                        <td nowrap>Área</td>
+                                        <td class="w-100"><div id="bar_area_slider"></div></td>
+                                        <td><input id="bar_area_label" type="text" class="input-90 form-control form-control-sm text-center" readonly></td>
                                     </tr>
                                     <tr>
-                                        <td nowrap>Var 2</td>
-                                        <td class="w-100"><div id="var2_slider"></div></td>
-                                        <td><input id="var2_label" type="text" class="input-80 form-control form-control-sm text-center" readonly></td>
+                                        <td nowrap>K</td>
+                                        <td class="w-100"><div id="k_slider"></div></td>
+                                        <td><input id="k_label" type="text" class="input-90 form-control form-control-sm text-center" readonly></td>
                                     </tr>
+                                    <tr>
+                                        <td nowrap>T<sub>1</sub></td>
+                                        <td class="w-100"><div id="t1_slider"></div></td>
+                                        <td><input id="t1_label" type="text" class="input-90 form-control form-control-sm text-center" readonly></td>
+                                    </tr>
+                                    <tr>
+                                        <td nowrap>T<sub>2</sub></td>
+                                        <td class="w-100"><div id="t2_slider"></div></td>
+                                        <td><input id="t2_label" type="text" class="input-90 form-control form-control-sm text-center" readonly></td>
+                                    </tr>
+                                    
                                 </table>
-                            </div>
-                        </div> <!-- end .row- -->
-                        <div class="row">
-                            <div class="col">
-                                <h4>Resultados</h4>
-                            </div>
-                        </div> <!-- end .row- -->
-                        <div class="row">
-                            <div class="col">
-                                <button type="button" id="start" class="btn btn-sm btn-success btn-block">
-                                    <i data-feather="play"></i>
-                                    <span>Simular</span>
-                                </button>
-                            </div>
-                        </div> <!-- end .row- -->
-                        <div class="row">
-                            <div class="col-4">
-                                <button type="button" id="start" class="btn btn-sm btn-success btn-block">
-                                    <i data-feather="play"></i>
-                                    <span class="d-none d-sm-inline">Simular</span>
-                                </button>
-                            </div>
-                            <div class="col-4">
-                                <button type="button" id="pause" class="btn btn-sm btn-primary btn-block">
-                                    <i data-feather="pause"></i>    
-                                    <span class="d-none d-sm-inline">Pausar</span>
-                                </button>
-                            </div>
-                            <div class="col-4">
-                                <button type="button" id="stop" class="btn btn-sm btn-danger btn-block">
-                                    <i data-feather="square"></i>
-                                    <span class="d-none d-sm-inline">Detener</span>
-                                </button>
                             </div>
                         </div> <!-- end .row- -->
                     </div>
