@@ -11,7 +11,7 @@ var showRefPoints = false;
 
 // p$ Objeccts
 var w;
-var ball_labels = new p$.Shape(drawBallLabels);
+var ballLabels = new p$.Shape(drawBallLabels);
 var ball = new p$.Ball(2.5, { color: p$.COLORS.BLUE, isDraggable: false });
 var vel = new p$.Vector( { color: p$.COLORS.PURPLE, components: true } );
 var path = new p$.Plot( { color: p$.COLORS.BLUE } );
@@ -67,10 +67,11 @@ function setup() {
   path.setZ(1);
   vel.setZ(2);
   ball.setZ(4);
+  ballLabels.setZ(5);
   box.setZ(10);
 
   // Add objects to world.
-  w.add(ball, vel, box, path, ball_labels);
+  w.add(ball, vel, box, path, ballLabels);
 }
 
 /**
@@ -181,14 +182,14 @@ function reset() {
 }
 
 /**
- * Draw function for Shape Object: ball_labels.
+ * Draw function for Shape Object: ballLabels.
  */
 function drawBallLabels() {
   for (var i = 0; i < balls.length; i++) {
     var b = balls[i];
     if (b.obj.display) {
-      ball_labels.text("Vy: " + p$.utils.round(b.vy, 1) + " m/s", b.obj.position.x, b.obj.position.y + 4);
-      ball_labels.text(p$.utils.round(b.t, 2) + " s", b.obj.position.x, b.obj.position.y + 8);
+      ballLabels.text("Vy: " + p$.utils.round(b.vy, 1) + " m/s", b.obj.position.x, b.obj.position.y + 4);
+      ballLabels.text(p$.utils.round(b.t, 2) + " s", b.obj.position.x, b.obj.position.y + 8);
     }
   }
 }
