@@ -438,6 +438,50 @@ export default class Shape extends WorldElement {
     this.end();
   }
 
+  // cube(x0, y0, w, h, l) {
+
+  //   const ctx = this.selectCtx();
+  //   const { scaleX, scaleY } = this.world;
+
+  //   const x0_px = x0 * scaleX.toPx;
+  //   const y0_px = y0 * scaleY.toPx;
+  //   const w_px = w * scaleX.toPx;
+  //   const h_px = h * scaleY.toPx;
+  //   const ofx = l/2 * Math.cos(25 * constants.DEG_TO_RAD) * scaleX.toPx;
+  //   const ofy = l/2 * Math.sin(25 * constants.DEG_TO_RAD) * scaleY.toPx;
+
+  //   this.save();
+
+  //   // Front face.
+  //   this.begin();
+  //   ctx.translate(x0_px, y0_px);
+  //   ctx.rect(0, 0, w_px, h_px);
+  //   this.end();
+
+  //   // Top face.
+  //   this.begin();
+  //   ctx.translate(0, h_px);
+  //   ctx.moveTo(0, 0);
+  //   ctx.lineTo(ofx, ofy);
+  //   ctx.lineTo(w_px + ofx, ofy);
+  //   ctx.lineTo(w_px, 0);
+  //   ctx.lineTo(0, 0);
+  //   this.end();
+
+  //   // Left face.
+  //   this.begin();
+  //   ctx.translate(w_px, -h_px)
+  //   ctx.moveTo(0, 0);
+  //   ctx.lineTo(ofx, ofy);
+  //   ctx.lineTo(ofx, h_px - ofy);
+  //   ctx.lineTo(0, h_px);
+  //   ctx.lineTo(0, 0)
+  //   this.end();
+
+  //   this.restore();
+
+  // }
+
   /**
    * Draws a line on the world.
    * @public

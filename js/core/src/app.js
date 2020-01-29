@@ -9,6 +9,7 @@ import Picture from "./figures/Picture";
 import Shape from "./figures/Shape";
 import Plot from "./figures/Plot";
 import Box from "./figures/Box";
+import DataCursor from "./figures/DataCursor";
 
 window.requestAnimationFrame = (() => {
   function backupTimeout(callback) {
@@ -50,4 +51,5 @@ p$.Vector = Vector;
 p$.World = World;
 p$.utils = utils;
 p$.dom = dom;
+p$.DataCursor = DataCursor;
 window.p$ = p$;

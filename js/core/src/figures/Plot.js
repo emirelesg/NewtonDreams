@@ -155,7 +155,6 @@ export default class Plot extends WorldElement {
     const prevLineWidth = ctx.lineWidth;
 
     // Draw path.
-    if (this.style === "line") {}
     ctx.beginPath();
     ctx.lineWidth = this.lineWidth;
     ctx.strokeStyle = this.color;

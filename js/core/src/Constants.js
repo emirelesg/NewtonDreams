@@ -61,7 +61,7 @@ export const SYMBOL = {
 export const CURSOR = {
   DEFAULT: "default",
   POINTER: "pointer",
-  CROSS: "cross",
+  CROSS: "crosshair",
   MOVE: "move",
   TEXT: "text"
 };

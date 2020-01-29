@@ -287,10 +287,7 @@ export default class Vector extends WorldElement {
    */
   standardAngle() {
     const a = this.angle();
-    if (a < 0) {
-      return a + 360;
-    }
-    return a;
+    return a < 0 ? a + 360 : a;
   }
 
   /**

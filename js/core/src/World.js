@@ -304,9 +304,9 @@ export default class World {
         e.preventDefault();
         self.getMousePosition(e);
         self.isMouseOverElement();
+        self.mouse.down = true;
         if (self.mouse.over !== constants.OVER_NOTHING) {
           self.mouse.dragging = self.elements[self.mouse.over];
-          self.mouse.down = true;
         }
       },
       mouseup(e) {
