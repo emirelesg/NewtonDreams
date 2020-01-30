@@ -108,7 +108,7 @@
                                 </table>
                             </div>
                         </div> <!-- end .row- -->
-                        <div class="row">
+                        <div class="row button-row">
                             <div class="col">
                                 <button type="button" id="start" class="btn btn-sm btn-success btn-block">
                                     <i data-feather="play"></i>

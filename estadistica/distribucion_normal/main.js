@@ -7,6 +7,7 @@ var STEP = 0.02;        // Step made every interation.
 
 // p$ Objects
 var w;
+var dc = new p$.DataCursor();
 var g1 = new p$.Plot({ limit: 800, drawInvisiblePoints: true });
 var g2 = new p$.Plot({ limit: 800, color: p$.COLORS.BLUE, drawInvisiblePoints: true });
 var controls = {};
@@ -32,8 +33,11 @@ function setup() {
   w.axis.outsideNumbers = false;
   w.axis.draggable(false);
 
+  // Add plots to data cursor.
+  dc.add(g1, g2);
+
   // Add objects to world.
-  w.add(g1, g2);
+  w.add(g1, g2, dc);
 
 }
 

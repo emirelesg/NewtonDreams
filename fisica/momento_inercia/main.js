@@ -112,6 +112,7 @@ var plane = {
 };
 
 // p$ Objects
+var dc = new p$.DataCursor();
 var cylinder = new RollingObject('cylinder.png');
 var sphere = new RollingObject('sphere.png');
 var wheel = new RollingObject('wheel.png');
@@ -166,6 +167,9 @@ function setup() {
   labels.times.font.set( { spacing: 1.4 } );
   results.calculateDimensions();
 
+  // Add plots to data cursor.
+  dc.add(cylinder.plot, sphere.plot, wheel.plot);
+
   // Configure the z index of all objects.
   scene.setZ(1);
   box.setZ(2);
@@ -173,9 +177,10 @@ function setup() {
   wheel.img.setZ(4);
   sphere.img.setZ(5);
   cylinder.img.setZ(6);
+  dc.setZ(7);
 
   // Add objects to world.
-  w.add(scene, box, results, wheel.img, cylinder.img, sphere.img); 
+  w.add(dc, scene, box, results, wheel.img, cylinder.img, sphere.img); 
 
 }
 
@@ -267,6 +272,11 @@ function reset() {
     objects[i].ended = false;
     objects[i].setRadius(controls.radius.value);
     objects[i].plot.clear();
+
+    // Set marker in the initial position.
+    const y = graph_type === "pos" ? objects[i].d - objects[i].d0 : graph_type === "vel" ? objects[i].v : objects[i].accel;
+    objects[i].plot.addMarker(0, y);
+
   }
 
   // Reset time.
@@ -356,11 +366,12 @@ function draw() {
         // If the object has not ended its animation plot the requested variable on the graph.
         if (!objects[i].ended) {
           finished = false;
-          switch(graph_type) {   
-            case "pos": objects[i].plot.addPoint(t, objects[i].d - objects[i].d0); break;
-            case "vel": objects[i].plot.addPoint(t, objects[i].v); break;
-            case "accel": objects[i].plot.addPoint(t, objects[i].accel); break;
-          }
+
+          // Add point to graph and update marker to follow the latest point.
+          const y = graph_type === "pos" ? objects[i].d - objects[i].d0 : graph_type === "vel" ? objects[i].v : objects[i].accel;
+          objects[i].plot.addPoint(t, y);
+          objects[i].plot.markers[0].x = t;
+          objects[i].plot.markers[0].y = y;
 
         // If the object has ended and has not yet received a place number, assign the next one.
         } else if (objects[i].place_label == "-") {

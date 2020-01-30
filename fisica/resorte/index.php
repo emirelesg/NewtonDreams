@@ -89,22 +89,29 @@
                             </div>
                         </div> <!-- end .row- -->
                         <div class="row button-row">
-                            <div class="col-4">
+                            <div class="col">
+                                <button type="button" id="back" class="btn btn-sm btn-outline-secondary btn-block">
+                                    <i data-feather="skip-back"></i>
+                                </button>
+                            </div>
+                            <div class="col">
+                                <button type="button" id="forward" class="btn btn-sm btn-outline-secondary btn-block">
+                                    <i data-feather="skip-forward"></i>
+                                </button>
+                            </div>
+                            <div class="col">
                                 <button type="button" id="start" class="btn btn-sm btn-success btn-block">
                                     <i data-feather="play"></i>
-                                    <span class="d-none d-sm-inline">Simular</span>
                                 </button>
                             </div>
-                            <div class="col-4">
+                            <div class="col">
                                 <button type="button" id="pause" class="btn btn-sm btn-primary btn-block">
-                                    <i data-feather="pause"></i>    
-                                    <span class="d-none d-sm-inline">Pausar</span>
+                                    <i data-feather="pause"></i>
                                 </button>
                             </div>
-                            <div class="col-4">
-                                <button type="button" id="stop" class="btn btn-sm btn-danger btn-block">
-                                    <i data-feather="square"></i>
-                                    <span class="d-none d-sm-inline">Detener</span>
+                            <div class="col">
+                                <button type="button" id="reset" class="btn btn-sm btn-danger btn-block">
+                                    <i data-feather="rotate-ccw"></i>
                                 </button>
                             </div>
                         </div> <!-- end .row- -->

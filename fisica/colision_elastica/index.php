@@ -2,7 +2,7 @@
     require '../../php/lang.php';
     require '../../php/data.php';
     $active         = $nav_items['physics'];
-    $active_sim     = $active['sim']['pendulo_simple'];
+    // $active_sim     = $active['sim']['operaciones_vectores'];
 ?>
 <!doctype html>
 <html lang="es">
@@ -54,37 +54,32 @@
                 <div class="row">
                     <div class="col-lg-5 controls">
                         <div class="row">
-                            <div class="col">
-                                <h4>Controles</h4>
+                            <div class="col clearfix">
+                                <h4 class="float-left">Controles</h4>
                             </div>
                         </div> <!-- end .row- -->
                         <div class="row">
                             <div class="col">
                                 <table class="table slider-table">
                                     <tr>
-                                        <td nowrap>Ángulo Inicial</td>
-                                        <td class="w-100"><div id="angle_slider"></div></td>
-                                        <td><input id="angle_label" type="text" class="input-80 form-control form-control-sm text-center" readonly></td>
+                                        <td nowrap>m<sub>1<sub></td>
+                                        <td class="w-100"><div id="m1_slider"></div></td>
+                                        <td><input id="m1_label" type="text" class="input-80 form-control form-control-sm text-center" readonly></td>
                                     </tr>
                                     <tr>
-                                        <td nowrap>Masa 1</td>
-                                        <td class="w-100"><div id="mass1_slider"></div></td>
-                                        <td><input id="mass1_label" type="text" class="input-80 form-control form-control-sm text-center" readonly></td>
+                                        <td nowrap>v<sub>1<sub></td>
+                                        <td class="w-100"><div id="v1_slider"></div></td>
+                                        <td><input id="v1_label" type="text" class="input-80 form-control form-control-sm text-center" readonly></td>
                                     </tr>
                                     <tr>
-                                        <td nowrap>Longitud 1</td>
-                                        <td class="w-100"><div id="length1_slider"></div></td>
-                                        <td><input id="length1_label" type="text" class="input-80 form-control form-control-sm text-center" readonly></td>
+                                        <td nowrap>m<sub>2<sub></td>
+                                        <td class="w-100"><div id="m2_slider"></div></td>
+                                        <td><input id="m2_label" type="text" class="input-80 form-control form-control-sm text-center" readonly></td>
                                     </tr>
                                     <tr>
-                                        <td nowrap>Masa 2</td>
-                                        <td class="w-100"><div id="mass2_slider"></div></td>
-                                        <td><input id="mass2_label" type="text" class="input-80 form-control form-control-sm text-center" readonly></td>
-                                    </tr>
-                                    <tr>
-                                        <td nowrap>Longitud 2</td>
-                                        <td class="w-100"><div id="length2_slider"></div></td>
-                                        <td><input id="length2_label" type="text" class="input-80 form-control form-control-sm text-center" readonly></td>
+                                        <td nowrap>v<sub>2<sub></td>
+                                        <td class="w-100"><div id="v2_slider"></div></td>
+                                        <td><input id="v2_label" type="text" class="input-80 form-control form-control-sm text-center" readonly></td>
                                     </tr>
                                 </table>
                             </div>
@@ -97,15 +92,9 @@
                                 </button>
                             </div>
                             <div class="col">
-                                <button type="button" id="pause" class="btn btn-sm btn-primary btn-block">
-                                    <i data-feather="pause"></i>    
-                                    <span class="d-none d-sm-inline">Pausar</span>
-                                </button>
-                            </div>
-                            <div class="col">
                                 <button type="button" id="reset" class="btn btn-sm btn-danger btn-block">
                                     <i data-feather="rotate-ccw"></i>
-                                    <span class="d-none d-sm-inline">Reiniciar<span>
+                                    <span class="d-none d-sm-inline">Reiniciar</span>
                                 </button>
                             </div>
                         </div> <!-- end .row- -->

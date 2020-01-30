@@ -26,6 +26,8 @@ Pendulum.prototype.update = function(time) {
     this.length * Math.sin(p$.PI - this.current_angle), 
     this.length * Math.cos(p$.PI - this.current_angle)
   );
+  this.plot.markers[0].x = time;
+  this.plot.markers[0].y = this.ball.position.x;
   if (started) {
     this.plot.addPoint(t, this.ball.position.x);
   }
@@ -39,6 +41,8 @@ Pendulum.prototype.setInitialConditions = function(length, angle) {
   this.initial_angle = angle;
   this.omega = Math.sqrt(9.81 / (this.length));
   this.period_label.set(2 * p$.PI / this.omega);
+  this.plot.clear();
+  this.plot.addMarker(0, 0);
 }
 
 // Variables
@@ -48,6 +52,7 @@ var wasMouseOutside = false;
 
 // p$ Objects
 var w;
+var dc = new p$.DataCursor({ constant: true });
 var results = new p$.Box( { debug: false, title: "Resultados", isDraggable: false, color: p$.BOX_COLORS.BLUE } )
 var box = new p$.Box( { debug: false, title: "Movimiento en -x", isDraggable: false } );
 var graph = undefined;
@@ -111,15 +116,19 @@ function setup() {
   p2.period_label.setPosition(0, 50);
   results.calculateDimensions();
 
+  // Add plots to data cursor.
+  dc.add(p1.plot, p2.plot);
+
   // Configure the z index of all objects.
   scene.setZ(1);
   p1.ball.setZ(2);
   p2.ball.setZ(2);
   box.setZ(3);
   results.setZ(4);
+  dc.setZ(5);
 
   // Add objects to world.
-  w.add(p1.ball, p2.ball, scene, box, results);
+  w.add(p1.ball, p2.ball, scene, box, results, dc);
 
 }
 
@@ -135,23 +144,14 @@ function setupControls() {
   controls.mass2 = new p$.Slider({ id: "mass2", start: 1, min: 0.5, max: 2, decPlaces: 1, units: "kg", callback: reset, color: p$.COLORS.BLUE });
   controls.length2 = new p$.Slider({ id: "length2", start: 5, min: 2, max: 7, decPlaces: 1, units: "m", callback: reset, color: p$.COLORS.BLUE });
 
-  // Start button.
+  // Buttons.
   controls.start = new p$.dom.Button("start", function() {
     started = true;
-    this.enabled(false);
-    controls.pause.enabled(true);
-    controls.stop.enabled(true);
   });
-
-  // Pause button.
   controls.pause = new p$.dom.Button("pause", function() {
     started = false;
-    this.enabled(false);
-    controls.start.enabled(true);
   });
-
-  // Stop button.
-  controls.stop = new p$.dom.Button("stop", function() {
+  controls.reset = new p$.dom.Button("reset", function() {
     reset();
   });
   
@@ -163,6 +163,10 @@ function setupControls() {
  */
 function reset() {
 
+  // Reset animation state.
+  started = false;
+  t = 0;
+
   // Set the angle of the pendulums.
   p1.setInitialConditions(controls.lenght1.value, controls.angle.value * p$.DEG_TO_RAD);
   p1.update(0);
@@ -173,21 +177,8 @@ function reset() {
   p1.ball.r = Math.pow(controls.mass1.value / (4 * p$.PI * 5 / 3), 1/3);
   p2.ball.r = Math.pow(controls.mass2.value / (4 * p$.PI * 5 / 3), 1/3);
 
-  // Reset button states.
-  controls.start.enabled(true);
-  controls.pause.enabled(false);
-  controls.stop.enabled(false);
-
-  // Clear plots.
-  p1.plot.clear();
-  p2.plot.clear();
-
   // Reset the axis position.
   graph.setAxisPosition();
-
-  // Reset animation state.
-  started = false;
-  t = 0;
 
 }
 
@@ -228,6 +219,11 @@ function drawScene() {
  * Function gets called 60x per second.
  */
 function draw() {
+
+  // Set button states.
+  controls.start.enabled(!started);
+  controls.pause.enabled(started);
+  controls.reset.enabled(started || t > 0);
 
   // Only animate if user has started the animation.
   if (started) {

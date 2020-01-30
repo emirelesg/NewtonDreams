@@ -10,6 +10,7 @@ var y0 = 0;               // Initial height.
 
 // p$ Objects
 var w;
+var dc = new p$.DataCursor();
 var box = new p$.Box( { debug: false, title: "Movimiento de la Particula", isDraggable: false } );
 var ball = new p$.Ball(2.5, { color: p$.COLORS.BLUE, isDraggable: false });
 var vel = new p$.Vector( { color: p$.COLORS.PURPLE, components: true } );
@@ -46,14 +47,18 @@ function setup() {
   graph.scaleX.set(35, 1, '');
   path = graph.addPlot( { color: p$.COLORS.BLUE } );
   box.calculateDimensions();
+  
+  // Add plots to data cursor.
+  dc.add(path);
 
   // Configure the z index of all objects.
+  dc.setZ(4);
   box.setZ(3);
   ball.setZ(2);
   vel.setZ(1);
 
   // Add objects to world.
-  w.add(ball, vel, box);
+  w.add(ball, vel, box, dc);
 
 }
 
@@ -84,9 +89,6 @@ function reset() {
   t = 0;
   started = false;
 
-  // Clear path.
-  path.clear();
-
   // Reset main ball and vector.
   vel.setMag(controls.v0.value, 90);
   vel.setPosition(0, controls.y0.value);
@@ -95,6 +97,10 @@ function reset() {
   // Save initial values.
   vy0 = vel.y;
   y0 = ball.position.y;
+
+  // Clear path.
+  path.clear();
+  path.addMarker(0, y0);
 
   // Using the quadratic formula get the positive solution to the time
   // the ball takes to reach ground again.
@@ -127,7 +133,7 @@ function draw() {
     vel.setPosition(ball.position.x, ball.position.y);
 
     // If ball has reached maximum height create a marker.
-    if (t >= t_max && path.markers.length === 0) {
+    if (t >= t_max && path.markers.length === 1) {
       path.addMarker(t, ball.position.y, {
         label: t.toFixed(2) + "s", 
         lower_label: y.toFixed(2) + "m",
@@ -140,11 +146,9 @@ function draw() {
       t += 0.05;
     } else {
 
-      // Add marker at the ground.
-      path.addMarker(t, 0, {
-        label: t.toFixed(2) + "s", 
-        lower_label: "0m"
-      });
+      // When the marker hits the ground, add its labels.
+      path.markers[0].label = t.toFixed(2) + "s";
+      path.markers[0].lower_label = "0m";
 
       // Stop animation.
       started = false;
@@ -157,6 +161,8 @@ function draw() {
 
     // Add y position of ball to plot.
     path.addPoint(t, ball.position.y);
+    path.markers[0].x = t;
+    path.markers[0].y = ball.position.y;
     
   }
 }

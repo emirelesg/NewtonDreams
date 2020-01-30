@@ -110,20 +110,20 @@
                                 </button>
                             </div>
                         </div> <!-- end .row- -->
-                        <div class="row">
-                            <div class="col-4">
+                        <div class="row button-row">
+                            <div class="col">
                                 <button type="button" id="start" class="btn btn-sm btn-success btn-block">
                                     <i data-feather="play"></i>
                                     <span class="d-none d-sm-inline">Simular</span>
                                 </button>
                             </div>
-                            <div class="col-4">
+                            <div class="col">
                                 <button type="button" id="pause" class="btn btn-sm btn-primary btn-block">
                                     <i data-feather="pause"></i>    
                                     <span class="d-none d-sm-inline">Pausar</span>
                                 </button>
                             </div>
-                            <div class="col-4">
+                            <div class="col">
                                 <button type="button" id="stop" class="btn btn-sm btn-danger btn-block">
                                     <i data-feather="square"></i>
                                     <span class="d-none d-sm-inline">Detener</span>

@@ -3,7 +3,6 @@ var OFX = 0.6;                              // Offset in the -x axis for the 3d 
 var OFY = 0.3;                              // Offset in the -y axis for the 3d perspective.
 var BOX_LABEL_WIDTH = 70;                   // Width of labels in the result box.
 var MIN_TEMP = -20, MAX_TEMP = 300;         // Define the temperature range.
-var FONT_COLOR = "#444444";                 // Default font color.
 var BLOCK_W = 2.5;                          // Width the blocks that will transfer heat.
 var ARROW_BODY_H = 0.3;                     // Height of the arrow's body.
 var ARROW_HEAD_L = 0.8;                     // Side length of the arrow's head.
@@ -102,7 +101,7 @@ function reset() {
   barWidth = Math.sqrt(controls.barArea.value);
 
   // Dimensions of the arrow.
-  arrowBodyW = Math.abs(heatTransfer / 100);
+  arrowBodyW = heatTransfer / 100;
 
 }
 
@@ -200,7 +199,7 @@ function drawSimulation() {
   
   // Left block.
   draw3dRect(-barLength / 2 - BLOCK_W / 2, 0, BLOCK_W, BLOCK_W, t1Color);
-  sim.font.set({ size: 14, color: FONT_COLOR });
+  sim.font.set({ size: 14, color: p$.FONT_COLOR });
   sim.text('T1', -barLength/2 - BLOCK_W/2, 0.3);
   sim.font.set({ size: 16, color: shadeColor(t1Color, 40) });
   sim.text(controls.t1.label.val(), -barLength/2 - BLOCK_W/2, -0.3);
@@ -210,7 +209,7 @@ function drawSimulation() {
 
   // Right block.
   draw3dRect(barLength / 2 + BLOCK_W / 2, 0, BLOCK_W, BLOCK_W, t2Color);
-  sim.font.set({ size: 14, color: FONT_COLOR });
+  sim.font.set({ size: 14, color: p$.FONT_COLOR });
   sim.text('T2', barLength/2 + BLOCK_W/2, 0.3);
   sim.font.set({ size: 16, color: shadeColor(t2Color, 40) });
   sim.text(controls.t2.label.val(), barLength/2 + BLOCK_W/2, -0.3);
@@ -224,27 +223,27 @@ function drawSimulation() {
     sim.fill(p$.BOX_COLORS.ORANGE.BACKGROUND);
     sim.stroke(p$.BOX_COLORS.ORANGE.BORDER);
     sim.translate(0, 2.5);
-    if (heatTransfer < 0) sim.rotate(-180);
 
     // Draw the arrow tip.
-    sim.equilateralTriangle(arrowBodyW + ARROW_HEAD_H / 2, 0, ARROW_HEAD_L, 0);
+    if (arrowBodyW > 0) {
+      sim.equilateralTriangle(arrowBodyW + ARROW_HEAD_H / 2, 0, ARROW_HEAD_L, 0);
+    } else {
+      sim.equilateralTriangle(arrowBodyW - ARROW_HEAD_H / 2, 0, ARROW_HEAD_L, 180);
+    }
 
     // Draw the arrow body. The body is shifted slightly to cover the stroke of the arrow
     // head.
     sim.begin();
-    sim.moveTo(arrowBodyW + 0.01, -ARROW_BODY_H/2);
+    sim.moveTo(arrowBodyW, -ARROW_BODY_H/2);
     sim.lineTo(0, -ARROW_BODY_H/2);
     sim.lineTo(0, ARROW_BODY_H/2);
-    sim.lineTo(arrowBodyW + 0.01, ARROW_BODY_H/2);
+    sim.lineTo(arrowBodyW, ARROW_BODY_H/2);
     sim.end();
 
     // Display the heat label only if there is space.
-    if (arrowBodyW > 0.5) {
-      // Rotate the label according to the heat direction.
-      sim.translate(arrowBodyW / 2, 0);
-      if (heatTransfer < 0) sim.rotate(-180);   
+    if (Math.abs(arrowBodyW) > 0.5) {
       sim.font.set({ size: 12, color: p$.BOX_COLORS.ORANGE.BORDER });
-      sim.text("calor", 0, 0);
+      sim.text("calor", arrowBodyW / 2, 0);
     }
 
     sim.restore();

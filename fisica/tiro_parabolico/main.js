@@ -5,12 +5,13 @@ var BALL_AMOUNT = 4;              // Amount of balls.
 // Variables
 var vx0 = 0;                // Initial x velocity.
 var points = [];            // 2d array with the values of the simulation.
-var current = 0;            // Current step of the simulation.
+var frame = 0;              // Current frame of the simulation.
 var started = false;        // Determines if the simulations is running.
 var showRefPoints = false;
 
 // p$ Objeccts
 var w;
+var dc = new p$.DataCursor();
 var ballLabels = new p$.Shape(drawBallLabels);
 var ball = new p$.Ball(2.5, { color: p$.COLORS.BLUE, isDraggable: false });
 var vel = new p$.Vector( { color: p$.COLORS.PURPLE, components: true } );
@@ -63,15 +64,19 @@ function setup() {
   labels.t.setPosition(0, 75);
   box.calculateDimensions();
 
+  // Add plots to data cursor.
+  dc.add(path);
+
   // Configure the z index of all objects.
   path.setZ(1);
   vel.setZ(2);
   ball.setZ(4);
   ballLabels.setZ(5);
+  dc.setZ(6);
   box.setZ(10);
 
   // Add objects to world.
-  w.add(ball, vel, box, path, ballLabels);
+  w.add(ball, vel, box, path, ballLabels, dc);
 }
 
 /**
@@ -87,7 +92,7 @@ function setupControls() {
   // Buttons.
   controls.start = new p$.dom.Button("start", function() {
     // Reset the simulation only if the simulation has ended.
-    if (current >= points.length - 1) reset();
+    if (frame >= points.length - 1) reset();
     started = true;
   });
   controls.pause = new p$.dom.Button("pause", function() {
@@ -95,13 +100,17 @@ function setupControls() {
   });
   controls.forward = new p$.dom.Button("forward", function() {
     started = false;
-    current += 1;
-    if (current >= points.length) current = points.length - 1;
+    frame += 1;
+    if (frame >= points.length) frame = points.length - 1;
   });
   controls.back = new p$.dom.Button("back", function() {
     started = false;
-    current -= 1;
-    if (current < 0) current = 0;
+    frame -= 1;
+    if (frame < 0) frame = 0;
+  });
+  controls.reset = new p$.dom.Button("reset", function() {
+    started = false;
+    frame = 0;
   });
 
   // Show points option.
@@ -128,7 +137,7 @@ function reset() {
   }
 
   // Restart simulation.
-  current = 0;
+  frame = 0;
   started = false;
 
   // Save initial values.
@@ -200,13 +209,13 @@ function drawBallLabels() {
 function draw() {
 
   // Get the current time, position, and velocity values.
-  var t = points[current][0];
-  var x = points[current][1], y = points[current][2];
-  var vy = points[current][3];
+  var t = points[frame][0];
+  var x = points[frame][1], y = points[frame][2];
+  var vy = points[frame][3];
 
   // Draw plot til the current point.
   path.clear();
-  for (var i = 0; i < current; i++) {
+  for (var i = 0; i < frame; i++) {
     path.addPoint(points[i][1], points[i][2]);
   }
 
@@ -227,18 +236,19 @@ function draw() {
   
   // Increase current frame only if the simulation has not started.
   if (started) {
-    if (current < points.length - 1) {
-      current += 1;
+    if (frame < points.length - 1) {
+      frame += 1;
     } else {
       started = false;
     }
   }
 
   // Update the control buttons, depending on the current frame.
-  controls.back.enabled(current > 0);
-  controls.forward.enabled(current < points.length - 1);
+  controls.back.enabled(frame > 0);
+  controls.forward.enabled(frame < points.length - 1);
   controls.start.enabled(!started);
   controls.pause.enabled(started);
+  controls.reset.enabled(started || frame > 0);
 
 }
 

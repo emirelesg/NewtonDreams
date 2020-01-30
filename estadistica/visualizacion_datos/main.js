@@ -28,6 +28,7 @@ var regressionType = "0";                     // Desired regression type.
 var statsVariable = 0;                        // Defines which variable should be used to calculate the statistical values.
 
 // p$ Objects
+var dc = new p$.DataCursor();
 var plot = new p$.Plot( { drawInvisiblePoints: true, color: p$.COLORS.BLUE } );
 var regressionPlot = new p$.Plot( { drawInvisiblePoints: true, color: p$.COLORS.GRAY } ); 
 var box = new p$.Box( {debug: false, isDraggable: false, color: p$.BOX_COLORS.GRAY } );
@@ -71,15 +72,19 @@ function setup() {
   labels.mean = statsBox.addLabel(55, 14, { name: "x̄:", labelWidth: 25, decPlaces: 3 });
   labels.variance = statsBox.addLabel(55, 14, { name: "s²:", labelWidth: 25, decPlaces: 3 });
 
+  // Add plots to data cursor.
+  dc.add(plot, regressionPlot);
+
   // Configure z-index.
   plot.setZ(1);
   regressionPlot.setZ(2);
   box.setZ(3);
   regressionBox.setZ(4);
   statsBox.setZ(5);
+  dc.setZ(6);
 
   // Add objects to world.
-  w.add(plot, box, regressionPlot, regressionBox, statsBox);
+  w.add(plot, box, regressionPlot, regressionBox, statsBox, dc);
 
 }
 

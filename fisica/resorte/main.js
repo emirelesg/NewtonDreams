@@ -15,12 +15,13 @@ var spring_y = 0;                       // Current extension of the spring.
 var natural_y = 0;                      // Y coordinate of the spring's natural length.
 var equilibrium_y = 0;                  // Y coordinate of the equilibrium point of the spring.
 var extended_y = 0;                     // Y coordinate of the spring's extended length.
-var t = 0;                              // Current time in seconds.
+var frame = 0;                          // Current frame.
 var started = false;                    // Is the animation running?
 var horizontal_distance_labels = true;  // Display labels horizontally or vertically?
 
 // p$ Objects
 var w;
+var dc = new p$.DataCursor({ constant: true });
 var box = new p$.Box( { debug: false, title: "Movimiento del Resorte", isDraggable: false } );
 var spring = new p$.Shape(drawSpring);
 var controls = {};
@@ -67,22 +68,26 @@ function setup() {
 
   // Configure graph plot.
   graph = box.addGraph(300, 200, {});
-  graph.setLabels("", "Tiempo [s]", "Amplitud [m]");
+  graph.setLabels("", "Tiempo [s]", "Amplitud [cm]");
   graph.setPosition(0, 20);
-  graph.scaleX.set(35, 2, '');
-  graph.scaleY.set(35, -1, '');
+  graph.scaleX.set(50, 2, '');
+  graph.scaleY.set(50, -2, '');
   graph.setAxisPosition("left", "center");
-  path = graph.addPlot( { color: p$.COLORS.BLUE, label: "" } );
-  damping_plot_top = graph.addPlot( { color: p$.BOX_COLORS.GRAY.BORDER, label: "", display: false } );
-  damping_plot_bottom = graph.addPlot( { color: p$.BOX_COLORS.GRAY.BORDER, label: "", display: false });
+  path = graph.addPlot( { color: p$.COLORS.BLUE, label: "", limit: 1000 } );
+  damping_plot_top = graph.addPlot( { color: p$.BOX_COLORS.GRAY.BORDER, label: "", limit: 1000, display: false } );
+  damping_plot_bottom = graph.addPlot( { color: p$.BOX_COLORS.GRAY.BORDER, label: "", limit: 1000, display: false });
   box.calculateDimensions();
 
+  // Add plots to data cursor.
+  dc.add(path);
+
   // Configure the z index of all objects.
-  spring.setZ(1);
-  box.setZ(2);
+  box.setZ(1);
+  spring.setZ(2);
+  dc.setZ(3);
 
   // Add objects to world.
-  w.add(spring, box);
+  w.add(spring, box, dc);
 
 }
 
@@ -92,29 +97,33 @@ function setup() {
 function setupControls() {
 
   // Configure sliders.
-  controls.mass = new p$.Slider({ id: "mass", start: 2.5, min: 1, max: 4, decPlaces: 1, units: "kg", callback: reset, color: p$.COLORS.RED });
-  controls.amplitude = new p$.Slider({ id: "amplitude", start: 2, min: 0, max: 4, decPlaces: 1, units: "cm", callback: reset, color: p$.COLORS.GREEN });
+  controls.mass = new p$.Slider({ id: "mass", start: 2.5, min: 1, max: 3, decPlaces: 1, units: "kg", callback: reset, color: p$.COLORS.RED });
+  controls.amplitude = new p$.Slider({ id: "amplitude", start: 2, min: 0, max: 3, decPlaces: 1, units: "cm", callback: reset, color: p$.COLORS.GREEN });
   controls.k = new p$.Slider({ id: "k", start: 5, min: 5, max: 10, decPlaces: 1, units: "N/m", callback: reset, color: p$.COLORS.BLUE });
   controls.damping = new p$.Slider({ id: "damping", start: 0.5, min: 0, max: 3, decPlaces: 1, units: "", callback: reset, color: p$.COLORS.YELLOW });
   
-  // Start button.
+  // Buttons.
   controls.start = new p$.dom.Button("start", function() {
+    // Reset the simulation only if the simulation has ended.
+    if (frame >= path.points.length - 1) reset();
     started = true;
-    this.enabled(false);
-    controls.pause.enabled(true);
-    controls.stop.enabled(true);
   });
-
-  // Pause button.
   controls.pause = new p$.dom.Button("pause", function() {
     started = false;
-    this.enabled(false);
-    controls.start.enabled(true);
   });
-
-  // Stop button.
-  controls.stop = new p$.dom.Button("stop", function() {
-    reset();
+  controls.forward = new p$.dom.Button("forward", function() {
+    started = false;
+    frame += 10;
+    if (frame >= path.points.length) frame = path.points.length - 1;
+  });
+  controls.back = new p$.dom.Button("back", function() {
+    started = false;
+    frame -= 10;
+    if (frame < 0) frame = 0;
+  });
+  controls.reset = new p$.dom.Button("reset", function() {
+    started = false;
+    frame = 0;
   });
 
   // Show damping option.
@@ -130,11 +139,6 @@ function setupControls() {
  * Called when any slider changes values.
  */
 function reset() {
-
-  // Reset button states.
-  controls.start.enabled(true);
-  controls.stop.enabled(false);
-  controls.pause.enabled(false);
 
   // Calculate equilibrium point. The mass moves around this point.
   // F(weight) = F(spring)
@@ -156,15 +160,44 @@ function reset() {
 
   // Clear plots.
   path.clear();
+  path.addMarker(0, 0);
   damping_plot_top.clear();
   damping_plot_bottom.clear();
-
-  // Reset axis position.
-  graph.setAxisPosition();
-
+  
   // Stop and reset animation.
-  t = 0;
+  frame = 0;
   started = false;
+  resize();
+
+  // Precalculate the simulation.
+  var omega = Math.sqrt(controls.k.value / controls.mass.value);
+  var t_period = 2 * p$.PI * Math.sqrt(controls.mass.value / controls.k.value);
+  var y = controls.damping.value / (2 * controls.mass.value);
+  var t = 0;
+
+  // Calculate the displacement and damping factor of the spring.
+  function calc(t) {
+    var damp_factor = Math.exp(-y * t);
+    var s = damp_factor * controls.amplitude.value * Math.cos(Math.sqrt(omega * omega - y * y) * t);
+    path.points.push([t, -s]);
+    damping_plot_top.points.push([t, damp_factor * controls.amplitude.value]);
+    damping_plot_bottom.points.push([t, -damp_factor * controls.amplitude.value]);
+  }
+
+  // Calculate the spring's movement and store it in an array.
+  if (controls.damping.value > 0) {
+    // Record points until the spring stops moving.
+    do {
+      calc(t);
+      t += 1/60.0;
+    } while (damping_plot_top.points[damping_plot_top.points.length - 1][1] > 0.05);
+  } else {
+    // Record points until the first period.
+    for (t = 0; t < 10 * t_period; t += 1 / 60.0) {
+      calc(t);
+    }
+  }
+
 
 }
 
@@ -173,39 +206,39 @@ function reset() {
  */
 function draw() {
 
-  // Only animate if animation has started.
+  // Update the control buttons, depending on the current frame.
+  controls.start.enabled(!started);
+  controls.pause.enabled(started);
+  controls.back.enabled(frame > 0);
+  controls.forward.enabled(frame < path.points.length - 1);
+  controls.reset.enabled(started || frame > 0);
+
+  // Increase current frame only if the simulation has not started.
   if (started) {
-    
-    // Increase time.
-    t += 0.1;
-
-    // Spring position calculations.
-    var omega = Math.sqrt(controls.k.value / controls.mass.value);
-    var y = controls.damping.value / (2 * controls.mass.value);
-    var damp_factor = Math.exp(-y * t);
-    var s = damp_factor * controls.amplitude.value * Math.cos(Math.sqrt(omega * omega - y * y) * t);
-    
-    // Spring oscillates around its equilibrium point.
-    spring_y = equilibrium_y - s;
-
-    // Save position and damping to plots.
-    path.addPoint(t, s);
-    damping_plot_top.addPoint(t, damp_factor * controls.amplitude.value);
-    damping_plot_bottom.addPoint(t, -damp_factor * controls.amplitude.value);
-
-    // If the graph has gone outside of the available graph space, then move the x axis to fit the latest data.
-    var maxDisplayTime = (graph.axis.width - graph.axis.position.x) * graph.scaleX.toUnits;
-    if (t > maxDisplayTime) {
-      graph.axis.position.x -= 0.1 * graph.scaleX.toPx;
-    }
-
-    // If damping is really small pause the animation.
-    // The spring isn't moving any more.
-    if (damp_factor < 0.01) {
+    if (frame < path.points.length - 1) {
+      // Next frame of the animation.
+      frame += 1;
+    } else if (controls.damping.value > 0) {
+      // Stop the simulation, the movement of the spring is not noticeable.
       started = false;
-      reset();
+    } else {
+      // Repeat the points. The spring never stops moving.
+      frame = 0;
     }
+  }
 
+  // Set the spring's position.
+  spring_y = equilibrium_y + path.points[frame][1];
+  path.markers[0].x = path.points[frame][0];
+  path.markers[0].y = path.points[frame][1];
+
+  // If the graph has gone outside of the available graph space,
+  // then move the x axis to fit the latest data.
+  var availableDisplayTime = graph.axis.width * graph.scaleX.toUnits;
+  if (path.points[frame][0] > availableDisplayTime) {
+    graph.axis.position.x = -(path.points[frame][0] - availableDisplayTime) * graph.scaleX.toPx;
+  } else {
+    graph.axis.position.x = 0;
   }
 
 }
@@ -360,6 +393,13 @@ function drawSpring() {
   drawSpring();
   spring.strokeWeight(2);
   drawMass();
+
+  // Draw reference line to the plot.
+  var lastPointX = path.points[frame][0] * graph.scaleX.toPx + graph.axis.position.x;
+  spring.stroke(p$.BOX_COLORS.GRAY.BORDER);
+  spring.lineDash(4);
+  spring.strokeWeight(2);
+  spring.line(SPRING_X0, spring_y, (lastPointX + box.position.x - w.axis.position.x + box.padding.left + graph.padding.left) * w.scaleX.toUnits, spring_y)
   
 }
 
@@ -372,14 +412,16 @@ function resize() {
    * Resizes the graph while keeping the last x position of the axis.
    * Since the x axis is sliding during the animation, the position must be restored.
    */
-  function resizeGraph(w, h) {
+  function resizeGraph(width, height) {
+    
     if (started) {
       var axis_x = graph.axis.position.x;
-      graph.setDimensions(w, h);
+      graph.setDimensions(width, height);
       graph.axis.position.x = axis_x; 
     } else {
-      graph.setDimensions(w, h)
+      graph.setDimensions(width, height)
     }
+ 
   }
 
   // Position the axis at the top left corner.
@@ -398,10 +440,14 @@ function resize() {
   horizontal_distance_labels = w.width > 480 || w.width < 350;
 
   // Keep the width of the graph equal to the half of the canvas width.
-  resizeGraph(w.width / 2 - 30, 200);
+  resizeGraph(w.width / 2 - 30, 310);
 
   // Recalculate the dimensions and set its position on the top right corner.
   box.calculateDimensions();
   box.setPosition(w.width - box.width - 20, 30);
+
+  // Set the -y axis to the height of the equilibrium position.
+  var graphYAbs = box.position.y - w.axis.position.y + box.padding.top + graph.position.y + graph.padding.top;
+  graph.axis.position.y = equilibrium_y * w.scaleY.toPx - graphYAbs;
 
 }

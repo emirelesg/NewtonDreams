@@ -35,6 +35,7 @@ var bins = [];                          // Histogram bins.
 
 // p$ Objects
 var w;
+var dc = new p$.DataCursor({ constant: true });
 var results = new p$.Box( { debug: false, title: "Resultados", isDraggable: false, color: p$.BOX_COLORS.BLUE } )
 var box = new p$.Box( { debug: false, title: "Histograma", isDraggable: false } );
 var graph = undefined;
@@ -92,13 +93,17 @@ function setup() {
   labels.pressure.setPosition(0, 50);
   results.calculateDimensions();
 
+  // Add plots to data cursor.
+  dc.add(histogram);
+
   // Configure the z index of all objects.
   scene.setZ(1);
   box.setZ(2);
   results.setZ(3);
+  dc.setZ(4);
 
   // Add objects to world.
-  w.add(scene, box, results);
+  w.add(scene, box, results, dc);
 
 }
 

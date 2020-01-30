@@ -29,15 +29,15 @@
             "name"  => "Caída Libre",
             "desc"  => "Simula el movimiento en caida libre de un proyectil.",
             "url"   => "$base/fisica/caida_libre/",
-            "ver"   => "2.0.0",
-            "date"  => "22/01/2019"
+            "ver"   => "2.1.0",
+            "date"  => "27/01/2020"
         ),
         "calculadora_vectores" => array(
             "name"  => "Calculadora de Vectores",
             "desc"  => "Calcula la suma o diferencia de dos o más vectores.",
             "url"   => "$base/fisica/calculadora_vectores/",
-            "ver"   => "1.2.0",
-            "date"  => "21/01/2019"
+            "ver"   => "1.3.0",
+            "date"  => "29/01/2019"
         ),
         "carga_campo" => array(
             "name"  => "Carga en un Campo Eléctrico",
@@ -78,8 +78,8 @@
             "name"  => "Momento de Inercia",
             "desc"  => "Compara diversos objetos rodando por un plano inclinado.",
             "url"   => "$base/fisica/momento_inercia/",
-            "ver"   => "1.0.0",
-            "date"  => "13/04/2019"
+            "ver"   => "1.1.0",
+            "date"  => "27/01/2020"
         ),
         "operaciones_vectores" => array(
             "name"  => "Operaciones Básicas con Vectores",
@@ -92,36 +92,36 @@
             "name"  => "Péndulo Simple",
             "desc"  => "Simula un péndulo para ángulos pequeños.",
             "url"   => "$base/fisica/pendulo_simple/",
-            "ver"   => "2.0.0",
-            "date"  => "13/04/2019"
+            "ver"   => "2.1.0",
+            "date"  => "27/01/2020"
         ),
         "plano_inclinado" => array(
             "name"  => "Plano Inclinado",
             "desc"  => "Calcula la aceleración de los cuerpos y la tensión del cable en un plano inclinado sin fricción.",
             "url"   => "$base/fisica/plano_inclinado/",
-            "ver"   => "2.0.0",
-            "date"  => "22/01/2019"
+            "ver"   => "2.1.0",
+            "date"  => "27/01/2020"
         ),
         "resorte" => array(
             "name"  => "Resorte",
             "desc"  => "Simula un resorte utilizando la Ley de Hooke.",
             "url"   => "$base/fisica/resorte/",
-            "ver"   => "2.0.0",
-            "date"  => "12/04/2019"
+            "ver"   => "3.0.0",
+            "date"  => "27/20/2020"
         ),
         "teoria_cinetica" => array(
             "name"  => "Teoría Cinética Molecular",
             "desc"  => "Simula un gas ideal.",
             "url"   => "$base/fisica/teoria_cinetica/",
-            "ver"   => "2.0.0",
-            "date"  => "13/04/2019"
+            "ver"   => "2.1.0",
+            "date"  => "27/01/2020"
         ),
         "tiro_parabolico" => array(
             "name"  => "Tiro Parabólico",
             "desc"  => "Simula el movimiento de un proyectil.",
             "url"   => "$base/fisica/tiro_parabolico/",
             "ver"   => "2.1.0",
-            "date"  => "17/01/2020"
+            "date"  => "27/01/2020"
         ),
         "transferencia_calor" => array(
            "name"  => "Transferencia de calor",
@@ -138,15 +138,15 @@
             "name"  => "Distribución Normal",
             "desc"  => "Cambia la media (&mu;) y desviación típica (&sigma;) de dos distribuciones normales.",
             "url"   => "$base/estadistica/distribucion_normal/",
-            "ver"   => "2.0.0",
-            "date"  => "22/01/2019"
+            "ver"   => "2.1.0",
+            "date"  => "27/01/2020"
         ),
         "visualizacion_datos" => array(
             "name"  => "Visualizador de Datos",
             "desc"  => "Grafica datos en forma de histograma, dispersión o línea y realiza una regresión con ellos.",
             "url"   => "$base/estadistica/visualizacion_datos/",
-            "ver"   => "1.0.0",
-            "date"  => "06/06/2019"
+            "ver"   => "1.1.0",
+            "date"  => "27/01/2020"
         )
     );
 
@@ -163,8 +163,15 @@
             "name"  => "Polinomio",
             "desc"  => "Grafica una función de la forma: A<sub>0</sub> + A<sub>1</sub>x<sup>1</sup> +  A<sub>2</sub>x<sup>2</sup> + A<sub>3</sub>x<sup>3</sup> + A<sub>4</sub>x<sup>4</sup>",
             "url"   => "$base/matematicas/polinomio/",
+            "ver"   => "1.1.0",
+            "date"  => "27/01/2020"
+        ),
+        "translacion_simetria" => array(
+            "name"  => "Traslación y Simetría",
+            "desc"  => "Traslada una función de la forma: x<sup>2<sup>",
+            "url"   => "$base/matematicas/translacion_simetria/",
             "ver"   => "1.0.0",
-            "date"  => "22/01/2019"
+            "date"  => "23/01/2020"
         )
     );
 

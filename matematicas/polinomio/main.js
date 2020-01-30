@@ -7,6 +7,7 @@ var xMax = 5;
 
 // p$ Objects
 var w;
+var dc = new p$.DataCursor();
 var plot = new p$.Plot( {limit: 1000} );
 var controls = {};
 
@@ -30,9 +31,12 @@ function setup() {
   w = new p$.World("canvasContainer", draw, resize);
   w.scaleX.set(50, 2, "");
   w.scaleY.set(50, -2, "");
+  
+  // Add plots to data cursor.
+  dc.add(plot);
 
   // Add objects to world.
-  w.add(plot);
+  w.add(plot, dc);
 
 }
 

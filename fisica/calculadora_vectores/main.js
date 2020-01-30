@@ -242,14 +242,14 @@ function inputChanged(e) {
 
     // Update other input fields
     magnitude.val(p$.utils.round(v.mag(), DECPLACES) || "");
-    angle.val(p$.utils.round(v.angle(), DECPLACES) || "");
+    angle.val(p$.utils.round(v.standardAngle(), DECPLACES) || "");
   } else if (col === 4) {
     // Update the y component of the vector
     v.y = value || 0;
 
     // Update other input fields
     magnitude.val(p$.utils.round(v.mag(), DECPLACES) || "");
-    angle.val(p$.utils.round(v.angle(), DECPLACES) || "");
+    angle.val(p$.utils.round(v.standardAngle(), DECPLACES) || "");
   }
 
 }
@@ -293,7 +293,7 @@ function calcResultant() {
   // Update input fields
   var inputs = $("#vectorTable tbody tr:last-child").find("input");
   $(inputs[0]).val(p$.utils.round(resultant.mag(), DECPLACES));
-  $(inputs[1]).val(p$.utils.round(resultant.angle(), DECPLACES));
+  $(inputs[1]).val(p$.utils.round(resultant.standardAngle(), DECPLACES));
   $(inputs[2]).val(p$.utils.round(resultant.x, DECPLACES));
   $(inputs[3]).val(p$.utils.round(resultant.y, DECPLACES));
   

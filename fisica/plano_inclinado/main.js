@@ -100,9 +100,7 @@ function setupControls() {
   // Start button.
   controls.start = new p$.dom.Button("start", function() {
     reset();
-    setTimeout(function() {
-      started = true;
-    }, 200);
+    started = true;
   });
 
   // Show vector option.
@@ -152,17 +150,42 @@ function reset(reason) {
   // Position box at the middle of the plane.
   box2.y = pulley_y - box2.side - plane_height / 2;
 
-  // Calculate system's acceleration and tension.
-  accel = (box1.weight * sin_a - box2.weight) / (box2.mass + box1.mass);
-  tension = box2.mass * (9.81 - accel);
-
   // Center plane horizontally in the canvas.
   plane_x0 = (w.width * w.scaleX.toUnits - plane_width - box2.side) / 2;
 
-  // Set acceleration of boxes.
-  box1.ax = -accel;
-  box2.ay = accel;
-  
+  // Calculate the aceleration and tension.
+  if (box2.weight > box1.weight * sin_a) {
+    // Acceleration is positive.
+    // t - m1*g*sin(t) = m1*a
+    // t - m2*g = -m2*a => t = -m2*a + m2*g
+    // -m2*a + m2*g - m1*g*sin(t) = m1*a
+    // m2*g - m1*g*sin(t) = m1*a + m2*a
+    // (m2*g - m1*g*sin(t)) / (m1 + m2) = a
+    accel = (box2.weight - box1.weight * sin_a) / (box2.mass + box1.mass);
+    tension = -box2.mass * accel + box2.weight
+    box1.ax = accel;
+    box2.ay = -accel;
+  } else if (box2.weight < box1.weight * sin_a) {
+    // Acceleration is negative.
+    // t - m1*g*sin(t) = -m1*a
+    // t - m2*g = m2*a => t = m2*a + m2*g
+    // m2*a + m2*g - m1*g*sin(t) = -m1*a
+    // m2*g - m1*g*sin(t) = -m1*a - m2*a
+    // (m2*g - m1*g*sin(t)) / (-m1 - m2) = a
+    accel = (box2.weight - box1.weight * sin_a) / (-box2.mass - box1.mass);
+    tension = box2.mass * accel + box2.weight
+    box1.ax = -accel;
+    box2.ay = accel;
+  } else {
+    // Acceleration is 0.
+    // t - m1*g*sin(t) = 0
+    // t - m2*g = 0 => t = m2*g
+    accel = 0;
+    tension = box2.weight;
+    box1.ax = 0;
+    box2.ax = 0;
+  }
+
   // Reset boxes' velocities.
   box1.vx = 0;
   box2.vy = 0;
@@ -172,7 +195,7 @@ function reset(reason) {
   started = false;
 
   // Set display labels.
-  labels.accel.set(accel);
+  labels.accel.set(box1.ax);
   labels.tension.set(tension);
 
 }
@@ -182,11 +205,14 @@ function reset(reason) {
  */
 function draw() {
 
+  // Controls.
+  controls.start.enabled(!started);
+
   // Only run if user has pressed the start button.
   if (started) {
 
     // Update time.
-    t += 0.0025;
+    t += 1.0/120.0;
 
     // Motion equations for box 1.
     box1.vx += box1.ax * t;
