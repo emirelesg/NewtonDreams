@@ -22,11 +22,11 @@ var labels = {};
 var controls = {};
 
 var images = {
-  'rocketOff': new p$.Picture('rocket_off.png', { 'scale': 1, 'isDraggable': false, 'display': false }),
-  'rocketOn': new p$.Picture('rocket.png', { 'scale': 1, 'isDraggable': false, 'display': true }),
-  'soccer': new p$.Picture('soccer.png', { 'scale': 0.5, 'isDraggable': false, 'display': false }),
-  'baseball': new p$.Picture('baseball.png', { 'scale': 0.5, 'isDraggable': false, 'display': false }),
-  'user': undefined
+  "rocketOff": new p$.Picture("rocket_off.png", { scale: 1, isDraggable: false, display: false }),
+  "rocketOn": new p$.Picture("rocket.png", { scale: 1, isDraggable: false, display: true }),
+  "soccer": new p$.Picture("soccer.png", { scale: 0.5, isDraggable: false, display: false }),
+  "baseball": new p$.Picture("baseball.png", { scale: 0.5, isDraggable: false, display: false }),
+  "user": undefined
 };
 var selectedImage = images.rocketOn;
 
@@ -47,8 +47,8 @@ function setup() {
 
   // Configure the world.
   w = new p$.World("canvasContainer", draw, resize);
-  w.scaleX.set(50, 10, 'm');
-  w.scaleY.set(50, -10, 'm');
+  w.scaleX.set(50, 10, "m");
+  w.scaleY.set(50, -10, "m");
 
   // Add steps amount of balls.
   // Creates an object with obj, time and vy property.

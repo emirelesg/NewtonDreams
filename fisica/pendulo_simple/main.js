@@ -80,10 +80,9 @@ function setup() {
   
   // Configure the world.
   w = new p$.World("canvasContainer", draw, resize);
-  w.axis.isDraggable = false;
   w.axis.display = false;
-  w.scaleX.set(50, 1, "m");
-  w.scaleY.set(50, -1, "m");
+  w.scaleX.set(50, 1, "");
+  w.scaleY.set(50, -1, "");
 
   // Define background.
   w.background.setCallback(function(ctx) {
@@ -102,17 +101,17 @@ function setup() {
   graph.legends(true);
   graph.setLabels("", "Tiempo [s]", "Movimiento en -x [m]");
   graph.setPosition(0, 20);
-  graph.scaleX.set(35, 1);
-  graph.scaleY.set(35, -0.5);
+  graph.scaleX.set(30, 1);
+  graph.scaleY.set(30, -1);
   graph.setAxisPosition("left", "center");
   p1.plot = graph.addPlot( { color: p$.COLORS.GREEN, label: "Péndulo 1" } );
   p2.plot = graph.addPlot( { color: p$.COLORS.BLUE, label: "Péndulo 2" } );
   box.calculateDimensions();
 
   // Configure labels.
-  p1.period_label = results.addLabel(150, 14, { name: "Periodo 1: ", units: "s", labelWidth: 100, decPlaces: 2 });
+  p1.period_label = results.addLabel(120, 14, { name: "Periodo 1", units: "s", labelWidth: 80, decPlaces: 2 });
   p1.period_label.setPosition(0, 25);
-  p2.period_label = results.addLabel(150, 14, { name: "Periodo 2: ", units: "s", labelWidth: 100, decPlaces: 2 });
+  p2.period_label = results.addLabel(120, 14, { name: "Periodo 2", units: "s", labelWidth: 80, decPlaces: 2 });
   p2.period_label.setPosition(0, 50);
   results.calculateDimensions();
 
@@ -138,11 +137,11 @@ function setup() {
 function setupControls() {
 
   // Configure sliders
-  controls.angle = new p$.Slider({ id: "angle", start: -10, min: -MAX_ANGLE, max: MAX_ANGLE, decPlaces: 1, units: "°", callback: reset, color: p$.COLORS.RED });
-  controls.mass1 = new p$.Slider({ id: "mass1", start: 1, min: 0.5, max: 2, decPlaces: 1, units: "kg", callback: reset, color: p$.COLORS.GREEN });
-  controls.lenght1 = new p$.Slider({ id: "length1", start: 3, min: 2, max: 7, decPlaces: 1, units: "m", callback: reset, color: p$.COLORS.GREEN });
-  controls.mass2 = new p$.Slider({ id: "mass2", start: 1, min: 0.5, max: 2, decPlaces: 1, units: "kg", callback: reset, color: p$.COLORS.BLUE });
-  controls.length2 = new p$.Slider({ id: "length2", start: 5, min: 2, max: 7, decPlaces: 1, units: "m", callback: reset, color: p$.COLORS.BLUE });
+  controls.angle    = new p$.Slider({ id: "angle", start: -10, min: -MAX_ANGLE, max: MAX_ANGLE, decPlaces: 1, units: "°", callback: reset, color: p$.COLORS.RED });
+  controls.mass1    = new p$.Slider({ id: "mass1", start: 1, min: 0.5, max: 2, decPlaces: 1, units: "kg", callback: reset, color: p$.COLORS.GREEN });
+  controls.lenght1  = new p$.Slider({ id: "length1", start: 3, min: 2, max: 7, decPlaces: 1, units: "m", callback: reset, color: p$.COLORS.GREEN });
+  controls.mass2    = new p$.Slider({ id: "mass2", start: 1, min: 0.5, max: 2, decPlaces: 1, units: "kg", callback: reset, color: p$.COLORS.BLUE });
+  controls.length2  = new p$.Slider({ id: "length2", start: 5, min: 2, max: 7, decPlaces: 1, units: "m", callback: reset, color: p$.COLORS.BLUE });
 
   // Buttons.
   controls.start = new p$.dom.Button("start", function() {

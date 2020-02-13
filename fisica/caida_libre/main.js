@@ -36,15 +36,15 @@ function setup() {
   // Configure the world.
   w = new p$.World("canvasContainer", draw, resize);
   w.axis.isDraggable = false;
-  w.scaleX.set(50, 10, 'm');
-  w.scaleY.set(50, -10, 'm');
+  w.scaleX.set(50, 10, "m");
+  w.scaleY.set(50, -10, "m");
 
   // Configure graph plot.
   graph = box.addGraph(300, 200, {});
   graph.setLabels("", "Tiempo [s]", "Altura [m]");
   graph.setPosition(0, 20);
-  graph.scaleY.set(35, -15, '');
-  graph.scaleX.set(35, 1, '');
+  graph.scaleY.set(35, -15, "");
+  graph.scaleX.set(35, 1, "");
   path = graph.addPlot( { color: p$.COLORS.BLUE } );
   box.calculateDimensions();
   
@@ -175,11 +175,11 @@ function resize() {
   if (w.width < 400) {
     w.axis.setPosition(50, w.height - 50);
     graph.setDimensions(200, 200);
-    graph.scaleX.set(40, 2, '');
+    graph.scaleX.set(40, 2, "");
   } else {
     w.axis.setPosition(100, w.height - 50);
     graph.setDimensions(300, 200);
-    graph.scaleX.set(35, 1, '');
+    graph.scaleX.set(35, 1, "");
   }
 
   // Update box dimensions and position.

@@ -7,7 +7,6 @@ var vx0 = 0;                // Initial x velocity.
 var points = [];            // 2d array with the values of the simulation.
 var frame = 0;              // Current frame of the simulation.
 var started = false;        // Determines if the simulations is running.
-var showRefPoints = false;
 
 // p$ Objeccts
 var w;
@@ -38,8 +37,8 @@ function setup() {
 
   // Configure the world.
   w = new p$.World("canvasContainer", draw, resize);
-  w.scaleX.set(50, 10, 'm');
-  w.scaleY.set(50, -10, 'm');
+  w.scaleX.set(50, 10, "m");
+  w.scaleY.set(50, -10, "m");
 
   // Add steps amount of balls.
   // Creates an object with obj, time and vy property.
@@ -114,9 +113,7 @@ function setupControls() {
   });
 
   // Show points option.
-  controls.showRefPoints = new p$.dom.Option("showPoints", function(s) {
-    showRefPoints = s;
-  });
+  controls.showRefPoints = new p$.dom.Option("showPoints");
 
 }
 
@@ -221,7 +218,7 @@ function draw() {
 
   // Draw reference balls til the current point.
   for (var i = 0; i < balls.length; i++) {
-    balls[i].obj.display = t >= balls[i].t && showRefPoints;
+    balls[i].obj.display = t >= balls[i].t && controls.showRefPoints.value;
   }
 
   // Update the position of the ball and velocity vector.

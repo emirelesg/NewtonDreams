@@ -98,7 +98,6 @@ var all_images_loaded = false;          // True when all images have been loaded
 var t = 0;                              // Curent time.
 var images_loaded = false;              // Have all images been loaded?
 var started = false;                    // Has the user requested to start the animation?
-var graph_type = "pos";                 // Sets the current type of graph.
 var places = 1;                         // Keeps track of the order in which the objects arrive.
 
 // Plane object.
@@ -145,7 +144,6 @@ function setup() {
   w.scaleX.set(50, 5, 'cm');
   w.scaleY.set(50, -5, 'cm');
   w.axis.display = false;
-  w.axis.isDraggable = false;
   w.background.setCallback(drawBackground);     // Call background to draw sky and grass.
 
   // Configure graph box.
@@ -190,7 +188,7 @@ function setup() {
 function configGraphType() {
 
   graph.scaleX.set(35, 2, '');
-  switch(graph_type) {
+  switch(controls.graph_type.value) {
     case 'pos':
       box.title = "Posición vs. Tiempo";
       graph.scaleY.set(35, -20, '');
@@ -221,7 +219,6 @@ function setupControls() {
   
   // Select graph type options.
   controls.graph_type = new p$.dom.Options("graph_type", function(o) {
-    graph_type = o;
     reset();
   });
 
@@ -274,7 +271,7 @@ function reset() {
     objects[i].plot.clear();
 
     // Set marker in the initial position.
-    const y = graph_type === "pos" ? objects[i].d - objects[i].d0 : graph_type === "vel" ? objects[i].v : objects[i].accel;
+    const y = controls.graph_type.value === "pos" ? objects[i].d - objects[i].d0 : controls.graph_type.value === "vel" ? objects[i].v : objects[i].accel;
     objects[i].plot.addMarker(0, y);
 
   }
@@ -368,7 +365,7 @@ function draw() {
           finished = false;
 
           // Add point to graph and update marker to follow the latest point.
-          const y = graph_type === "pos" ? objects[i].d - objects[i].d0 : graph_type === "vel" ? objects[i].v : objects[i].accel;
+          const y = controls.graph_type.value === "pos" ? objects[i].d - objects[i].d0 : controls.graph_type.value === "vel" ? objects[i].v : objects[i].accel;
           objects[i].plot.addPoint(t, y);
           objects[i].plot.markers[0].x = t;
           objects[i].plot.markers[0].y = y;

@@ -12,9 +12,9 @@ var CEILING_HEIGHT = 10;                // Height of the ceiling in pixels.
 // Variables
 var weight_side = 0;                    // Dimensions of the hanging mass. Depends on its mass.
 var spring_y = 0;                       // Current extension of the spring. 
-var natural_y = 0;                      // Y coordinate of the spring's natural length.
+var natural_y = 0;                      // Y coordinate of the spring"s natural length.
 var equilibrium_y = 0;                  // Y coordinate of the equilibrium point of the spring.
-var extended_y = 0;                     // Y coordinate of the spring's extended length.
+var extended_y = 0;                     // Y coordinate of the spring"s extended length.
 var frame = 0;                          // Current frame.
 var started = false;                    // Is the animation running?
 var horizontal_distance_labels = true;  // Display labels horizontally or vertically?
@@ -51,8 +51,8 @@ function setup() {
   w.axis.display = true;
   w.axis.displayX = false;
   w.axis.grid = false;
-  w.scaleX.set(50, 2, 'cm');
-  w.scaleY.set(50, -2, 'cm');
+  w.scaleX.set(50, 2, "cm");
+  w.scaleY.set(50, -2, "cm");
 
   // Define background.
   w.background.setCallback(function(ctx) {
@@ -70,8 +70,8 @@ function setup() {
   graph = box.addGraph(300, 200, {});
   graph.setLabels("", "Tiempo [s]", "Amplitud [cm]");
   graph.setPosition(0, 20);
-  graph.scaleX.set(50, 2, '');
-  graph.scaleY.set(50, -2, '');
+  graph.scaleX.set(50, 2, "");
+  graph.scaleY.set(50, -2, "");
   graph.setAxisPosition("left", "center");
   path = graph.addPlot( { color: p$.COLORS.BLUE, label: "", limit: 1000 } );
   damping_plot_top = graph.addPlot( { color: p$.BOX_COLORS.GRAY.BORDER, label: "", limit: 1000, display: false } );
@@ -97,15 +97,15 @@ function setup() {
 function setupControls() {
 
   // Configure sliders.
-  controls.mass = new p$.Slider({ id: "mass", start: 2.5, min: 1, max: 3, decPlaces: 1, units: "kg", callback: reset, color: p$.COLORS.RED });
-  controls.amplitude = new p$.Slider({ id: "amplitude", start: 2, min: 0, max: 3, decPlaces: 1, units: "cm", callback: reset, color: p$.COLORS.GREEN });
-  controls.k = new p$.Slider({ id: "k", start: 5, min: 5, max: 10, decPlaces: 1, units: "N/m", callback: reset, color: p$.COLORS.BLUE });
-  controls.damping = new p$.Slider({ id: "damping", start: 0.5, min: 0, max: 3, decPlaces: 1, units: "", callback: reset, color: p$.COLORS.YELLOW });
+  controls.mass       = new p$.Slider({ id: "mass", start: 2.5, min: 1, max: 3, decPlaces: 1, units: "kg", callback: reset, color: p$.COLORS.RED });
+  controls.amplitude  = new p$.Slider({ id: "amplitude", start: 2, min: 0, max: 3, decPlaces: 1, units: "cm", callback: reset, color: p$.COLORS.GREEN });
+  controls.k          = new p$.Slider({ id: "k", start: 5, min: 5, max: 10, decPlaces: 1, units: "N/m", callback: reset, color: p$.COLORS.BLUE });
+  controls.damping    = new p$.Slider({ id: "damping", start: 0.5, min: 0, max: 3, decPlaces: 1, units: "", callback: reset, color: p$.COLORS.YELLOW });
   
   // Buttons.
   controls.start = new p$.dom.Button("start", function() {
     // Reset the simulation only if the simulation has ended.
-    if (frame >= path.points.length - 1) reset();
+    if (frame >= path.points.length - 1) frame = 0;
     started = true;
   });
   controls.pause = new p$.dom.Button("pause", function() {
@@ -148,9 +148,9 @@ function reset() {
 
   // Calculate spring lengths. They are the absolute y length of the spring.
   // This means the zero point is taken into consideration.
-  natural_y = SPRING_Y0 - SPRING_NATURAL_LENGTH;
+  natural_y     = SPRING_Y0 - SPRING_NATURAL_LENGTH;
   equilibrium_y = natural_y - equilibrium_point;
-  extended_y = equilibrium_y - controls.amplitude.value;
+  extended_y    = equilibrium_y - controls.amplitude.value;
 
   // Calculate dimensions of box based on mass.
   weight_side = Math.pow(controls.mass.value * 2, 1 / 3);
@@ -170,10 +170,10 @@ function reset() {
   resize();
 
   // Precalculate the simulation.
-  var omega = Math.sqrt(controls.k.value / controls.mass.value);
-  var t_period = 2 * p$.PI * Math.sqrt(controls.mass.value / controls.k.value);
-  var y = controls.damping.value / (2 * controls.mass.value);
-  var t = 0;
+  var omega     = Math.sqrt(controls.k.value / controls.mass.value);
+  var t_period  = 2 * p$.PI * Math.sqrt(controls.mass.value / controls.k.value);
+  var y         = controls.damping.value / (2 * controls.mass.value);
+  var t         = 0;
 
   // Calculate the displacement and damping factor of the spring.
   function calc(t) {
@@ -184,7 +184,7 @@ function reset() {
     damping_plot_bottom.points.push([t, -damp_factor * controls.amplitude.value]);
   }
 
-  // Calculate the spring's movement and store it in an array.
+  // Calculate the spring"s movement and store it in an array.
   if (controls.damping.value > 0) {
     // Record points until the spring stops moving.
     do {
@@ -227,7 +227,7 @@ function draw() {
     }
   }
 
-  // Set the spring's position.
+  // Set the spring"s position.
   spring_y = equilibrium_y + path.points[frame][1];
   path.markers[0].x = path.points[frame][0];
   path.markers[0].y = path.points[frame][1];
@@ -330,7 +330,7 @@ function drawSpring() {
     // Calculate the x position of the lines
     var x0 = SPRING_X0 * 2;
 
-    // Draw y0 / spring's natural length.
+    // Draw y0 / spring"s natural length.
     spring.stroke(p$.BOX_COLORS.YELLOW.BORDER);
     spring.fill(p$.BOX_COLORS.YELLOW.BACKGROUND);
     spring.rect(0, 0, x0, natural_y);

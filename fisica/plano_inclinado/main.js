@@ -41,7 +41,6 @@ var accel = 0;                          // Magnitude of the system's acceleratio
 var tension = 0;                        // Tension of the system.
 var started = false;                    // Has the animation started?
 var t = 0;                              // Time of the animation.
-var show_vectors = true;                // Show the vectors of the masses.
 
 // p$ Objects
 var w;
@@ -104,9 +103,7 @@ function setupControls() {
   });
 
   // Show vector option.
-  controls.show_vectors = new p$.dom.Option("showVectors", function(c) {
-    show_vectors = c;
-  });
+  controls.show_vectors = new p$.dom.Option("showVectors");
   
 }
 
@@ -296,7 +293,7 @@ function drawScene() {
     scene.text(labels.accel.value, (box1_accel_x0 + box1_accel_x1) / 2, box1_accel_y0 + 0.3)
 
     // mg vector.
-    if (show_vectors) {
+    if (controls.show_vectors.value) {
       var weight = -box1.weight * WEIGHT_VECTOR_SCALE_FACTOR;
       scene.vectorFromMag(box1.half_side, box1.half_side, weight * sin_a, 0, p$.COLORS.GRAY, true);
       scene.vectorFromMag(box1.half_side, box1.half_side, weight * cos_a, 90, p$.COLORS.GRAY, true);
@@ -311,7 +308,7 @@ function drawScene() {
     scene.text(box1.mass + "kg", box1.half_side, box1.half_side);
     
     // mg vector label.
-    if (show_vectors) {
+    if (controls.show_vectors.value) {
       scene.translate(pos[0], pos[1]);
       scene.rotate(-plane_angle_deg);
       scene.text("m1*g", 0, -0.3);
@@ -334,7 +331,7 @@ function drawScene() {
     scene.line(box2_wire_x, pulley_y, box2_wire_x, box2.y);
 
     // mg vector
-    if (show_vectors) {
+    if (controls.show_vectors.value) {
       var weight = -box2.weight * WEIGHT_VECTOR_SCALE_FACTOR;
       var pos = scene.vectorFromMag(pulley_x + box2.half_side, box2.y + box2.half_side, weight, 90, p$.COLORS.YELLOW);
       scene.text("m2*g", pos[0], pos[1] -0.3);

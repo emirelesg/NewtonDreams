@@ -139,13 +139,13 @@
                             </div>
                         </div> <!-- end .row- -->
                         <div class="row button-row">
-                            <div class="col-6">
+                            <div class="col">
                                 <button type="button" id="start" class="btn btn-sm btn-success btn-block">
                                     <i data-feather="play"></i>
                                     <span class="d-none d-sm-inline">Simular</span>
                                 </button>
                             </div>
-                            <div class="col-6">
+                            <div class="col">
                                 <button type="button" id="randomize" class="btn btn-sm btn-primary btn-block">
                                     <i data-feather="shuffle"></i>    
                                     <span class="d-none d-sm-inline">Valores Aleatorios</span>
