@@ -1,6 +1,6 @@
 // https://webpack.js.org/configuration/devtool/
 // https://www.npmjs.com/package/typedoc-webpack-plugin
-const LiveReloadPlugin = require("webpack-livereload-plugin");
+// const LiveReloadPlugin = require("webpack-livereload-plugin");
 // const TypedocWebpackPlugin = require('typedoc-webpack-plugin');
 module.exports = {
   mode: "development",
@@ -25,7 +25,10 @@ module.exports = {
     ]
   },
   plugins: [
-  ]
+  ],
+  watchOptions: {
+    poll: true
+  }
   // plugins: [
   //   new LiveReloadPlugin({
   //     appendScriptTag: true

@@ -19,6 +19,12 @@ export default class DOMElement {
      */
     this.obj = $(utils.fixId(id));
 
+    /**
+     * Stores if the element is enabled or disabled.
+     * @type {boolean}
+     */
+    this.isEnabled = !this.obj.prop("disabled");
+
   }
 
   /**
@@ -26,7 +32,10 @@ export default class DOMElement {
    * @param {boolean} state Desired state of the element.
    */
   enabled(state) {
-    this.obj.prop("disabled", !state);
+    if (this.isEnabled !== state) {
+      this.isEnabled = state;
+      this.obj.prop("disabled", !this.isEnabled);
+    }
   }
 
 }
@@ -62,12 +71,16 @@ export class Option extends DOMElement {
      */
     this.onClick = onClick;
 
+    /**
+     * State of the option.
+     * @type {boolean}
+     */
+    this.value = this.obj.prop("checked");
+
     // Set the callback.
-    const self = this;
     this.obj.on("click", () => {
-      if (utils.isFunction(self.onClick)) {
-        if (utils.isFunction(self.onClick)) self.onClick(self.obj.prop("checked"));
-      }
+      this.value = this.obj.prop("checked");
+      if (utils.isFunction(this.onClick)) this.onClick(this.obj.prop("checked"));
     });
 
   }
@@ -104,11 +117,129 @@ export class Button extends DOMElement {
     this.onClick = onClick;
 
     // Set the callback.
-    const self = this;
     this.obj.on("click", () => {
-      if (utils.isFunction(self.onClick)) self.onClick();
+      if (utils.isFunction(this.onClick)) this.onClick();
     });
 
+  }
+
+}
+
+/**
+ * Class used to handle an Input (<input>).
+ * @public
+ * @class Input
+ * @example
+ * // Given the following HTML input element:
+ * //   <input id="value"></button>
+ * var value = new Input("value", function(val) {
+ *  console.log(val);
+ * });
+ */
+export class Input extends DOMElement {
+
+  /**
+   * @constructor
+   * @param {string} id HTML id of the input.
+   * @param {function} onChange Callback function for when input value changes.
+   */
+  constructor(id, onChange, opts) {
+
+    // Extend DOMElement.
+    super(id);
+
+    /**
+     * Callback function for when the input value changes.
+     * @type {function}
+     */
+    this.onChange = onChange;
+
+    /**
+     * Callback function for when the focus is lost.
+     * @type {function}
+     */
+    this.onFocusout = undefined;
+
+    /**
+     * Defines if the parsed value must be casted to a number, otherwise the input is invalid.
+     * @type {boolean}
+     */
+    this.isNumber = false;
+
+    /**
+     * Flag for remembering if the input is invalid.
+     * @type {boolean}
+     */
+    this.isInvalid = false;
+
+    /**
+     * Stores the parsed value of the input.
+     * @type {(number|string)}
+     */
+    this.value = '';
+
+    /**
+     * Default value for the input.
+     * @type {(number|string)}
+     */
+    this.default = '';
+
+    // Apply user settings.
+    utils.loadOptions(this, opts);
+    this.set(this.default);
+
+    // Callback whenever the input is changed by the user.
+    this.obj.on("input", (e) => {
+      const rawValue = this.obj.val();
+      if (this.isNumber) {
+        if (rawValue === '') {
+          this.value = this.default;
+          this.invalid(false);
+        } else {
+          const parsedValue = parseFloat(rawValue);
+          this.invalid(isNaN(parsedValue));
+          if (!isNaN(parsedValue)) this.value = parsedValue;
+        }
+      } else {
+        this.value = rawValue;
+      }
+      if (utils.isFunction(this.onChange)) this.onChange(this.value);
+    });
+
+    // Watch for the focusout event.
+    // After the user leaves the input, set the value to the parsed one.
+    this.obj.on('focusout', () => {
+      if (this.isNumber) {
+        this.set(this.value);
+        if (utils.isFunction(this.onChange)) this.onChange(this.value);
+        if (utils.isFunction(this.onFocusout)) this.onFocusout();
+      }
+    });
+
+    // When the user presses enter, focusout.
+    this.obj.on('keyup', (e) => {
+      if (e.keyCode === 13) {
+        this.obj.blur();
+      }
+    })
+
+  }
+
+  set(value) {
+    this.value = value || this.default;
+    this.obj.val(this.value);
+    this.invalid(false);
+  }
+
+  invalid(state) {
+    if (this.isInvalid !== state) {
+      this.isInvalid = state;
+      if (this.isInvalid) {
+        this.obj.addClass('invalid');
+      } else {
+        this.obj.removeClass('invalid');
+      }
+    }
   }
 
 }
@@ -147,12 +278,35 @@ export class Select extends DOMElement {
      */
     this.onChange = onChange;
 
+    /**
+     * Current option selected.
+     * @type {number}
+     */
+    this.value = 0;
+
     // Set the callback.
-    const self = this;
-    this.obj.on('change', function() {
-      if (utils.isFunction(self.onChange)) self.onChange(self.obj.find(":selected").val());
+    this.obj.on('change', () => {
+      this.value = this.obj.find(":selected").val();
+      if (utils.isFunction(this.onChange)) this.onChange(this.value);
     });
 
+  }
+
+  /**
+   * Sets the options for the select element.
+   * @param {Object} options Object that will define the options in the select element.
+   * @param {Number} select Key of the option to select.
+   */
+  setOptions(options, select) {
+    // Remove old options.
+    this.obj.empty();
+    // Add new options.
+    for (let [key, value] of Object.entries(options)) {
+      this.obj.append(
+        $('<option></option>').attr('value', value).attr('selected', value === select).text(key)
+      );
+    }
+    this.obj.trigger('change');
   }
   
 }
@@ -193,6 +347,12 @@ export class Options {
     this.obj = $(this.name);
 
     /**
+     * Value of the currently selected radio option.
+     * @type {string}
+     */
+    this.value = $(`${this.name}:checked`).val();
+
+    /**
      * Callback function for when a radio button is selected. The value of the selected 
      * radio button is passed to the callback function as a parameter.
      * @type {function}
@@ -200,13 +360,30 @@ export class Options {
     this.onChange = onChange;
 
     // Set the callback.
-    const self = this;
     this.obj.change(() => {
-      if (utils.isFunction(self.onChange)) {
-        self.onChange($(`${self.name}:checked`).val());
+      this.value = $(`${this.name}:checked`).val();
+      if (utils.isFunction(this.onChange)) {
+        this.onChange(this.value);
       }
     });
   
+  }
+
+  /**
+   * Selects a radio button using its value.
+   * @param {string} value Value of the radio button to select.
+   */
+  select(value) {
+    this.value = value;
+    this.obj.each(function() {
+      if ($(this).val() === value) {
+        $(this).parent().addClass('active');
+        $(this).prop('checked', true);
+      } else {
+        $(this).parent().removeClass('active');
+        $(this).prop('checked', false);
+      }
+    });
   }
 
   /**

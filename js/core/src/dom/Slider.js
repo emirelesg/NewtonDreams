@@ -1,5 +1,6 @@
 import * as utils from "../Utils";
 import * as constants from "../Constants";
+import * as dom from './dom';
 
 /**
  * Class used to handle the sliders and their labels. 
@@ -38,6 +39,13 @@ export default class Slider {
      * @type {string}
      */
     this.prevColor = this.color;
+
+    /**
+     * Creates a Dom element from the cloned Input. This value the user inputs is validated
+     * to always be a number.
+     * @type {dom.Input}
+     */
+    this.clone = undefined;
 
     /**
      * Sets the units that the slider will use.
@@ -116,11 +124,11 @@ export default class Slider {
      * @type {object}
      */
     this.label = $(utils.fixId(`${this.id}_label`));
-
+    
     // Set the current color to the slider.
     this.setColor();
     this.setLabel(this.start);
-
+    
     // Init slider using the provided values.
     const self = this;
     /* eslint-disable-next-line no-undef */
@@ -132,7 +140,7 @@ export default class Slider {
         max: this.max
       }
     });
-
+    
     // Configure the callback for when the slider changes value.
     this.slider.noUiSlider.on("slide", values => {
       self.value = utils.round(values[0], self.decPlaces);
@@ -141,6 +149,34 @@ export default class Slider {
         self.callback(self.callbackArgs);
       }
     });
+
+    // Create a clone of the input. It must be initially hidden.
+    let cloneId = `${this.label.prop('id')}_editable`;
+    let cloneObj = this.label.clone();
+    cloneObj.prop('id', cloneId).prop('readonly', false).addClass('d-none');
+    this.label.after(cloneObj);
+
+    // Create the Dom object from the cloned input.
+    this.clone = new dom.Input(cloneId, undefined, 
+      { 
+        isNumber: true,
+        onFocusout: () => {
+          this.set(this.clone.value);
+          this.clone.obj.addClass('d-none');
+          this.label.removeClass('d-none');
+        }
+      }
+    );
+
+    // When the label is clicked, hide it and show the cloned input.
+    // Sets also the current value of the slider to the input.
+    this.label.on('click', () => {
+      this.clone.set(this.value);
+      this.clone.obj.removeClass('d-none');
+      this.clone.obj.select();
+      this.label.addClass('d-none');
+    });
+
   }
 
   /**
@@ -164,9 +200,7 @@ export default class Slider {
     this.slider.noUiSlider.set(parsed);
     this.setLabel(parsed);
     this.value = utils.round(parsed, this.decPlaces);
-    if (utils.isFunction(this.callback)) {
-      this.callback(this.callbackArgs);
-    }
+    if (utils.isFunction(this.callback)) this.callback(this.callbackArgs);
   }
 
   /**

@@ -340,17 +340,18 @@ export default class Graph extends WorldElement {
 
     // Draw legends.
     if (this.legends_enabled) {
-      const legendSpace = this.width / this.plots.length;
-      for (let i = 0; i < this.plots.length; i += 1) {
+      const enabledPlots = this.plots.filter((p) => p.display && p.label !== '');
+      const legendSpace = this.width / enabledPlots.length;
+      enabledPlots.forEach((plot, i) => {
         ctx.beginPath();
         this.font.set({ size: 12, baseline: "middle" });
         this.font.toCtx(ctx);
         const x = Math.floor(legendSpace / 2 + legendSpace * i);
         const y = Math.floor(this.padding.top * 0.3);
-        ctx.fillText(this.plots[i].label, x, y);
-        ctx.fillStyle = this.plots[i].color;
+        ctx.fillText(plot.label, x, y);
+        ctx.fillStyle = plot.color;
         ctx.arc(
-          Math.floor(x - ctx.measureText(this.plots[i].label).width / 2 - 10),
+          Math.floor(x - ctx.measureText(plot.label).width / 2 - 10),
           y,
           4,
           0,
@@ -358,7 +359,7 @@ export default class Graph extends WorldElement {
         );
         ctx.fill();
         ctx.closePath();
-      }
+      });
     }
 
     // Draw Title
@@ -402,9 +403,9 @@ export default class Graph extends WorldElement {
     this.axis.draw();
 
     // Draw plots.
-    for (let i = 0; i < this.plots.length; i += 1) {
-      if (this.plots[i].display) this.plots[i].draw();
-    }
+    this.plots.forEach(plot => {
+      if (plot.display) plot.draw()
+    });
   }
 
 }

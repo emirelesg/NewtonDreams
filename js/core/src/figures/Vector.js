@@ -54,6 +54,12 @@ export default class Vector extends WorldElement {
     this.componentsAtOrigin = true;
 
     /**
+     * Label for the vector.
+     * @type {string}
+     */
+    this.label = '';
+
+    /**
      * Flag for setting the angle style of the vector.
      * Default value is {@link ANGLE_STYLE}.DEG.
      * @type {number}
@@ -91,6 +97,7 @@ export default class Vector extends WorldElement {
    * @param {number} y1 End -y coordinate of the vector in pixels.
    * @param {string} color Color of the vector in HEX format.
    * @param {boolean} dashed Flag for drawing the vector with a dashed line.
+   * @returns {Array} Array with elem 0 being the magnitude and elem 1 the angle in radians.
    */
   drawLine(x0, y0, x1, y1, color, dashed) {
     const { ctx } = this.world;
@@ -126,6 +133,8 @@ export default class Vector extends WorldElement {
     ctx.fill();
     ctx.stroke();
     ctx.closePath();
+
+    return [mag, a1];
   }
   
   /**
@@ -152,7 +161,12 @@ export default class Vector extends WorldElement {
         true
       );
     }
-    this.drawLine(fromX, fromY, toX, toY, this.color, false);
+    let [_, angle] = this.drawLine(fromX, fromY, toX, toY, this.color, false);
+    if (this.label != '') {
+      // Draw the label at the tip of the vector.
+      this.font.toCtx(ctx);
+      ctx.fillText(this.label, toX + 10 * Math.cos(angle), toY + 10 * Math.sin(angle));
+    }
     ctx.lineWidth = prevLineWidth;
   }
 

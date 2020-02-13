@@ -241,3 +241,19 @@ export function gaussian(n) {
   }
   return sum / n;
 }
+
+
+/**
+ * Adds an alpha channel to an rgb color.
+ * Must have the pattern #AABBCC.
+ * @public
+ * @param {string} color Color to add alpha.
+ * @param {number} alpha Alpha channel added to the color.
+ */
+export function rgbToRgba(color, alpha) {
+  const alphaP = alpha > 1 ? 1 : alpha < 0 ? 0 : alpha;
+  const r = parseInt(color.substr(1, 2), 16);
+  const g = parseInt(color.substr(3, 2), 16);
+  const b = parseInt(color.substr(5, 2), 16);
+  return `rgba(${r}, ${g}, ${b}, ${alphaP})`
+}

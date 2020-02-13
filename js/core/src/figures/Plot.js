@@ -27,6 +27,24 @@ export default class Plot extends WorldElement {
     this.points = [];
 
     /**
+     * Sets the maximum index to display.
+     * @type {number}
+     */
+    this.displayUntil = -1;
+
+    /**
+     * Sets a flag for shading the area under the curve.
+     * @type {boolean}
+     */
+    this.shade = false;
+
+    /**
+     * Sets the color of the shade.
+     * @type {string}
+     */
+    this.shadeColor = 'rgba(1, 1, 1, 0.2)';
+
+    /**
      * Array for storing the markers.
      * @type {object[]}
      */
@@ -144,6 +162,7 @@ export default class Plot extends WorldElement {
   clear() {
     this.points = [];
     this.markers = [];
+    this.displayUntil = -1;
   }
 
   /**
@@ -151,83 +170,153 @@ export default class Plot extends WorldElement {
    * @private
    */
   draw() {
+
+    // Get all points.
+    const p = this.getPoints();
+
+    // Drawing sequence.
+    if (this.shade) this.drawShade(p);
+    this.drawPlot(p);
+    this.drawMarkers();
+    
+  }
+
+  /**
+   * Calculates the amount of points that can be displayed, starting from 0.
+   * @returns {number} The index of the last point.
+   */
+  maxIdx() {
+    return this.displayUntil >= 0 && this.displayUntil < this.points.length ? this.displayUntil + 1 : this.points.length;
+  }
+
+  /**
+   * Returns the points array until the max Idx. Also converts every point to pixels and determines if
+   * the point is visible.
+   * @return {any} Array of points.
+   */
+  getPoints() {
+    return this.points
+      .filter((_, idx) => idx < this.maxIdx())
+      .map(p => {
+        const px = p[0] * this.world.scaleX.toPx;
+        const py = p[1] * this.world.scaleY.toPx;
+        return [
+          ...p,
+          px,
+          py,
+          this.world.axis.isPointVisible(px, py)
+        ];
+      });
+  }
+
+  /**
+   * Shade the area under the curve.
+   * @param {array} p Array of precalculated points.
+   * @private
+   */
+  drawShade(p) {
+    const { scaleX, scaleY, ctx } = this.world;
+    ctx.beginPath();
+    ctx.fillStyle = this.shadeColor;
+    let disconnected = false;
+    p.forEach(([x, y, px, py, isVisible], i) => {
+      if (this.drawInvisiblePoints || isVisible) {
+        if (i === 0 || disconnected) {
+          ctx.moveTo(px, 0);
+          ctx.lineTo(px, py);
+          disconnected = false;
+        } else {
+          ctx.lineTo(px, py);
+          if (i === this.maxIdx() - 1) ctx.lineTo(px, 0);          
+        }
+      } else {
+        disconnected = true;
+        ctx.lineTo(px, 0);
+      }
+    });
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  /**
+   * Draw the plot.
+   * @param {array} p Array of precalculated points.
+   * @private
+   */
+  drawPlot(p) {
     const { scaleX, scaleY, ctx } = this.world;
     const prevLineWidth = ctx.lineWidth;
-
-    // Draw path.
     ctx.beginPath();
     ctx.lineWidth = this.lineWidth;
     ctx.strokeStyle = this.color;
     let disconnected = false;
-    for (let i = 0; i < this.points.length; i++) {
-
-      // Draw line plot.
-      const x = this.points[i][0] * scaleX.toPx;
-      const y = this.points[i][1] * scaleY.toPx;
-
+    p.forEach(([x, y, px, py, isVisible], i) => {
       if (this.style === "line") {
-        if (this.drawInvisiblePoints || this.world.axis.isPointVisible(x, y)) {
+        if (this.drawInvisiblePoints || isVisible) {
           if (i === 0 || disconnected) {
-            ctx.moveTo(x, y);
+            ctx.moveTo(px, py);
             disconnected = false;
           } else {
-            ctx.lineTo(x, y);
+            ctx.lineTo(px, py);
           }
         } else {
           disconnected = true;
         }
       } else {
-
         // Draw histogram.
         ctx.fillStyle = this.color;
-        ctx.rect(x - this.binWidth / 2, 0, this.binWidth, y);
+        ctx.rect(px - this.binWidth / 2, 0, this.binWidth, py);
         ctx.fill();
-
       }
-
-    }
+    });
     ctx.stroke();
     ctx.closePath();
+    ctx.lineWidth = prevLineWidth;
+  }
 
-    // Draw markers.
+  /**
+   * Draw the markers.
+   * @private
+   */
+  drawMarkers() {
+    const { scaleX, scaleY, ctx } = this.world;
     this.font.set({ baseline: "middle" });
-    for (let i = 0; i < this.markers.length; i++) {
-      // Draw marker circles.
-      const x = this.markers[i].x * scaleX.toPx;
-      const y = this.markers[i].y * scaleY.toPx;
-      ctx.beginPath();
-      ctx.fillStyle = this.markers[i].color;
-      ctx.arc(x, y, this.markerRadius, 0, constants.TWO_PI);
-      ctx.fill();
-      // ctx.closePath();
+    this.markers.forEach((m) => {
 
-      // Draw marker label box.
+      // Draw marker circles.
+      const px = m.x * scaleX.toPx;
+      const py = m.y * scaleY.toPx;
+      ctx.beginPath();
+      ctx.fillStyle = m.color;
+      ctx.arc(px, py, this.markerRadius, 0, constants.TWO_PI);
+      ctx.fill();
+      ctx.closePath();
 
       // Draw marker labels.
-      if (this.markers[i].label !== "") {
-        const direction = this.markers[i].top ? -1 : 1;
+      if (m.label !== "") {
+        const direction = m.top ? -1 : 1;
         this.font.toCtx(ctx);
-        if (this.markers[i].lower_label !== "") {
+        if (m.lower_label !== "") {
           ctx.fillText(
-            this.markers[i].label,
-            x,
-            y + (this.markerRadius + 25) * direction
+            m.label,
+            px,
+            py + (this.markerRadius + 25) * direction
           );
           ctx.fillText(
-            this.markers[i].lower_label,
-            x,
-            y + (this.markerRadius + 10) * direction
+            m.lower_label,
+            px,
+            py + (this.markerRadius + 10) * direction
           );
         } else {
           ctx.fillText(
-            this.markers[i].label,
-            x,
-            y + (this.markerRadius + 10) * direction
+            m.label,
+            px,
+            py + (this.markerRadius + 10) * direction
           );
         }
       }
-    }
-    ctx.lineWidth = prevLineWidth;
+    });
   }
+
 
 }

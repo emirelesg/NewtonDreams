@@ -138,12 +138,7 @@ export default class DataCursor extends WorldElement {
 
     // Iterate through all points in the plot and find the closest point.
     let closestPoint = { distance: Infinity, px: 0, py: 0, label: '', color: '' };
-    plot.points.forEach(([x, y]) => {
-
-      // Convert the points to pixels.
-      const px = x * plot.world.scaleX.toPx;
-      const py = y * plot.world.scaleY.toPx;
-      const isVisible = plot.world.axis.isPointVisible(px, py);
+    plot.getPoints().forEach(([x, y, px, py, isVisible]) => {
 
       // Only analyze points that are in view.
       if (isVisible) {
@@ -180,7 +175,9 @@ export default class DataCursor extends WorldElement {
    */
   isMouseOver() {
     // Get the closest point from every plot, and then sort them by increasing distance.
-    let closestPoints = this.plots.map(plot => this.isMouseOverPlot(plot)).sort((a, b) => a.distance - b.distance);
+    let closestPoints = this.plots
+      .filter(plot => plot.display)
+      .map(plot => this.isMouseOverPlot(plot)).sort((a, b) => a.distance - b.distance);
     if (closestPoints.length && closestPoints[0].distance < Infinity) {
       this.closest = closestPoints[0];
       return true;
