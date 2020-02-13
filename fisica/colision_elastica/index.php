@@ -2,7 +2,7 @@
     require '../../php/lang.php';
     require '../../php/data.php';
     $active         = $nav_items['physics'];
-    // $active_sim     = $active['sim']['operaciones_vectores'];
+    $active_sim     = $active['sim']['colision_elastica'];
 ?>
 <!doctype html>
 <html lang="es">

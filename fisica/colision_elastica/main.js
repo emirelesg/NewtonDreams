@@ -6,13 +6,15 @@ var ARROW_HEAD_H = ARROW_HEAD_L * p$.SIN60; // Height of the arrow's head.
 
 // Variables
 var started = false;                        // Flag for starting/stopping the simulation.
-var block1 = { mass: 0, vx: 0, width: 0, x: 0, label: 'M1', color: p$.BOX_COLORS.RED };
-var block2 = { mass: 0, vx: 0, width: 0, x: 0, label: 'M2', color: p$.BOX_COLORS.GREEN };
+var block1 = { mass: 0, vx: 0, width: 0, x: 0, label: 'm1', color: p$.BOX_COLORS.RED };
+var block2 = { mass: 0, vx: 0, width: 0, x: 0, label: 'm2', color: p$.BOX_COLORS.GREEN };
 
 // p$ Objects
 var w;
 var s = new p$.Shape(drawScene);
+var box = new p$.Box( { debug: false, title: "Resultados", isDraggable: false } );
 var controls = {};
+var labels = {};
 
 /**
  * Function runs when document is completely loaded.
@@ -34,11 +36,19 @@ function setup() {
   w.axis.display = false;
   w.background.setCallback(drawBackground);
 
+  // Configure box and add labels for vx and vy.
+  labels.v1 = box.addLabel(110, 14, { name: "V1", units: "m/s", labelWidth: 35 });
+  labels.v1.setPosition(0, 25);
+  labels.v2 = box.addLabel(110, 14, { name: "V2", units: "m/s", labelWidth: 35 });
+  labels.v2.setPosition(0, 50);
+  box.calculateDimensions();
+
   // Configure the z index of all objects.
   s.setZ(1);
+  box.setZ(2);
 
   // Add objects to world.
-  w.add(s);
+  w.add(s, box);
 
 }
 
@@ -49,7 +59,7 @@ function setupControls() {
 
   // Configure sliders.
   controls.m1 = new p$.Slider({ id: "m1", start: 3, min: 0.1, max: 5, decPlaces: 1, units: "kg", callback: reset });
-  controls.v1 = new p$.Slider({ id: "v1", start: 1, min: -5, max: 5, decPlaces: 1, units: "m/s", callback: reset });
+  controls.v1 = new p$.Slider({ id: "v1", start: 3, min: -5, max: 5, decPlaces: 1, units: "m/s", callback: reset });
   controls.m2 = new p$.Slider({ id: "m2", start: 3, min: 0.1, max: 5, decPlaces: 1, units: "kg", callback: reset, color: p$.COLORS.GREEN });
   controls.v2 = new p$.Slider({ id: "v2", start: -1, min: -5, max: 5, decPlaces: 1, units: "m/s", callback: reset, color: p$.COLORS.GREEN });
 
@@ -67,9 +77,9 @@ function setupControls() {
 function reset() {
 
   // Set the control's values to the block objects.
-  block1.vx = controls.v1.value;
+  block1.vx   = controls.v1.value;
   block1.mass = controls.m1.value;
-  block2.vx = controls.v2.value;
+  block2.vx   = controls.v2.value;
   block2.mass = controls.m2.value;
 
   // Calculate the blocks side.
@@ -93,6 +103,10 @@ function draw() {
   // Enable controls.
   controls.start.enabled(!started);
   controls.reset.enabled(started);
+
+  // Set result labels.
+  labels.v1.set(block1.vx);
+  labels.v2.set(block2.vx);
 
   // Move blocks.
   if (started) {
@@ -183,34 +197,37 @@ function drawScene() {
 
     // Mass label.
     s.font.set({ size: 14, color: p$.FONT_COLOR });
-    s.text(p$.utils.round(block.mass, 2) + " kg", block.x + block.width / 2, block.width > 1 ? block.width / 2 - 0.3 : block.width / 2);
+    s.text(controls[block.label].label.val(), block.x + block.width / 2, block.width > 1 ? block.width / 2 - 0.3 : block.width / 2);
     
-    s.save();
-    s.translate(block.x + block.width / 2, 3.5);
-    s.fill(p$.BOX_COLORS.ORANGE.BACKGROUND);
-    s.stroke(p$.BOX_COLORS.ORANGE.BORDER);
-    
-    // Draw the arrow head.
-    if (block.vx <  0) {
-      s.equilateralTriangle(arrowBodyW / 2 - ARROW_HEAD_H / 2, 0, ARROW_HEAD_L, 180);
-    } else {
-      s.equilateralTriangle(arrowBodyW / 2 + ARROW_HEAD_H / 2, 0, ARROW_HEAD_L, 0);
+    // Draw speed.
+    if (Math.abs(block.vx) > 0) {
+      s.save();
+      s.translate(block.x + block.width / 2, block.width + 0.75);
+      s.fill(p$.BOX_COLORS.ORANGE.BACKGROUND);
+      s.stroke(p$.BOX_COLORS.ORANGE.BORDER);
+      
+      // Draw the arrow head.
+      if (block.vx <  0) {
+        s.equilateralTriangle(arrowBodyW / 2 - ARROW_HEAD_H / 2, 0, ARROW_HEAD_L, 180);
+      } else {
+        s.equilateralTriangle(arrowBodyW / 2 + ARROW_HEAD_H / 2, 0, ARROW_HEAD_L, 0);
+      }
+      
+      // Draw the arrow body.
+      s.begin();
+      s.moveTo(arrowBodyW / 2, -ARROW_BODY_H/2);
+      s.lineTo(-arrowBodyW / 2, -ARROW_BODY_H/2);
+      s.lineTo(-arrowBodyW / 2, ARROW_BODY_H/2);
+      s.lineTo(arrowBodyW / 2, ARROW_BODY_H/2);
+      s.end();
+      
+      // Draw speed label inside arrow.
+      s.font.set({ size: 12, color: p$.BOX_COLORS.ORANGE.BORDER });
+      s.text(p$.utils.round(block.vx, 2) + " m/s", 0, 0);
+      
+      s.restore();
     }
-    
-    // Draw the arrow body.
-    s.begin();
-    s.moveTo(arrowBodyW / 2, -ARROW_BODY_H/2);
-    s.lineTo(-arrowBodyW / 2, -ARROW_BODY_H/2);
-    s.lineTo(-arrowBodyW / 2, ARROW_BODY_H/2);
-    s.lineTo(arrowBodyW / 2, ARROW_BODY_H/2);
-    s.end();
-    
-    // Draw speed label inside arrow.
-    s.font.set({ size: 12, color: p$.BOX_COLORS.ORANGE.BORDER });
-    s.text(p$.utils.round(block.vx, 2) + " m/s", 0, 0);
-
-    s.restore();
-
+      
   }
 
   drawBlock(block1);
@@ -223,4 +240,5 @@ function drawScene() {
  */
 function resize() {
   w.axis.setPosition(w.width / 2, w.height - 10);
+  box.setPosition(20, 20);
 }
