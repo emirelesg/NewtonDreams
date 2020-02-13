@@ -53,6 +53,20 @@
             "ver"   => "2.0.0",
             "date"  => "22/01/2019"
         ),
+        "colision_elastica" => array(
+            "name"  => "Colisión Elástica",
+            "desc"  => "Simula una colisión elástica sin fricción.",
+            "url"   => "$base/fisica/colision_elastica/",
+            "ver"   => "1.0.0",
+            "date"  => "03/02/2020"
+        ),
+        "conversion_unidades" => array(
+            "name"  => "Conversión de Unidades",
+            "desc"  => "Convierte distintos tipos de unidades físicas.",
+            "url"   => "$base/fisica/conversion_unidades/",
+            "ver"   => "1.0.0",
+            "date"  => "03/02/2020"
+        ),
         "flujo" => array(
             "name"  => "Flujo de Corriente por un Tubo",
             "desc"  => "Comprueba el Principio de Bernoulli.",
@@ -123,17 +137,31 @@
             "ver"   => "2.1.0",
             "date"  => "27/01/2020"
         ),
+        "trabajo" => array(
+            "name"  => "Trabajo",
+            "desc"  => "Calcula el trabajo realizado por una fuerza.",
+            "url"   => "$base/fisica/trabajo/",
+            "ver"   => "1.0.0",
+            "date"  => "06/02/2020"
+        ),
         "transferencia_calor" => array(
            "name"  => "Transferencia de calor",
            "desc"  => "Simula la transferencia de calor entre dos cuerpos.",
            "url"   => "$base/fisica/transferencia_calor/",
-           "ver"   => "1.0.0",
-           "date"  => "16/01/2020"
+           "ver"   => "1.1.0",
+           "date"  => "13/02/2020"
         )
     );
 
     // Statistics simulations.
     $statistics = array(
+        "area" => array(
+            "name"  => "Distribución Normal Estándar",
+            "desc"  => "Calcula el área bajo la curva normal estándar.",
+            "url"   => "$base/estadistica/distribucion_normal_estandar/",
+            "ver"   => "1.0.0",
+            "date"  => "12/02/2020"
+        ),
         "distribucion_normal" => array(
             "name"  => "Distribución Normal",
             "desc"  => "Cambia la media (&mu;) y desviación típica (&sigma;) de dos distribuciones normales.",
