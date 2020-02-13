@@ -56,51 +56,58 @@
                         <div class="row">
                             <div class="col clearfix">
                                 <h4 class="float-left">Variables</h4>
+                                <div class="form-check form-check-inline float-right m-0 h-100">
+                                    <input class="form-check-input" type="checkbox" id="vertical" value="vertical">
+                                    <label class="form-check-label" for="vertical">Vertical</label>
+                                </div>
                             </div>
                         </div> <!-- end .row- -->
                         <div class="row">
                             <div class="col">
                                 <table class="table slider-table">
-                                    <!-- <tr>
+                                    <tr>
                                         <td nowrap>Material</td>
                                         <td colspan=2>
                                             <div class="btn-group btn-block btn-group-toggle" data-toggle="buttons">
                                                 <label class="btn btn-sm w-100 btn-outline-primary active">
-                                                    <input type="radio" name="constant_type" value="Cu" autocomplete="off" checked> Cobre
+                                                    <input type="radio" name="material" value="Otro" autocomplete="off" checked>Otro
                                                 </label>
                                                 <label class="btn btn-sm w-100 btn-outline-primary">
-                                                    <input type="radio" name="constant_type" value="Al" autocomplete="off"> Aluminio
+                                                    <input type="radio" name="material" value="Madera" autocomplete="off">Madera
                                                 </label>
                                                 <label class="btn btn-sm w-100 btn-outline-primary">
-                                                    <input type="radio" name="constant_type" value="Pb" autocomplete="off"> Plomo
+                                                    <input type="radio" name="material" value="Concreto" autocomplete="off">Concreto
+                                                </label>
+                                                <label class="btn btn-sm w-100 btn-outline-primary">
+                                                    <input type="radio" name="material" value="Acero" autocomplete="off">Acero
                                                 </label>
                                             </div>
                                         </td>
-                                    </tr> -->
+                                    </tr>
                                     <tr>
                                         <td nowrap>Largo</td>
                                         <td class="w-100"><div id="bar_length_slider"></div></td>
-                                        <td><input id="bar_length_label" type="text" class="input-90 form-control form-control-sm text-center" readonly></td>
+                                        <td><input id="bar_length_label" type="text" class="input-100 form-control form-control-sm text-center" readonly></td>
                                     </tr>
                                     <tr>
                                         <td nowrap>Área</td>
                                         <td class="w-100"><div id="bar_area_slider"></div></td>
-                                        <td><input id="bar_area_label" type="text" class="input-90 form-control form-control-sm text-center" readonly></td>
+                                        <td><input id="bar_area_label" type="text" class="input-100 form-control form-control-sm text-center" readonly></td>
                                     </tr>
                                     <tr>
                                         <td nowrap>K</td>
                                         <td class="w-100"><div id="k_slider"></div></td>
-                                        <td><input id="k_label" type="text" class="input-90 form-control form-control-sm text-center" readonly></td>
+                                        <td><input id="k_label" type="text" class="input-100 form-control form-control-sm text-center" readonly></td>
                                     </tr>
                                     <tr>
                                         <td nowrap>T<sub>1</sub></td>
                                         <td class="w-100"><div id="t1_slider"></div></td>
-                                        <td><input id="t1_label" type="text" class="input-90 form-control form-control-sm text-center" readonly></td>
+                                        <td><input id="t1_label" type="text" class="input-100 form-control form-control-sm text-center" readonly></td>
                                     </tr>
                                     <tr>
                                         <td nowrap>T<sub>2</sub></td>
                                         <td class="w-100"><div id="t2_slider"></div></td>
-                                        <td><input id="t2_label" type="text" class="input-90 form-control form-control-sm text-center" readonly></td>
+                                        <td><input id="t2_label" type="text" class="input-100 form-control form-control-sm text-center" readonly></td>
                                     </tr>
                                     
                                 </table>
