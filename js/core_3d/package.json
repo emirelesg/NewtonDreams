@@ -1,0 +1,11 @@
+{
+  "name": "core_3d",
+  "version": "1.0.0",
+  "scripts": {},
+  "dependencies": {
+    "three": "^0.113.2"
+  },
+  "devDependencies": {
+    "@types/node": "^13.7.7"
+  }
+}
