@@ -48,6 +48,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isString">isString</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-loadOptions">loadOptions</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-rad">rad</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-rgbToRgba">rgbToRgba</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-round">round</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sin">sin</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ANGLE_STYLE">ANGLE_STYLE</a></span></span></li>
@@ -90,12 +91,14 @@
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#dom">dom</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/Slider.js~Slider.html">Slider</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Button.html">Button</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~DOMElement.html">DOMElement</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Input.html">Input</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Option.html">Option</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Options.html">Options</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Select.html">Select</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#figures">figures</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Axis.js~Axis.html">Axis</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Ball.js~Ball.html">Ball</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Box.js~Box.html">Box</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/DataCursor.js~DataCursor.html">DataCursor</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Picture.js~Picture.html">Picture</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Plot.js~Plot.html">Plot</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Shape.js~Shape.html">Shape</a></span></span></li>
@@ -164,6 +167,12 @@ export default class Vector extends WorldElement {
     this.componentsAtOrigin = true;
 
     /**
+     * Label for the vector.
+     * @type {string}
+     */
+    this.label = &apos;&apos;;
+
+    /**
      * Flag for setting the angle style of the vector.
      * Default value is {@link ANGLE_STYLE}.DEG.
      * @type {number}
@@ -201,6 +210,7 @@ export default class Vector extends WorldElement {
    * @param {number} y1 End -y coordinate of the vector in pixels.
    * @param {string} color Color of the vector in HEX format.
    * @param {boolean} dashed Flag for drawing the vector with a dashed line.
+   * @returns {Array} Array with elem 0 being the magnitude and elem 1 the angle in radians.
    */
   drawLine(x0, y0, x1, y1, color, dashed) {
     const { ctx } = this.world;
@@ -236,6 +246,8 @@ export default class Vector extends WorldElement {
     ctx.fill();
     ctx.stroke();
     ctx.closePath();
+
+    return [mag, a1];
   }
   
   /**
@@ -262,7 +274,12 @@ export default class Vector extends WorldElement {
         true
       );
     }
-    this.drawLine(fromX, fromY, toX, toY, this.color, false);
+    let [_, angle] = this.drawLine(fromX, fromY, toX, toY, this.color, false);
+    if (this.label != &apos;&apos;) {
+      // Draw the label at the tip of the vector.
+      this.font.toCtx(ctx);
+      ctx.fillText(this.label, toX + 10 * Math.cos(angle), toY + 10 * Math.sin(angle));
+    }
     ctx.lineWidth = prevLineWidth;
   }
 
@@ -397,10 +414,7 @@ export default class Vector extends WorldElement {
    */
   standardAngle() {
     const a = this.angle();
-    if (a &lt; 0) {
-      return a + 360;
-    }
-    return a;
+    return a &lt; 0 ? a + 360 : a;
   }
 
   /**

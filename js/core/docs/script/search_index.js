@@ -102,6 +102,12 @@ window.esdocSearchIndex = [
     "variable"
   ],
   [
+    "core/src/figures/datacursor.js~datacursor",
+    "class/src/figures/DataCursor.js~DataCursor.html",
+    "<span>DataCursor</span> <span class=\"search-result-import-path\">core/src/figures/DataCursor.js</span>",
+    "class"
+  ],
+  [
     "core/src/constants.js~e0",
     "variable/index.html#static-variable-E0",
     "<span>E0</span> <span class=\"search-result-import-path\">core/src/Constants.js</span>",
@@ -172,6 +178,12 @@ window.esdocSearchIndex = [
     "variable/index.html#static-variable-HALF_PI",
     "<span>HALF_PI</span> <span class=\"search-result-import-path\">core/src/Constants.js</span>",
     "variable"
+  ],
+  [
+    "core/src/dom/dom.js~input",
+    "class/src/dom/dom.js~Input.html",
+    "<span>Input</span> <span class=\"search-result-import-path\">core/src/dom/dom.js</span>",
+    "class"
   ],
   [
     "core/src/constants.js~k",
@@ -429,6 +441,12 @@ window.esdocSearchIndex = [
     "core/src/utils.js~rad",
     "function/index.html#static-function-rad",
     "<span>rad</span> <span class=\"search-result-import-path\">core/src/Utils.js</span>",
+    "function"
+  ],
+  [
+    "core/src/utils.js~rgbtorgba",
+    "function/index.html#static-function-rgbToRgba",
+    "<span>rgbToRgba</span> <span class=\"search-result-import-path\">core/src/Utils.js</span>",
     "function"
   ],
   [
@@ -1386,6 +1404,12 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "src/dom/slider.js~slider#clone",
+    "class/src/dom/Slider.js~Slider.html#instance-member-clone",
+    "src/dom/Slider.js~Slider#clone",
+    "member"
+  ],
+  [
     "src/dom/slider.js~slider#color",
     "class/src/dom/Slider.js~Slider.html#instance-member-color",
     "src/dom/Slider.js~Slider#color",
@@ -1524,9 +1548,69 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/dom/dom.js~domelement#isenabled",
+    "class/src/dom/dom.js~DOMElement.html#instance-member-isEnabled",
+    "src/dom/dom.js~DOMElement#isEnabled",
+    "member"
+  ],
+  [
     "src/dom/dom.js~domelement#obj",
     "class/src/dom/dom.js~DOMElement.html#instance-member-obj",
     "src/dom/dom.js~DOMElement#obj",
+    "member"
+  ],
+  [
+    "src/dom/dom.js~input#constructor",
+    "class/src/dom/dom.js~Input.html#instance-constructor-constructor",
+    "src/dom/dom.js~Input#constructor",
+    "method"
+  ],
+  [
+    "src/dom/dom.js~input#default",
+    "class/src/dom/dom.js~Input.html#instance-member-default",
+    "src/dom/dom.js~Input#default",
+    "member"
+  ],
+  [
+    "src/dom/dom.js~input#invalid",
+    "class/src/dom/dom.js~Input.html#instance-method-invalid",
+    "src/dom/dom.js~Input#invalid",
+    "method"
+  ],
+  [
+    "src/dom/dom.js~input#isinvalid",
+    "class/src/dom/dom.js~Input.html#instance-member-isInvalid",
+    "src/dom/dom.js~Input#isInvalid",
+    "member"
+  ],
+  [
+    "src/dom/dom.js~input#isnumber",
+    "class/src/dom/dom.js~Input.html#instance-member-isNumber",
+    "src/dom/dom.js~Input#isNumber",
+    "member"
+  ],
+  [
+    "src/dom/dom.js~input#onchange",
+    "class/src/dom/dom.js~Input.html#instance-member-onChange",
+    "src/dom/dom.js~Input#onChange",
+    "member"
+  ],
+  [
+    "src/dom/dom.js~input#onfocusout",
+    "class/src/dom/dom.js~Input.html#instance-member-onFocusout",
+    "src/dom/dom.js~Input#onFocusout",
+    "member"
+  ],
+  [
+    "src/dom/dom.js~input#set",
+    "class/src/dom/dom.js~Input.html#instance-method-set",
+    "src/dom/dom.js~Input#set",
+    "method"
+  ],
+  [
+    "src/dom/dom.js~input#value",
+    "class/src/dom/dom.js~Input.html#instance-member-value",
+    "src/dom/dom.js~Input#value",
     "member"
   ],
   [
@@ -1539,6 +1623,12 @@ window.esdocSearchIndex = [
     "src/dom/dom.js~option#onclick",
     "class/src/dom/dom.js~Option.html#instance-member-onClick",
     "src/dom/dom.js~Option#onClick",
+    "member"
+  ],
+  [
+    "src/dom/dom.js~option#value",
+    "class/src/dom/dom.js~Option.html#instance-member-value",
+    "src/dom/dom.js~Option#value",
     "member"
   ],
   [
@@ -1572,6 +1662,18 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "src/dom/dom.js~options#select",
+    "class/src/dom/dom.js~Options.html#instance-method-select",
+    "src/dom/dom.js~Options#select",
+    "method"
+  ],
+  [
+    "src/dom/dom.js~options#value",
+    "class/src/dom/dom.js~Options.html#instance-member-value",
+    "src/dom/dom.js~Options#value",
+    "member"
+  ],
+  [
     "src/dom/dom.js~select#constructor",
     "class/src/dom/dom.js~Select.html#instance-constructor-constructor",
     "src/dom/dom.js~Select#constructor",
@@ -1581,6 +1683,18 @@ window.esdocSearchIndex = [
     "src/dom/dom.js~select#onchange",
     "class/src/dom/dom.js~Select.html#instance-member-onChange",
     "src/dom/dom.js~Select#onChange",
+    "member"
+  ],
+  [
+    "src/dom/dom.js~select#setoptions",
+    "class/src/dom/dom.js~Select.html#instance-method-setOptions",
+    "src/dom/dom.js~Select#setOptions",
+    "method"
+  ],
+  [
+    "src/dom/dom.js~select#value",
+    "class/src/dom/dom.js~Select.html#instance-member-value",
+    "src/dom/dom.js~Select#value",
     "member"
   ],
   [
@@ -1914,6 +2028,90 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "src/figures/datacursor.js",
+    "file/src/figures/DataCursor.js.html",
+    "src/figures/DataCursor.js",
+    "file"
+  ],
+  [
+    "src/figures/datacursor.js~datacursor#add",
+    "class/src/figures/DataCursor.js~DataCursor.html#instance-method-add",
+    "src/figures/DataCursor.js~DataCursor#add",
+    "method"
+  ],
+  [
+    "src/figures/datacursor.js~datacursor#closest",
+    "class/src/figures/DataCursor.js~DataCursor.html#instance-member-closest",
+    "src/figures/DataCursor.js~DataCursor#closest",
+    "member"
+  ],
+  [
+    "src/figures/datacursor.js~datacursor#color",
+    "class/src/figures/DataCursor.js~DataCursor.html#instance-member-color",
+    "src/figures/DataCursor.js~DataCursor#color",
+    "member"
+  ],
+  [
+    "src/figures/datacursor.js~datacursor#constant",
+    "class/src/figures/DataCursor.js~DataCursor.html#instance-member-constant",
+    "src/figures/DataCursor.js~DataCursor#constant",
+    "member"
+  ],
+  [
+    "src/figures/datacursor.js~datacursor#constructor",
+    "class/src/figures/DataCursor.js~DataCursor.html#instance-constructor-constructor",
+    "src/figures/DataCursor.js~DataCursor#constructor",
+    "method"
+  ],
+  [
+    "src/figures/datacursor.js~datacursor#cursor",
+    "class/src/figures/DataCursor.js~DataCursor.html#instance-member-cursor",
+    "src/figures/DataCursor.js~DataCursor#cursor",
+    "member"
+  ],
+  [
+    "src/figures/datacursor.js~datacursor#cursorradius",
+    "class/src/figures/DataCursor.js~DataCursor.html#instance-member-cursorRadius",
+    "src/figures/DataCursor.js~DataCursor#cursorRadius",
+    "member"
+  ],
+  [
+    "src/figures/datacursor.js~datacursor#draw",
+    "class/src/figures/DataCursor.js~DataCursor.html#instance-method-draw",
+    "src/figures/DataCursor.js~DataCursor#draw",
+    "method"
+  ],
+  [
+    "src/figures/datacursor.js~datacursor#isdraggable",
+    "class/src/figures/DataCursor.js~DataCursor.html#instance-member-isDraggable",
+    "src/figures/DataCursor.js~DataCursor#isDraggable",
+    "member"
+  ],
+  [
+    "src/figures/datacursor.js~datacursor#ismouseover",
+    "class/src/figures/DataCursor.js~DataCursor.html#instance-method-isMouseOver",
+    "src/figures/DataCursor.js~DataCursor#isMouseOver",
+    "method"
+  ],
+  [
+    "src/figures/datacursor.js~datacursor#ismouseoverplot",
+    "class/src/figures/DataCursor.js~DataCursor.html#instance-method-isMouseOverPlot",
+    "src/figures/DataCursor.js~DataCursor#isMouseOverPlot",
+    "method"
+  ],
+  [
+    "src/figures/datacursor.js~datacursor#plots",
+    "class/src/figures/DataCursor.js~DataCursor.html#instance-member-plots",
+    "src/figures/DataCursor.js~DataCursor#plots",
+    "member"
+  ],
+  [
+    "src/figures/datacursor.js~datacursor#remove",
+    "class/src/figures/DataCursor.js~DataCursor.html#instance-method-remove",
+    "src/figures/DataCursor.js~DataCursor#remove",
+    "method"
+  ],
+  [
     "src/figures/picture.js",
     "file/src/figures/Picture.js.html",
     "src/figures/Picture.js",
@@ -2016,6 +2214,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/figures/plot.js~plot#displayuntil",
+    "class/src/figures/Plot.js~Plot.html#instance-member-displayUntil",
+    "src/figures/Plot.js~Plot#displayUntil",
+    "member"
+  ],
+  [
     "src/figures/plot.js~plot#draw",
     "class/src/figures/Plot.js~Plot.html#instance-method-draw",
     "src/figures/Plot.js~Plot#draw",
@@ -2026,6 +2230,30 @@ window.esdocSearchIndex = [
     "class/src/figures/Plot.js~Plot.html#instance-member-drawInvisiblePoints",
     "src/figures/Plot.js~Plot#drawInvisiblePoints",
     "member"
+  ],
+  [
+    "src/figures/plot.js~plot#drawmarkers",
+    "class/src/figures/Plot.js~Plot.html#instance-method-drawMarkers",
+    "src/figures/Plot.js~Plot#drawMarkers",
+    "method"
+  ],
+  [
+    "src/figures/plot.js~plot#drawplot",
+    "class/src/figures/Plot.js~Plot.html#instance-method-drawPlot",
+    "src/figures/Plot.js~Plot#drawPlot",
+    "method"
+  ],
+  [
+    "src/figures/plot.js~plot#drawshade",
+    "class/src/figures/Plot.js~Plot.html#instance-method-drawShade",
+    "src/figures/Plot.js~Plot#drawShade",
+    "method"
+  ],
+  [
+    "src/figures/plot.js~plot#getpoints",
+    "class/src/figures/Plot.js~Plot.html#instance-method-getPoints",
+    "src/figures/Plot.js~Plot#getPoints",
+    "method"
   ],
   [
     "src/figures/plot.js~plot#label",
@@ -2058,6 +2286,12 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "src/figures/plot.js~plot#maxidx",
+    "class/src/figures/Plot.js~Plot.html#instance-method-maxIdx",
+    "src/figures/Plot.js~Plot#maxIdx",
+    "method"
+  ],
+  [
     "src/figures/plot.js~plot#points",
     "class/src/figures/Plot.js~Plot.html#instance-member-points",
     "src/figures/Plot.js~Plot#points",
@@ -2068,6 +2302,18 @@ window.esdocSearchIndex = [
     "class/src/figures/Plot.js~Plot.html#instance-method-setLabel",
     "src/figures/Plot.js~Plot#setLabel",
     "method"
+  ],
+  [
+    "src/figures/plot.js~plot#shade",
+    "class/src/figures/Plot.js~Plot.html#instance-member-shade",
+    "src/figures/Plot.js~Plot#shade",
+    "member"
+  ],
+  [
+    "src/figures/plot.js~plot#shadecolor",
+    "class/src/figures/Plot.js~Plot.html#instance-member-shadeColor",
+    "src/figures/Plot.js~Plot#shadeColor",
+    "member"
   ],
   [
     "src/figures/plot.js~plot#style",
@@ -2362,6 +2608,12 @@ window.esdocSearchIndex = [
     "class/src/figures/Vector.js~Vector.html#instance-method-isMouseOver",
     "src/figures/Vector.js~Vector#isMouseOver",
     "method"
+  ],
+  [
+    "src/figures/vector.js~vector#label",
+    "class/src/figures/Vector.js~Vector.html#instance-member-label",
+    "src/figures/Vector.js~Vector#label",
+    "member"
   ],
   [
     "src/figures/vector.js~vector#mag",

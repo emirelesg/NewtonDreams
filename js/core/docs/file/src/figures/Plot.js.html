@@ -48,6 +48,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isString">isString</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-loadOptions">loadOptions</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-rad">rad</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-rgbToRgba">rgbToRgba</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-round">round</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sin">sin</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ANGLE_STYLE">ANGLE_STYLE</a></span></span></li>
@@ -90,12 +91,14 @@
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#dom">dom</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/Slider.js~Slider.html">Slider</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Button.html">Button</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~DOMElement.html">DOMElement</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Input.html">Input</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Option.html">Option</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Options.html">Options</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Select.html">Select</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#figures">figures</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Axis.js~Axis.html">Axis</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Ball.js~Ball.html">Ball</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Box.js~Box.html">Box</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/DataCursor.js~DataCursor.html">DataCursor</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Picture.js~Picture.html">Picture</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Plot.js~Plot.html">Plot</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Shape.js~Shape.html">Shape</a></span></span></li>
@@ -135,6 +138,24 @@ export default class Plot extends WorldElement {
      * @type {object[]}
      */
     this.points = [];
+
+    /**
+     * Sets the maximum index to display.
+     * @type {number}
+     */
+    this.displayUntil = -1;
+
+    /**
+     * Sets a flag for shading the area under the curve.
+     * @type {boolean}
+     */
+    this.shade = false;
+
+    /**
+     * Sets the color of the shade.
+     * @type {string}
+     */
+    this.shadeColor = &apos;rgba(1, 1, 1, 0.2)&apos;;
 
     /**
      * Array for storing the markers.
@@ -254,6 +275,7 @@ export default class Plot extends WorldElement {
   clear() {
     this.points = [];
     this.markers = [];
+    this.displayUntil = -1;
   }
 
   /**
@@ -261,85 +283,154 @@ export default class Plot extends WorldElement {
    * @private
    */
   draw() {
+
+    // Get all points.
+    const p = this.getPoints();
+
+    // Drawing sequence.
+    if (this.shade) this.drawShade(p);
+    this.drawPlot(p);
+    this.drawMarkers();
+    
+  }
+
+  /**
+   * Calculates the amount of points that can be displayed, starting from 0.
+   * @returns {number} The index of the last point.
+   */
+  maxIdx() {
+    return this.displayUntil &gt;= 0 &amp;&amp; this.displayUntil &lt; this.points.length ? this.displayUntil + 1 : this.points.length;
+  }
+
+  /**
+   * Returns the points array until the max Idx. Also converts every point to pixels and determines if
+   * the point is visible.
+   * @return {any} Array of points.
+   */
+  getPoints() {
+    return this.points
+      .filter((_, idx) =&gt; idx &lt; this.maxIdx())
+      .map(p =&gt; {
+        const px = p[0] * this.world.scaleX.toPx;
+        const py = p[1] * this.world.scaleY.toPx;
+        return [
+          ...p,
+          px,
+          py,
+          this.world.axis.isPointVisible(px, py)
+        ];
+      });
+  }
+
+  /**
+   * Shade the area under the curve.
+   * @param {array} p Array of precalculated points.
+   * @private
+   */
+  drawShade(p) {
+    const { scaleX, scaleY, ctx } = this.world;
+    ctx.beginPath();
+    ctx.fillStyle = this.shadeColor;
+    let disconnected = false;
+    p.forEach(([x, y, px, py, isVisible], i) =&gt; {
+      if (this.drawInvisiblePoints || isVisible) {
+        if (i === 0 || disconnected) {
+          ctx.moveTo(px, 0);
+          ctx.lineTo(px, py);
+          disconnected = false;
+        } else {
+          ctx.lineTo(px, py);
+          if (i === this.maxIdx() - 1) ctx.lineTo(px, 0);          
+        }
+      } else {
+        disconnected = true;
+        ctx.lineTo(px, 0);
+      }
+    });
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  /**
+   * Draw the plot.
+   * @param {array} p Array of precalculated points.
+   * @private
+   */
+  drawPlot(p) {
     const { scaleX, scaleY, ctx } = this.world;
     const prevLineWidth = ctx.lineWidth;
-
-    // Draw path.
-    if (this.style === &quot;line&quot;) {}
     ctx.beginPath();
     ctx.lineWidth = this.lineWidth;
     ctx.strokeStyle = this.color;
     let disconnected = false;
-    for (let i = 0; i &lt; this.points.length; i++) {
-
-      // Draw line plot.
-      const x = this.points[i][0] * scaleX.toPx;
-      const y = this.points[i][1] * scaleY.toPx;
-
+    p.forEach(([x, y, px, py, isVisible], i) =&gt; {
       if (this.style === &quot;line&quot;) {
-        if (this.drawInvisiblePoints || this.world.axis.isPointVisible(x, y)) {
+        if (this.drawInvisiblePoints || isVisible) {
           if (i === 0 || disconnected) {
-            ctx.moveTo(x, y);
+            ctx.moveTo(px, py);
             disconnected = false;
           } else {
-            ctx.lineTo(x, y);
+            ctx.lineTo(px, py);
           }
         } else {
           disconnected = true;
         }
       } else {
-
         // Draw histogram.
         ctx.fillStyle = this.color;
-        ctx.rect(x - this.binWidth / 2, 0, this.binWidth, y);
+        ctx.rect(px - this.binWidth / 2, 0, this.binWidth, py);
         ctx.fill();
-
       }
-
-    }
+    });
     ctx.stroke();
     ctx.closePath();
+    ctx.lineWidth = prevLineWidth;
+  }
 
-    // Draw markers.
+  /**
+   * Draw the markers.
+   * @private
+   */
+  drawMarkers() {
+    const { scaleX, scaleY, ctx } = this.world;
     this.font.set({ baseline: &quot;middle&quot; });
-    for (let i = 0; i &lt; this.markers.length; i++) {
-      // Draw marker circles.
-      const x = this.markers[i].x * scaleX.toPx;
-      const y = this.markers[i].y * scaleY.toPx;
-      ctx.beginPath();
-      ctx.fillStyle = this.markers[i].color;
-      ctx.arc(x, y, this.markerRadius, 0, constants.TWO_PI);
-      ctx.fill();
-      // ctx.closePath();
+    this.markers.forEach((m) =&gt; {
 
-      // Draw marker label box.
+      // Draw marker circles.
+      const px = m.x * scaleX.toPx;
+      const py = m.y * scaleY.toPx;
+      ctx.beginPath();
+      ctx.fillStyle = m.color;
+      ctx.arc(px, py, this.markerRadius, 0, constants.TWO_PI);
+      ctx.fill();
+      ctx.closePath();
 
       // Draw marker labels.
-      if (this.markers[i].label !== &quot;&quot;) {
-        const direction = this.markers[i].top ? -1 : 1;
+      if (m.label !== &quot;&quot;) {
+        const direction = m.top ? -1 : 1;
         this.font.toCtx(ctx);
-        if (this.markers[i].lower_label !== &quot;&quot;) {
+        if (m.lower_label !== &quot;&quot;) {
           ctx.fillText(
-            this.markers[i].label,
-            x,
-            y + (this.markerRadius + 25) * direction
+            m.label,
+            px,
+            py + (this.markerRadius + 25) * direction
           );
           ctx.fillText(
-            this.markers[i].lower_label,
-            x,
-            y + (this.markerRadius + 10) * direction
+            m.lower_label,
+            px,
+            py + (this.markerRadius + 10) * direction
           );
         } else {
           ctx.fillText(
-            this.markers[i].label,
-            x,
-            y + (this.markerRadius + 10) * direction
+            m.label,
+            px,
+            py + (this.markerRadius + 10) * direction
           );
         }
       }
-    }
-    ctx.lineWidth = prevLineWidth;
+    });
   }
+
 
 }
 </code></pre>

@@ -2,8 +2,8 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <base data-ice="baseUrl" href="../../../../">
-  <title data-ice="title">src/figures/box/Box.Text.js | core</title>
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/figures/DataCursor.js | core</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -110,62 +110,85 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">src/figures/box/Box.Text.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import * as utils from &quot;../../Utils&quot;;
-import * as constants from &quot;../../Constants&quot;;
-import WorldElement from &quot;../../WorldElement&quot;;
+<div class="content" data-ice="content"><h1 data-ice="title">src/figures/DataCursor.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import * as utils from &quot;../Utils&quot;;
+import * as constants from &quot;../Constants&quot;;
+import WorldElement from &quot;../WorldElement&quot;;
+import Plot from &quot;./Plot&quot;;
+import Graph from &quot;./box/Box.Graph&quot;;
 
 /**
- * A Text Box allows for text to be displayed on a Box element. The text can be multiline
- * containing \n caracters.
- * A Text object is created by calling the method {@link Box.addText} on the parent Box.
- * @private
- * @class Text
+ * The DataCursor class is used to add data cursors to plots. It works with plots added to Graph and World objects.
+ * @public
+ * @class DataCursor
  */
-export default class Text extends WorldElement {
+export default class DataCursor extends WorldElement {
 
   /**
    * @constructor
-   * @param {Box} box Parent box.
-   * @param {number} width Width of the text in pixels.
-   * @param {number} height Height of the text in pixels.
-   * @param {object} [opts] Object that contains valid Text properties with values. Their values will be assigned at the end of the constructor. If an invalid property is passed then the value will be ignored.
+   * @param {object} [opts] Object that contains valid DataCursor properties with values. Their values will be assigned at the end of the constructor. If an invalid property is passed then the value will be ignored.
    */
-  constructor(box, width, height, opts) {
+  constructor(opts) {
 
     // Extend WorldElement.
-    super();
+    super();    
 
     /**
-     * Sets the parent box where te Text will be placed.
-     * @type {Box}
+     * Updates the data cursor every frame.
+     * @type {boolean}
      */
-    this.box = box;
+    this.constant = false;
 
     /**
-     * Sets the width of the Text in pixels.
+     * Array with Plot elements that can have data cursors.
+     * @type {[Plot]}
+     */
+    this.plots = [];
+
+    /**
+     * Sets the radius of the cursor.
+     * Default value is 4.
      * @type {number}
      */
-    this.width = width;
+    this.cursorRadius = 4;
 
     /**
-     * Sets the height of the Text in pixels.
-     * @type {number}
+     * Object that contains info about the closest point to the cursor.
+     * @type {object}
+     * @property {distance} Squared distance to the closest point.
+     * @property {px} -x coordinate in pixels, referenced to the main axis.
+     * @property {py} -y coordinate in pixels, referenced to the main axis.
+     * @property {label} Label with the -x and -y coordinates to be displayed in the data cursor.
+     * @property {color} Plot&apos;s color.
      */
-    this.height = height;
+    this.closest = { distance: Infinity, px: 0, py: 0, label: &apos;&apos;, color: &apos;&apos; };
 
     /**
-     * Contains the string to be displayed separated by every \n character.
-     * Default value is [].
-     * @type {string[]}
+     * Sets the color of the data cursor box. The color must have the format as in {@link BOX_COLORS}.
+     * The default value is {@link BOX_COLORS}.BLUE.
+     * @type {object}
+     * @property {string} BACKGROUND Background color.
+     * @property {string} BORDER Border color.
      */
-    this.text = [];
-    
-    // Configure font settings for the text.
+    this.color = constants.BOX_COLORS.GRAY;
+
+    /**
+     * Sets the cursor that appears when hovering a point in a plot.
+     * @type {string}
+     */
+    this.cursor = constants.CURSOR.CROSS;
+
+    /**
+     * Flag for allowing the element to be dragged around. Must be set to true, in order
+     * for the cursor to be changed.
+     */
+    this.isDraggable = true;
+
+    // Sets the data cursor&apos;s font.
     this.font.set({
-      align: &quot;left&quot;,
-      size: 14,
-      baseline: &quot;top&quot;,
+      size: 12,
+      baseline: &quot;middle&quot;,
+      align: &quot;center&quot;,
       color: constants.COLORS.GRAY
     });
 
@@ -174,42 +197,159 @@ export default class Text extends WorldElement {
 
   }
 
-  /**
-   * Sets the text that will be displayed. The text can have multiple lines.
+  /*
+   * Add a data cursor to a Plot.
    * @public
-   * @param {string} rawText Text to be displayed.
+   * @param  {...Plot} Plots to be added.
    */
-  setText(rawText) {
-    this.text = rawText.split(&quot;\n&quot;);
-  }
+  add(...args) {
+    args.forEach((obj) =&gt; {
+      if (obj instanceof Plot &amp;&amp; this.plots.indexOf(obj) &lt; 0) {
+        this.plots.push(obj);
+      }
+    })
+  } 
 
   /**
-   * Debug function used to draw a box around the dimensions of the text object.
-   * It is only drawn if the parent box has the flag {@link Box.debug} enabled.
+   * Removes the data cursor from a Plot.
+   * @public
+   * @param  {...Plot} Plots to be removed.
+   */
+  remove(...args) {
+    args.forEach((obj) =&gt; {
+      if (this.plots.indexOf(obj)) {
+        this.plots.splice(this.plots.indexOf(obj), 1);
+      }
+    })
+  } 
+
+  /**
+   * Determines which is the closest point to the pointer.
    * @private
    */
-  debug() {
-    const { ctx } = this.box.world;
-    ctx.beginPath();
-    ctx.strokeStyle = constants.COLORS.RED;
-    ctx.rect(0, 0, this.width, this.height);
-    ctx.stroke();
-    ctx.closePath();
+  isMouseOverPlot(plot) {
+
+    // Check if the plot is placed inside of a Graph object.
+    const isInGraph = plot.world instanceof Graph;
+
+    // Get the mouse object.
+    const { mouse } = isInGraph ? plot.world.box.world : plot.world;
+
+    // Calculate the -x and -y offsets to the points in px.
+    let offsetX = plot.world.axis.position.x;
+    let offsetY = plot.world.axis.position.y;
+    if (isInGraph) {
+      offsetX += plot.world.box.position.x 
+        + plot.world.box.padding.left 
+        + plot.world.position.x 
+        + plot.world.padding.left;
+      offsetY += plot.world.box.position.y
+        + plot.world.box.padding.top 
+        + plot.world.position.y
+        + plot.world.padding.top;
+    }
+
+    // Iterate through all points in the plot and find the closest point.
+    let closestPoint = { distance: Infinity, px: 0, py: 0, label: &apos;&apos;, color: &apos;&apos; };
+    plot.getPoints().forEach(([x, y, px, py, isVisible]) =&gt; {
+
+      // Only analyze points that are in view.
+      if (isVisible) {
+
+        // Compare the squared distance to the point.
+        const distance = utils.distSquared(mouse.x, mouse.y, px + offsetX, py + offsetY);
+
+        // If point is closer to previous point...
+        if (distance &lt; closestPoint.distance &amp;&amp; distance &lt; 125) {
+          closestPoint.px = px;
+          closestPoint.py = py;
+          // If point is in a graph, get the position in pixels referenced to the true world&apos;s axis.
+          if (isInGraph) {
+            closestPoint.px += offsetX - plot.world.box.world.axis.position.x;
+            closestPoint.py += offsetY - plot.world.box.world.axis.position.y;
+          }
+          closestPoint.label = `(${utils.round(x, 2)}, ${utils.round(y, 2)})`;
+          closestPoint.distance = distance;
+          closestPoint.color = plot.color;
+        }
+      }  
+
+    });
+
+    return closestPoint;
+
+  };
+    
+
+  /**
+   * Tests if the mouse is over any plot.
+   * @private 
+   * @returns {boolean} Returns true if the pointer is over any plot.
+   */
+  isMouseOver() {
+    // Get the closest point from every plot, and then sort them by increasing distance.
+    let closestPoints = this.plots
+      .filter(plot =&gt; plot.display)
+      .map(plot =&gt; this.isMouseOverPlot(plot)).sort((a, b) =&gt; a.distance - b.distance);
+    if (closestPoints.length &amp;&amp; closestPoints[0].distance &lt; Infinity) {
+      this.closest = closestPoints[0];
+      return true;
+    }
+    this.closest.distance = Infinity;
+    return false;
   }
 
   /**
-   * Draw function for the Text called by the parent box.
+   * Draws the data cursor.
    * @private
    */
   draw() {
-    const { ctx } = this.box.world;
-    ctx.beginPath();
-    this.font.toCtx(ctx);
-    for (let i = 0; i &lt; this.text.length; i += 1) {
-      ctx.fillText(this.text[i], 0, i * this.font.spacing * this.font.size);
+    const { ctx } = this.world;
+
+    // Continuously check if the mouse is over something.
+    if (this.constant) this.isMouseOver();
+
+    // Only draw coordinates if mouse is over something.
+    if (this.closest.distance &lt; Infinity) {
+    
+      // Move to the point.
+      ctx.save();
+      ctx.translate(this.closest.px, this.closest.py);
+
+      // Calculate the text&apos;s dimensions.
+      this.font.toCtx(ctx);
+      const width = ctx.measureText(this.closest.label).width + 10;
+      const height = this.font.size + 10;
+      const offsetHeight = 25;
+
+      // Draw marker.
+      ctx.beginPath();
+      ctx.fillStyle = this.closest.color;
+      ctx.arc(0, 0, this.cursorRadius, 0, constants.TWO_PI);
+      ctx.fill();
+      ctx.closePath();
+
+      // Draw rectangle.
+      ctx.beginPath();
+      ctx.fillStyle = this.color.BACKGROUND;
+      ctx.strokeStyle = this.color.BORDER;
+      ctx.rect(-width/2, -height/2 - offsetHeight, width, height);
+      ctx.stroke();
+      ctx.fill();
+      ctx.closePath();
+      
+      // Draw text.
+      ctx.beginPath();
+      this.font.toCtx(ctx);
+      ctx.fillText(this.closest.label, 0, -offsetHeight);
+      ctx.fill();
+      ctx.closePath();
+
+      ctx.restore();
     }
-    ctx.closePath();
+
   }
+
 }
 </code></pre>
 

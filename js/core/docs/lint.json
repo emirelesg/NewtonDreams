@@ -1,1 +1,38 @@
-[]
+[
+  {
+    "name": "DataCursor#remove",
+    "filePath": "src/figures/DataCursor.js",
+    "lines": [
+      {
+        "lineNumber": 99,
+        "line": "  /**"
+      },
+      {
+        "lineNumber": 100,
+        "line": "   * Removes the data cursor from a Plot."
+      },
+      {
+        "lineNumber": 101,
+        "line": "   * @public"
+      },
+      {
+        "lineNumber": 102,
+        "line": "   * @param  {...Plot} Plots to be removed."
+      },
+      {
+        "lineNumber": 103,
+        "line": "   */"
+      },
+      {
+        "lineNumber": 104,
+        "line": "  remove(...args) {"
+      }
+    ],
+    "codeParams": [
+      "args"
+    ],
+    "docParams": [
+      "Plots"
+    ]
+  }
+]

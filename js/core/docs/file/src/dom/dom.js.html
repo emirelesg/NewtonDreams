@@ -48,6 +48,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isString">isString</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-loadOptions">loadOptions</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-rad">rad</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-rgbToRgba">rgbToRgba</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-round">round</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sin">sin</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ANGLE_STYLE">ANGLE_STYLE</a></span></span></li>
@@ -90,12 +91,14 @@
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#dom">dom</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/Slider.js~Slider.html">Slider</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Button.html">Button</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~DOMElement.html">DOMElement</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Input.html">Input</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Option.html">Option</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Options.html">Options</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Select.html">Select</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#figures">figures</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Axis.js~Axis.html">Axis</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Ball.js~Ball.html">Ball</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Box.js~Box.html">Box</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/DataCursor.js~DataCursor.html">DataCursor</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Picture.js~Picture.html">Picture</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Plot.js~Plot.html">Plot</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Shape.js~Shape.html">Shape</a></span></span></li>
@@ -129,6 +132,12 @@ export default class DOMElement {
      */
     this.obj = $(utils.fixId(id));
 
+    /**
+     * Stores if the element is enabled or disabled.
+     * @type {boolean}
+     */
+    this.isEnabled = !this.obj.prop(&quot;disabled&quot;);
+
   }
 
   /**
@@ -136,7 +145,10 @@ export default class DOMElement {
    * @param {boolean} state Desired state of the element.
    */
   enabled(state) {
-    this.obj.prop(&quot;disabled&quot;, !state);
+    if (this.isEnabled !== state) {
+      this.isEnabled = state;
+      this.obj.prop(&quot;disabled&quot;, !this.isEnabled);
+    }
   }
 
 }
@@ -172,12 +184,16 @@ export class Option extends DOMElement {
      */
     this.onClick = onClick;
 
+    /**
+     * State of the option.
+     * @type {boolean}
+     */
+    this.value = this.obj.prop(&quot;checked&quot;);
+
     // Set the callback.
-    const self = this;
     this.obj.on(&quot;click&quot;, () =&gt; {
-      if (utils.isFunction(self.onClick)) {
-        if (utils.isFunction(self.onClick)) self.onClick(self.obj.prop(&quot;checked&quot;));
-      }
+      this.value = this.obj.prop(&quot;checked&quot;);
+      if (utils.isFunction(this.onClick)) this.onClick(this.obj.prop(&quot;checked&quot;));
     });
 
   }
@@ -214,11 +230,129 @@ export class Button extends DOMElement {
     this.onClick = onClick;
 
     // Set the callback.
-    const self = this;
     this.obj.on(&quot;click&quot;, () =&gt; {
-      if (utils.isFunction(self.onClick)) self.onClick();
+      if (utils.isFunction(this.onClick)) this.onClick();
     });
 
+  }
+
+}
+
+/**
+ * Class used to handle an Input (&lt;input&gt;).
+ * @public
+ * @class Input
+ * @example
+ * // Given the following HTML input element:
+ * //   &lt;input id=&quot;value&quot;&gt;&lt;/button&gt;
+ * var value = new Input(&quot;value&quot;, function(val) {
+ *  console.log(val);
+ * });
+ */
+export class Input extends DOMElement {
+
+  /**
+   * @constructor
+   * @param {string} id HTML id of the input.
+   * @param {function} onChange Callback function for when input value changes.
+   */
+  constructor(id, onChange, opts) {
+
+    // Extend DOMElement.
+    super(id);
+
+    /**
+     * Callback function for when the input value changes.
+     * @type {function}
+     */
+    this.onChange = onChange;
+
+    /**
+     * Callback function for when the focus is lost.
+     * @type {function}
+     */
+    this.onFocusout = undefined;
+
+    /**
+     * Defines if the parsed value must be casted to a number, otherwise the input is invalid.
+     * @type {boolean}
+     */
+    this.isNumber = false;
+
+    /**
+     * Flag for remembering if the input is invalid.
+     * @type {boolean}
+     */
+    this.isInvalid = false;
+
+    /**
+     * Stores the parsed value of the input.
+     * @type {(number|string)}
+     */
+    this.value = &apos;&apos;;
+
+    /**
+     * Default value for the input.
+     * @type {(number|string)}
+     */
+    this.default = &apos;&apos;;
+
+    // Apply user settings.
+    utils.loadOptions(this, opts);
+    this.set(this.default);
+
+    // Callback whenever the input is changed by the user.
+    this.obj.on(&quot;input&quot;, (e) =&gt; {
+      const rawValue = this.obj.val();
+      if (this.isNumber) {
+        if (rawValue === &apos;&apos;) {
+          this.value = this.default;
+          this.invalid(false);
+        } else {
+          const parsedValue = parseFloat(rawValue);
+          this.invalid(isNaN(parsedValue));
+          if (!isNaN(parsedValue)) this.value = parsedValue;
+        }
+      } else {
+        this.value = rawValue;
+      }
+      if (utils.isFunction(this.onChange)) this.onChange(this.value);
+    });
+
+    // Watch for the focusout event.
+    // After the user leaves the input, set the value to the parsed one.
+    this.obj.on(&apos;focusout&apos;, () =&gt; {
+      if (this.isNumber) {
+        this.set(this.value);
+        if (utils.isFunction(this.onChange)) this.onChange(this.value);
+        if (utils.isFunction(this.onFocusout)) this.onFocusout();
+      }
+    });
+
+    // When the user presses enter, focusout.
+    this.obj.on(&apos;keyup&apos;, (e) =&gt; {
+      if (e.keyCode === 13) {
+        this.obj.blur();
+      }
+    })
+
+  }
+
+  set(value) {
+    this.value = value || this.default;
+    this.obj.val(this.value);
+    this.invalid(false);
+  }
+
+  invalid(state) {
+    if (this.isInvalid !== state) {
+      this.isInvalid = state;
+      if (this.isInvalid) {
+        this.obj.addClass(&apos;invalid&apos;);
+      } else {
+        this.obj.removeClass(&apos;invalid&apos;);
+      }
+    }
   }
 
 }
@@ -257,12 +391,35 @@ export class Select extends DOMElement {
      */
     this.onChange = onChange;
 
+    /**
+     * Current option selected.
+     * @type {number}
+     */
+    this.value = 0;
+
     // Set the callback.
-    const self = this;
-    this.obj.on(&apos;change&apos;, function() {
-      if (utils.isFunction(self.onChange)) self.onChange(self.obj.find(&quot;:selected&quot;).val());
+    this.obj.on(&apos;change&apos;, () =&gt; {
+      this.value = this.obj.find(&quot;:selected&quot;).val();
+      if (utils.isFunction(this.onChange)) this.onChange(this.value);
     });
 
+  }
+
+  /**
+   * Sets the options for the select element.
+   * @param {Object} options Object that will define the options in the select element.
+   * @param {Number} select Key of the option to select.
+   */
+  setOptions(options, select) {
+    // Remove old options.
+    this.obj.empty();
+    // Add new options.
+    for (let [key, value] of Object.entries(options)) {
+      this.obj.append(
+        $(&apos;&lt;option&gt;&lt;/option&gt;&apos;).attr(&apos;value&apos;, value).attr(&apos;selected&apos;, value === select).text(key)
+      );
+    }
+    this.obj.trigger(&apos;change&apos;);
   }
   
 }
@@ -303,6 +460,12 @@ export class Options {
     this.obj = $(this.name);
 
     /**
+     * Value of the currently selected radio option.
+     * @type {string}
+     */
+    this.value = $(`${this.name}:checked`).val();
+
+    /**
      * Callback function for when a radio button is selected. The value of the selected 
      * radio button is passed to the callback function as a parameter.
      * @type {function}
@@ -310,13 +473,30 @@ export class Options {
     this.onChange = onChange;
 
     // Set the callback.
-    const self = this;
     this.obj.change(() =&gt; {
-      if (utils.isFunction(self.onChange)) {
-        self.onChange($(`${self.name}:checked`).val());
+      this.value = $(`${this.name}:checked`).val();
+      if (utils.isFunction(this.onChange)) {
+        this.onChange(this.value);
       }
     });
   
+  }
+
+  /**
+   * Selects a radio button using its value.
+   * @param {string} value Value of the radio button to select.
+   */
+  select(value) {
+    this.value = value;
+    this.obj.each(function() {
+      if ($(this).val() === value) {
+        $(this).parent().addClass(&apos;active&apos;);
+        $(this).prop(&apos;checked&apos;, true);
+      } else {
+        $(this).parent().removeClass(&apos;active&apos;);
+        $(this).prop(&apos;checked&apos;, false);
+      }
+    });
   }
 
   /**

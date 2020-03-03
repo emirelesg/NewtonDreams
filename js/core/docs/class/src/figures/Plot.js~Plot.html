@@ -48,6 +48,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isString">isString</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-loadOptions">loadOptions</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-rad">rad</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-rgbToRgba">rgbToRgba</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-round">round</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sin">sin</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ANGLE_STYLE">ANGLE_STYLE</a></span></span></li>
@@ -90,12 +91,14 @@
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#dom">dom</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/Slider.js~Slider.html">Slider</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Button.html">Button</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~DOMElement.html">DOMElement</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Input.html">Input</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Option.html">Option</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Options.html">Options</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Select.html">Select</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#figures">figures</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Axis.js~Axis.html">Axis</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Ball.js~Ball.html">Ball</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Box.js~Box.html">Box</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/DataCursor.js~DataCursor.html">DataCursor</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Picture.js~Picture.html">Picture</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Plot.js~Plot.html">Plot</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Shape.js~Shape.html">Shape</a></span></span></li>
@@ -212,6 +215,35 @@ about the -x and -y values.</p>
         
         <div data-ice="description"><p>When the plot is configured in histogram mode, the binWidth is the width of the
 bars in pixels.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/src/figures/Plot.js~Plot.html#instance-member-displayUntil">displayUntil</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Sets the maximum index to display.</p>
 </div>
       </div>
     </td>
@@ -438,6 +470,64 @@ visible range of the plot.</p>
           
           
           
+          <span class="code" data-ice="name"><span><a href="class/src/figures/Plot.js~Plot.html#instance-member-shade">shade</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Sets a flag for shading the area under the curve.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/src/figures/Plot.js~Plot.html#instance-member-shadeColor">shadeColor</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Sets the color of the shade.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
           <span class="code" data-ice="name"><span><a href="class/src/figures/Plot.js~Plot.html#instance-member-style">style</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
         </p>
       </div>
@@ -561,6 +651,64 @@ visible range of the plot.</p>
           
           
           
+          <span class="code" data-ice="name"><span><a href="class/src/figures/Plot.js~Plot.html#instance-method-getPoints">getPoints</a></span></span><span class="code" data-ice="signature">(): <span>any</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Returns the points array until the max Idx.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/src/figures/Plot.js~Plot.html#instance-method-maxIdx">maxIdx</a></span></span><span class="code" data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Calculates the amount of points that can be displayed, starting from 0.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
           <span class="code" data-ice="name"><span><a href="class/src/figures/Plot.js~Plot.html#instance-method-setLabel">setLabel</a></span></span><span class="code" data-ice="signature">(label: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span>
         </p>
       </div>
@@ -603,6 +751,93 @@ visible range of the plot.</p>
         
         
         <div data-ice="description"><p>Main draw function for the Plot called by the World automatically.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">private</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/src/figures/Plot.js~Plot.html#instance-method-drawMarkers">drawMarkers</a></span></span><span class="code" data-ice="signature">()</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Draw the markers.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">private</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/src/figures/Plot.js~Plot.html#instance-method-drawPlot">drawPlot</a></span></span><span class="code" data-ice="signature">(p: <span>array</span>)</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Draw the plot.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">private</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/src/figures/Plot.js~Plot.html#instance-method-drawShade">drawShade</a></span></span><span class="code" data-ice="signature">(p: <span>array</span>)</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Shade the area under the curve.</p>
 </div>
       </div>
     </td>
@@ -1572,7 +1807,7 @@ visible range of the plot.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/figures/Plot.js.html#lineNumber86">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/figures/Plot.js.html#lineNumber104">source</a></span></span>
     </span>
   </h3>
 
@@ -1582,6 +1817,50 @@ visible range of the plot.</p>
   <div data-ice="description"><p>When the plot is configured in histogram mode, the binWidth is the width of the
 bars in pixels.
 Default value is 3.</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-member-displayUntil">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">displayUntil</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/figures/Plot.js.html#lineNumber33">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Sets the maximum index to display.</p>
 </div>
 
   
@@ -1618,7 +1897,7 @@ Default value is 3.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/figures/Plot.js.html#lineNumber71">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/figures/Plot.js.html#lineNumber89">source</a></span></span>
     </span>
   </h3>
 
@@ -1664,7 +1943,7 @@ Default value is false.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/figures/Plot.js.html#lineNumber63">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/figures/Plot.js.html#lineNumber81">source</a></span></span>
     </span>
   </h3>
 
@@ -1709,7 +1988,7 @@ Default value is &quot;&quot;.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/figures/Plot.js.html#lineNumber42">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/figures/Plot.js.html#lineNumber60">source</a></span></span>
     </span>
   </h3>
 
@@ -1756,7 +2035,7 @@ Default value is 300.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/figures/Plot.js.html#lineNumber56">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/figures/Plot.js.html#lineNumber74">source</a></span></span>
     </span>
   </h3>
 
@@ -1801,7 +2080,7 @@ Default value is 2.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/figures/Plot.js.html#lineNumber49">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/figures/Plot.js.html#lineNumber67">source</a></span></span>
     </span>
   </h3>
 
@@ -1846,7 +2125,7 @@ Default value is 4.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/figures/Plot.js.html#lineNumber33">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/figures/Plot.js.html#lineNumber51">source</a></span></span>
     </span>
   </h3>
 
@@ -1923,6 +2202,94 @@ Default value is 4.</p>
   
 </div>
 <div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-member-shade">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">shade</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/figures/Plot.js.html#lineNumber39">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Sets a flag for shading the area under the curve.</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-member-shadeColor">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">shadeColor</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/figures/Plot.js.html#lineNumber45">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Sets the color of the shade.</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-member-style">
     <span class="access" data-ice="access">public</span>
     
@@ -1934,7 +2301,7 @@ Default value is 4.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/figures/Plot.js.html#lineNumber78">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/figures/Plot.js.html#lineNumber96">source</a></span></span>
     </span>
   </h3>
 
@@ -1982,7 +2349,7 @@ Default value is &quot;line&quot;.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/figures/Plot.js.html#lineNumber126">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/figures/Plot.js.html#lineNumber144">source</a></span></span>
     </span>
   </h3>
 
@@ -2085,7 +2452,7 @@ Default value is &quot;line&quot;.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/figures/Plot.js.html#lineNumber108">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/figures/Plot.js.html#lineNumber126">source</a></span></span>
     </span>
   </h3>
 
@@ -2153,7 +2520,7 @@ Default value is &quot;line&quot;.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/figures/Plot.js.html#lineNumber144">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/figures/Plot.js.html#lineNumber162">source</a></span></span>
     </span>
   </h3>
 
@@ -2186,6 +2553,121 @@ Default value is &quot;line&quot;.</p>
   
 </div>
 <div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-getPoints">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">getPoints</span><span class="code" data-ice="signature">(): <span>any</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/figures/Plot.js.html#lineNumber197">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Returns the points array until the max Idx. Also converts every point to pixels and determines if
+the point is visible.</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span>any</span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>Array of points.</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-maxIdx">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">maxIdx</span><span class="code" data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/figures/Plot.js.html#lineNumber188">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Calculates the amount of points that can be displayed, starting from 0.</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>The index of the last point.</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-method-setLabel">
     <span class="access" data-ice="access">public</span>
     
@@ -2197,7 +2679,7 @@ Default value is &quot;line&quot;.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/figures/Plot.js.html#lineNumber98">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/figures/Plot.js.html#lineNumber116">source</a></span></span>
     </span>
   </h3>
 
@@ -2260,7 +2742,7 @@ Default value is &quot;line&quot;.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/figures/Plot.js.html#lineNumber153">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/figures/Plot.js.html#lineNumber172">source</a></span></span>
     </span>
   </h3>
 
@@ -2273,6 +2755,172 @@ Default value is &quot;line&quot;.</p>
   
 
   <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-drawMarkers">
+    <span class="access" data-ice="access">private</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">drawMarkers</span><span class="code" data-ice="signature">()</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/figures/Plot.js.html#lineNumber281">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Draw the markers.</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-drawPlot">
+    <span class="access" data-ice="access">private</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">drawPlot</span><span class="code" data-ice="signature">(p: <span>array</span>)</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/figures/Plot.js.html#lineNumber246">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Draw the plot.</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">p</td>
+      <td data-ice="type" class="code"><span>array</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>Array of precalculated points.</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-drawShade">
+    <span class="access" data-ice="access">private</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">drawShade</span><span class="code" data-ice="signature">(p: <span>array</span>)</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/figures/Plot.js.html#lineNumber217">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Shade the area under the curve.</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">p</td>
+      <td data-ice="type" class="code"><span>array</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>Array of precalculated points.</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
 </div>
 
   

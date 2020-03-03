@@ -48,6 +48,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isString">isString</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-loadOptions">loadOptions</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-rad">rad</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-rgbToRgba">rgbToRgba</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-round">round</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sin">sin</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ANGLE_STYLE">ANGLE_STYLE</a></span></span></li>
@@ -90,12 +91,14 @@
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#dom">dom</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/Slider.js~Slider.html">Slider</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Button.html">Button</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~DOMElement.html">DOMElement</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Input.html">Input</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Option.html">Option</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Options.html">Options</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dom/dom.js~Select.html">Select</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#figures">figures</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Axis.js~Axis.html">Axis</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Ball.js~Ball.html">Ball</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Box.js~Box.html">Box</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/DataCursor.js~DataCursor.html">DataCursor</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Picture.js~Picture.html">Picture</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Plot.js~Plot.html">Plot</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/figures/Shape.js~Shape.html">Shape</a></span></span></li>
@@ -108,13 +111,13 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Slider from &apos;<span><a href="file/src/dom/Slider.js.html#lineNumber9">core/src/dom/Slider.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Slider from &apos;<span><a href="file/src/dom/Slider.js.html#lineNumber10">core/src/dom/Slider.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/src/dom/Slider.js.html#lineNumber9">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/src/dom/Slider.js.html#lineNumber10">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -238,6 +241,35 @@
         
         
         <div data-ice="description"><p>Sets the arguments passed to the callback function set in <span><a href="class/src/dom/Slider.js~Slider.html#instance-member-callback">Slider.callback</a></span>.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/src/dom/Slider.js~Slider.html#instance-member-clone">clone</a></span></span><span class="code" data-ice="signature">: <span>dom.Input</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Creates a Dom element from the cloned Input.</p>
 </div>
       </div>
     </td>
@@ -768,7 +800,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber15">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber16">source</a></span></span>
     </span>
   </h3>
 
@@ -831,7 +863,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber89">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber97">source</a></span></span>
     </span>
   </h3>
 
@@ -876,7 +908,7 @@ Default value is undefined.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber96">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber104">source</a></span></span>
     </span>
   </h3>
 
@@ -885,6 +917,51 @@ Default value is undefined.</p>
   
   <div data-ice="description"><p>Sets the arguments passed to the callback function set in <span><a href="class/src/dom/Slider.js~Slider.html#instance-member-callback">Slider.callback</a></span>.
 Default value is undefined.</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-member-clone">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">clone</span><span class="code" data-ice="signature">: <span>dom.Input</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber48">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Creates a Dom element from the cloned Input. This value the user inputs is validated
+to always be a number.</p>
 </div>
 
   
@@ -921,7 +998,7 @@ Default value is undefined.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber32">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber33">source</a></span></span>
     </span>
   </h3>
 
@@ -966,7 +1043,7 @@ Default value is <span><a href="variable/index.html#static-variable-COLORS">COLO
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber75">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber83">source</a></span></span>
     </span>
   </h3>
 
@@ -1011,7 +1088,7 @@ Default value is 1.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber82">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber90">source</a></span></span>
     </span>
   </h3>
 
@@ -1056,7 +1133,7 @@ Default value is false.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber25">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber26">source</a></span></span>
     </span>
   </h3>
 
@@ -1104,7 +1181,7 @@ Default value is &quot;&quot;.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber118">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber126">source</a></span></span>
     </span>
   </h3>
 
@@ -1148,7 +1225,7 @@ Default value is &quot;&quot;.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber68">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber76">source</a></span></span>
     </span>
   </h3>
 
@@ -1193,7 +1270,7 @@ Default value is 1.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber61">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber69">source</a></span></span>
     </span>
   </h3>
 
@@ -1238,7 +1315,7 @@ Default value is 0.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber40">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber41">source</a></span></span>
     </span>
   </h3>
 
@@ -1284,7 +1361,7 @@ Default value is <span><a href="variable/index.html#static-variable-COLORS">COLO
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber112">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber120">source</a></span></span>
     </span>
   </h3>
 
@@ -1328,7 +1405,7 @@ Default value is <span><a href="variable/index.html#static-variable-COLORS">COLO
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber54">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber62">source</a></span></span>
     </span>
   </h3>
 
@@ -1373,7 +1450,7 @@ Default value is 0.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber47">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber55">source</a></span></span>
     </span>
   </h3>
 
@@ -1418,7 +1495,7 @@ Default value is &quot;&quot;.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber106">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber114">source</a></span></span>
     </span>
   </h3>
 
@@ -1466,7 +1543,7 @@ Default value is <span><a href="class/src/dom/Slider.js~Slider.html#instance-mem
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber187">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber221">source</a></span></span>
     </span>
   </h3>
 
@@ -1528,7 +1605,7 @@ Once it changes back to enabled, its previous color is restored.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber177">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber211">source</a></span></span>
     </span>
   </h3>
 
@@ -1585,7 +1662,7 @@ Once it changes back to enabled, its previous color is restored.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber162">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber198">source</a></span></span>
     </span>
   </h3>
 
@@ -1646,7 +1723,7 @@ Once it changes back to enabled, its previous color is restored.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber202">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber236">source</a></span></span>
     </span>
   </h3>
 
@@ -1707,7 +1784,7 @@ Once it changes back to enabled, its previous color is restored.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber151">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/dom/Slider.js.html#lineNumber187">source</a></span></span>
     </span>
   </h3>
 
