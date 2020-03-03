@@ -256,3 +256,9 @@ section {
 .controls .button-row {
   margin-top: 2rem;
 }
+
+.badge-3d {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}

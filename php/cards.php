@@ -38,11 +38,17 @@
             echo "<div class=\"col-lg-3 col-sm-6 mb-4\">";
         }
 
+        // Draw badge if the url of the simulation has the characters 3d in it.
+        $badge = "";
+        if (strpos(strtolower($sim['url']), '3d') > -1) {
+            $badge = "<h5 class=\"badge-3d\"><span class=\"badge badge-primary\">3D</span></h5>";
+        }
+
         // Create html
         $html = <<<HTML
-    
                         <div class="card h-100 card-default">    
                             <a href="$sim[url]">
+                                $badge
                                 <img class="card-img-top d-none d-sm-block" src="$sim[url]/sc.png" alt="Captura Simulación $sim[name]">
                                 <div class="card-body">
                                     <h4 class="card-title">$sim[name]</h4>
@@ -51,7 +57,6 @@
                             </a>
                         </div>
                     </div>
-
 HTML;
 
         echo $html;

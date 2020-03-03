@@ -121,7 +121,7 @@
             "desc"  => "Simula un resorte utilizando la Ley de Hooke.",
             "url"   => "$base/fisica/resorte/",
             "ver"   => "3.0.0",
-            "date"  => "27/20/2020"
+            "date"  => "27/02/2020"
         ),
         "teoria_cinetica" => array(
             "name"  => "Teoría Cinética Molecular",
@@ -150,6 +150,13 @@
            "url"   => "$base/fisica/transferencia_calor/",
            "ver"   => "1.1.0",
            "date"  => "13/02/2020"
+        ),
+        "vectores_3d" => array(
+            "name"  => "Vectores en 3D",
+            "desc"  => "Calcula la suma de dos o más vectores en tres dimensiones.",
+            "url"   => "$base/fisica/vectores_3d/",
+            "ver"   => "1.0.0",
+            "date"  => "02/03/2020"
         )
     );
 

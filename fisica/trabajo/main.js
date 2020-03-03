@@ -1,8 +1,10 @@
 // Constants
-var BOX_DENSITY = 1;            // Density in kg / m³.
-var TABLE_HEIGHT = 0.2;         // Height of the table where the box slides.
+var BOX_DENSITY = 1;                        // Density in kg / m³.
+var PLANE_HEIGHT = 2;                       // Height of the table where the box slides.
+var PLANE_WIDTH = 25;                       // Width of the table.
 
 // Variables
+var roughness = [];
 var started = false;            // Defines if the simulation has started.
 var frame = 0;                  // Current simulation frame.
 var box = {
@@ -95,7 +97,7 @@ function setupControls() {
   controls.angle      = new p$.Slider({ id: "angle", start: 0, min: -45, max: 45, decPlaces: 1, units: "°", callback: reset, color: p$.COLORS.GREEN });
   controls.distance   = new p$.Slider({ id: "distance", start: 5, min: 1, max: 7.5, decPlaces: 1, units: "m", callback: reset, color: p$.COLORS.BLUE });
   controls.mass       = new p$.Slider({ id: "mass", start: 2, min: 1, max: 5, decPlaces: 1, units: "kg", callback: reset, color: p$.COLORS.YELLOW });
-  controls.uk         = new p$.Slider({ id: "uk", start: 0, min: 0, max: 1, decPlaces: 2, units: "", callback: reset, color: p$.COLORS.PURPLE });
+  controls.uk         = new p$.Slider({ id: "uk", start: 0.5, min: 0, max: 1, decPlaces: 2, units: "", callback: reset, callbackArgs: true, color: p$.COLORS.PURPLE });
   
   // Configure buttons.
   controls.start = new p$.dom.Button("start", function() {
@@ -124,7 +126,7 @@ function setupControls() {
 }
 
 // Set the initial state of all variables and precalculates the simulation.
-function reset() {
+function reset(ukChanged) {
 
   // Stop any simulation.
   started = false;
@@ -169,6 +171,15 @@ function reset() {
     plots.work.points.push([0, 0]);
   }
 
+  // Precalculate noise for a rough surface.
+  if (ukChanged || roughness.length === 0) {
+    roughness = new Array();
+    for (var i = 0; i < Math.round(controls.uk.value * 200); i++) {
+      var y = controls.uk.value * Math.random() * 0.2;
+      roughness.push(y > PLANE_HEIGHT ? PLANE_HEIGHT : y);
+    }
+  }
+    
 }
 
 /**
@@ -229,12 +240,39 @@ function drawScene() {
   s.restore();
   s.end();
 
-  // Draw sliding surface.
+  // Draw sliding surface, roughness is drawn on x > 0.
+  // s.begin();
+  // s.fill(p$.COLORS.BROWN);
+  // s.noStroke();
+  // s.rect(-PLANE_WIDTH / 2, 0, PLANE_WIDTH / 2, -PLANE_HEIGHT);
+  // s.moveTo(0, 0);
+  // var step = (PLANE_WIDTH / 2) / roughness.length;
+  // for (var i = 0; i < roughness.length; i++) {
+  //   s.lineTo(i * step, -roughness[i]);
+  // }
+  // s.lineTo(PLANE_WIDTH / 2, 0);
+  // s.lineTo(PLANE_WIDTH / 2, -PLANE_HEIGHT);
+  // s.lineTo(0, -PLANE_HEIGHT);
+  // s.lineTo(0, 0);
+  // s.end();
+
+  // Draw sliding surface, roughness is drawn through the plane.
+  s.save();
   s.begin();
-  s.fill(p$.COLORS.BROWN);
-  s.stroke(p$.COLORS.BROWN);
-  s.rect(-10, 0, 25, -TABLE_HEIGHT);
+  s.fill(p$.BOX_COLORS.GREEN.BACKGROUND);
+  s.stroke(p$.BOX_COLORS.GREEN.BORDER);
+  s.translate(-PLANE_WIDTH / 2, 0);
+  s.moveTo(0, 0);
+  var step = (PLANE_WIDTH) / roughness.length;
+  for (var i = 0; i < roughness.length; i++) {
+    s.lineTo(i * step, -roughness[i]);
+  }
+  s.lineTo(PLANE_WIDTH, 0);
+  s.lineTo(PLANE_WIDTH, -PLANE_HEIGHT);
+  s.lineTo(0, -PLANE_HEIGHT);
+  s.lineTo(0, 0);
   s.end();
+  s.restore();
 
   // Draw displacement guide.
   s.font.set({ size: 14, color: p$.COLORS.GRAY });
