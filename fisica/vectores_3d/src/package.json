@@ -1,0 +1,25 @@
+{
+  "name": "vectores_3d",
+  "version": "1.0.0",
+  "scripts": {
+    "preinstall": "command -v link-module-alias && link-module-alias clean || true",
+    "postinstall": "link-module-alias",
+    "start": "webpack --watch",
+    "build": "webpack --mode=production"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "ts-loader": "^6.2.1",
+    "tslint": "^6.0.0",
+    "typescript": "^3.7.5",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.10.3",
+    "link-module-alias": "^1.2.0"
+  },
+  "_moduleAliasIgnoreWarning": true,
+  "_moduleAliases": {
+    "lib": "../../../js/core_3d/src",
+    "three": "../../../js/core_3d/node_modules/three/"
+  }
+}
