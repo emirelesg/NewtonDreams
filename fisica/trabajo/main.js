@@ -97,7 +97,7 @@ function setupControls() {
   controls.angle      = new p$.Slider({ id: "angle", start: 0, min: -45, max: 45, decPlaces: 1, units: "°", callback: reset, color: p$.COLORS.GREEN });
   controls.distance   = new p$.Slider({ id: "distance", start: 5, min: 1, max: 7.5, decPlaces: 1, units: "m", callback: reset, color: p$.COLORS.BLUE });
   controls.mass       = new p$.Slider({ id: "mass", start: 2, min: 1, max: 5, decPlaces: 1, units: "kg", callback: reset, color: p$.COLORS.YELLOW });
-  controls.uk         = new p$.Slider({ id: "uk", start: 0.5, min: 0, max: 1, decPlaces: 2, units: "", callback: reset, callbackArgs: true, color: p$.COLORS.PURPLE });
+  controls.uk         = new p$.Slider({ id: "uk", start: 0, min: 0, max: 1, decPlaces: 2, units: "", callback: reset, callbackArgs: true, color: p$.COLORS.PURPLE });
   
   // Configure buttons.
   controls.start = new p$.dom.Button("start", function() {
