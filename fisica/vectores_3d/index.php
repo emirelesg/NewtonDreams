@@ -22,30 +22,18 @@
             background-color: #FAFAFA;
         }
         #controls-div {
-            right: 1em;
+            left: 1em;
             top: 1rem;
         }
-        #controls-div > div button {
-            margin-left: 0.75rem;
-        }
         #input-div {
-            top: 1em;
+            top: 5em;
             left: 1em;
-            background-color: #FAFAFA;
-            padding: 0.5rem;
-            border: 1px solid #DDDDDD;
-            border-radius: 2px;
-            font-size: 1rem;
-            box-shadow: 0px 0px 2px 0px rgba(100,100,100,0.3);
         }
-        #input-div:hover {
-            opacity: 1;
+        .form-control {
+            width: 100px !important;
         }
-        #input-div > div:not(:last-child) {
-            padding-bottom: 0.5rem;
-        }
-        #input-div input {
-            width: 80px;
+        .form-check {
+            margin-left: 0.25rem;
         }
     </style>
 </head>
@@ -81,54 +69,58 @@
                 </div>
             </section>
             <section id="sim">
-                <div id="input-div" class="controls d-none">
-                    <div class="input-group input-group-sm">
+                <div id="camera-controls-div" class="controls">
+                    <div>
+                        <button type="button" id="rotate-btn" class="btn mb-2 btn-outline-secondary">
+                            <div id="rotate-btn-1"><i data-feather="video"></i></div>
+                            <div id="rotate-btn-0"><i data-feather="video-off"></i></div>
+                        </button>
+                        <button type="button" id="zoom-in-btn" class="btn mb-2 btn-outline-secondary">
+                            <i data-feather="zoom-in"></i>
+                        </button>
+                        <button type="button" id="zoom-out-btn" class="btn mb-2 btn-outline-secondary">
+                            <i data-feather="zoom-out"></i>
+                        </button>
+                        <button type="button" id="fullscreen-btn" class="btn btn-outline-secondary">
+                            <div id="fullscreen-btn-1"><i data-feather="minimize-2"></i></div>
+                            <div id="fullscreen-btn-0"><i data-feather="maximize-2"></i></div>
+                        </button>
+                    </div>
+                </div>
+                <div id="input-div" class="controls controls-panel d-none">
+                    <h5 class="mb-2">Vector <span id="vector-label">A</span></h5>
+                    <div class="input-group input-group-sm mb-1">
                         <div class="input-group-prepend">
                             <span class="input-group-text serif"><i>x</i></span>
                         </div>
                         <input type="text" class="form-control" id="x">
                     </div>
-                    <div class="input-group input-group-sm">
+                    <div class="input-group input-group-sm mb-1">
                         <div class="input-group-prepend">
                             <span class="input-group-text serif">y</span>
                         </div>
                         <input type="text" class="form-control" id="y">
                     </div>
-                    <div class="input-group input-group-sm">
+                    <div class="input-group input-group-sm mb-2">
                         <div class="input-group-prepend">
                             <span class="input-group-text serif">z</span>
                         </div>
                         <input type="text" class="form-control" id="z">
                     </div>
-                </div>
-                <div id="camera-controls-div" class="controls">
-                    <div class="d-flex">
-                        <button type="button" id="rotate-btn" class="btn btn-outline-secondary">
-                            <i id="rotate-btn-1" class="d-none" data-feather="video"></i>
-                            <i id="rotate-btn-0" data-feather="video-off"></i>
-                        </button>
-                        <button type="button" id="zoom-in-btn" class="btn btn-outline-secondary">
-                                <i data-feather="zoom-in"></i>
-                        </button>
-                        <button type="button" id="zoom-out-btn" class="btn btn-outline-secondary">
-                                <i data-feather="zoom-out"></i>
-                        </button>
-                        <button type="button" id="fullscreen-btn" class="btn btn-outline-secondary">
-                            <i id="fullscreen-btn-1" class="d-none" data-feather="minimize-2"></i>
-                            <i id="fullscreen-btn-0" data-feather="maximize-2"></i>
-                        </button>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="components">
+                        <label class="form-check-label" for="components">Componentes</label>
                     </div>
                 </div>
-                <div id="controls-div" class="controls">
-                    <div class="d-flex">
-                        <button type="button" id="add-btn" class="btn btn-sm btn-outline-success">
-                            <i data-feather="plus"></i>
-                            <span>Agregar</span>
+                <div id="controls-div" class="controls controls-panel">
+                    <div class="btn-group" id="operation" role="group">
+                        <button type="button" id="none" class="px-2 active btn btn-sm btn-outline-secondary">
+                            <i id="rotate-btn-0" data-feather="minus"></i> 
                         </button>
-                        <button type="button" id="remove-btn" class="btn btn-sm btn-outline-danger">
-                            <i data-feather="minus"></i>
-                            <span>Quitar</span>
-                        </button>
+                        <button type="button" id="a+b" class="px-2 btn btn-sm btn-outline-secondary">A + B</button>
+                        <button type="button" id="a-b" class="px-2 btn btn-sm btn-outline-secondary">A - B</button>
+                        <button type="button" id="b-a" class="px-2 btn btn-sm btn-outline-secondary">B - A</button>
+                        <button type="button" id="axb" class="px-2 btn btn-sm btn-outline-secondary">A x B</button>
                     </div>
                 </div>
                 <div class="row" style="z-index: 2">

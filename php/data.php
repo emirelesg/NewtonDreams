@@ -153,10 +153,10 @@
         ),
         "vectores_3d" => array(
             "name"  => "Vectores en 3D",
-            "desc"  => "Calcula la suma de dos o más vectores en tres dimensiones.",
+            "desc"  => "Realiza operaciones de suma, resta y producto cruz entre dos vectores.",
             "url"   => "$base/fisica/vectores_3d/",
             "ver"   => "1.0.0",
-            "date"  => "02/03/2020"
+            "date"  => "13/03/2020"
         )
     );
 
