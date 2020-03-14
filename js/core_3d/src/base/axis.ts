@@ -22,7 +22,7 @@ export class Axis extends Object3D {
   private z: Vector;
   private zUnits: Mesh[];
 
-  private fontMaterial: MeshBasicMaterial;
+  private basicMaterial: MeshBasicMaterial;
   
   constructor() {
 
@@ -31,7 +31,7 @@ export class Axis extends Object3D {
     const k = Constants.AXIS_SIZE;
 
     // Configure font for units.
-    this.fontMaterial = new MeshBasicMaterial({ color: Constants.AXIS_UNITS_COLOR });
+    this.basicMaterial = new MeshBasicMaterial({ color: Constants.AXIS_UNITS_COLOR });
 
     // Configure grid.
     this.grid = new GridHelper(k, 50, Constants.AXIS_COLOR, Constants.AXIS_GRID_COLOR);
@@ -98,7 +98,7 @@ export class Axis extends Object3D {
         });
         geometry.computeBoundingBox();
         geometry.center();
-        const label = new Mesh(geometry, this.fontMaterial);
+        const label = new Mesh(geometry, this.basicMaterial);
         label.position.copy(unitPosition);
         units.push(label);
         this.add(label);

@@ -25,7 +25,7 @@ export class DomElement {
 
   }
 
-  public exec(f: any) { 
+  public static exec(f: any) { 
     if (f && isFunction(f)) f();
   }
 

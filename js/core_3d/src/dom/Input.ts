@@ -44,7 +44,7 @@ export class InputNumber extends DomElement {
 
   }
 
-  set(value: number) {
+  public set(value: number) {
     this.value = value;
     (<any>this.obj).value = value;
   }
@@ -63,13 +63,13 @@ export class InputNumber extends DomElement {
       this.invalid(isNaN(parsed));
       if (!isNaN(parsed)) this.value = parsed;
     }
-    this.exec(this._onChangeCallback);
+    DomElement.exec(this._onChangeCallback);
   }
 
   private onFocusout() {
     this.set(this.value);
-    this.exec(this._onChangeCallback);
-    this.exec(this._onFocusoutCallback);
+    DomElement.exec(this._onChangeCallback);
+    DomElement.exec(this._onFocusoutCallback);
 
   }
 

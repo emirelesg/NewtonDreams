@@ -61,7 +61,7 @@ export class App {
   // Public
   public mouse: Mouse = {
     pos: new Vector2(),
-    norm: new Vector2()
+    norm: new Vector2(-1, -1)
   };
   public size = new Vector2();
 

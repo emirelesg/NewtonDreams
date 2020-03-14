@@ -12,6 +12,14 @@ export class Button extends DomElement {
     this.obj.addEventListener('click', this.onClick.bind(this), false);
 
   }
+  
+  public active(state: boolean) {
+    if (state) {
+      this.obj.classList.add('active');
+    } else {
+      this.obj.classList.remove('active');
+    }
+  }
 
   set onClickCallback(f: Function) {
     this._onClickCallback = f;
@@ -19,7 +27,7 @@ export class Button extends DomElement {
 
   private onClick(e: MouseEvent) {
     e.preventDefault();
-    this.exec(this._onClickCallback);
+    DomElement.exec(this._onClickCallback);
 
   } 
 
@@ -51,13 +59,13 @@ export class Switch extends Button {
 
   private onToggle() {
     this.setIcons(!this.value);
-    this.exec(this._onToggleCallback);
+    DomElement.exec(this._onToggleCallback);
   }
 
   private setIcons(value: boolean) {
     this.value = value;
-    this.onIcon.display(this.value);
     this.offIcon.display(!this.value);
+    this.onIcon.display(this.value);
   }
 
 }
