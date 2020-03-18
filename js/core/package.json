@@ -5,7 +5,7 @@
   "main": "./src/app.js",
   "scripts": {
     "tsc": "tsc",
-    "build": "webpack",
+    "build": "webpack --mode=production",
     "watch": "webpack --watch",
     "docs": "esdoc -c .esdoc.json"
   },
