@@ -2,7 +2,6 @@
   "name": "vectores_3d",
   "version": "1.0.0",
   "scripts": {
-    "preinstall": "command -v link-module-alias && link-module-alias clean || true",
     "postinstall": "link-module-alias",
     "start": "webpack --watch",
     "build": "webpack --mode=production"
