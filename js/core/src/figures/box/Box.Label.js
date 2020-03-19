@@ -94,6 +94,19 @@ export default class Label extends WorldElement {
      */
     this.fixPlaces = false;
 
+    /**
+     * Callback for clicking the label.
+     * Default value is undefined.
+     * @type {function}
+     */
+    this.onClick = undefined;
+
+    /**
+     * Click debouncing.
+     * @type {boolean}
+     */
+    this.isDown = false;
+
     // Configure font settings for the label.
     this.font.set({
       align: "left",
@@ -105,6 +118,22 @@ export default class Label extends WorldElement {
     // Apply user settings.
     utils.loadOptions(this, opts);
 
+  }
+
+  /**
+   * Tests if the mouse is over the label.
+   * @private
+   * @returns {boolean} True if the mouse is over the label, false otherwise.
+   */
+  isMouseOver() {
+    return utils.isCoordInside(
+      this.box.world.mouse.x,
+      this.box.world.mouse.y,
+      this.box.position.x + this.box.padding.top + this.position.x + this.width / 2,
+      this.box.position.y + this.box.padding.left + this.position.y + this.height / 2,
+      this.width / 2,
+      this.height / 2
+    );
   }
 
   /**
@@ -170,5 +199,13 @@ export default class Label extends WorldElement {
     ctx.fillText(this.name, 0, this.height / 2);
     ctx.fillText(this.value, this.labelWidth, this.height / 2);
     ctx.closePath();
+
+    // Handle clicking over the label.
+    if (this.box.world.mouse.down && this.mouseOver) {
+      this.isDown = true;
+    } else if (!this.box.world.mouse.down && this.isDown) {
+      this.isDown = false;
+      if (utils.isFunction(this.onClick)) this.onClick();
+    }
   }
 }

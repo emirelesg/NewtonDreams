@@ -171,7 +171,7 @@ export function formatValue(val, units, decPlaces, fixPlaces) {
   let result =
     Number.isNaN(val) && val !== undefined ? 0 : round(val, decPlaces);
   if (fixPlaces) result = result.toFixed(decPlaces);
-  return units === "°" || this.units === "º"
+  return units === "°" || units === "º"
     ? `${result}°`
     : `${result} ${units}`;
 }

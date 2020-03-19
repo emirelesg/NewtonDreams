@@ -258,7 +258,23 @@ export default class World {
   isMouseOverElement() {
     if (this.mouse.dragging !== constants.DRAG_NOTHING) return;
     let found = constants.OVER_NOTHING;
+    let overElement = false;
     for (let i = this.elements.length - 1; i >= 0; i -= 1) {
+
+      // A Box has multiple elements inside that can be clickable.
+      if (this.elements[i].elements) {
+        // Iterate though all elements and find those with click callbacks.
+        this.elements[i].elements
+          .filter(e => e.onClick)
+          .forEach(e => {
+            if (utils.isFunction(e.isMouseOver)) {
+              e.mouseOver = e.isMouseOver();
+              overElement = overElement || e.mouseOver;
+            }
+          });
+      }
+
+      // Check if the mouse is over an element.
       if (
         this.elements[i].isMouseOver() &&
         this.elements[i].display &&
@@ -271,11 +287,12 @@ export default class World {
         this.elements[i].mouseOver = false;
       }
     }
-    this.setCursor(
-      found === constants.OVER_NOTHING
-        ? constants.CURSOR.DEFAULT
-        : this.elements[found].cursor
-    );
+
+    // Change the cursor if the mouse is over an element or found an element.
+    let cursor = constants.CURSOR.DEFAULT;
+    if (overElement) cursor = constants.CURSOR.POINTER;
+    if (found !== constants.OVER_NOTHING) cursor = this.elements[found].cursor;
+    this.setCursor(cursor);
     this.mouse.over = found;
   }
 
