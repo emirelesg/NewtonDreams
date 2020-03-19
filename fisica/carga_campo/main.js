@@ -62,8 +62,8 @@ function setup() {
   field.renderer.render();
 
   // Configure position box.
-  labels.x = position.addLabel(50, 14, { name: "X:", decPlaces: 2, fixPlaces: true, labelWidth: 20 });
-  labels.y = position.addLabel(50, 14, { name: "Y:", decPlaces: 2, fixPlaces: true, labelWidth: 20 });
+  labels.x = position.addLabel(50, 14, { name: "X:", decPlaces: 2, fixPlaces: true, labelWidth: 20, onClick: function() {setPosition('x')} });
+  labels.y = position.addLabel(50, 14, { name: "Y:", decPlaces: 2, fixPlaces: true, labelWidth: 20, onClick: function() {setPosition('y')} });
   labels.x.setPosition(0, 0);
   labels.y.setPosition(60, 0);
   labels.x.set(3);
@@ -176,6 +176,22 @@ function drawField() {
   calculate = true;
 
 }
+
+/**
+ * Called when the -x or -y label is clicked.
+ * Asks the user for a new component.
+ */
+function setPosition(component) {
+
+  var raw = prompt("Posición -" + component + " de " + qs.lowerLabel +":", labels[component].value);
+  var num = parseFloat(raw);
+  if (!isNaN(num)) {
+    qs.position[component] = num;
+    calculate = true;
+  }
+
+}
+
 
 /**
  * Function gets called 60x per second.

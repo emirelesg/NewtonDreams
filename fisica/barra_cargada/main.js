@@ -48,9 +48,9 @@ function setup() {
   results.calculateDimensions();
 
   // Configure position box.
-  labels.x = position.addLabel(50, 14, { name: "X:", decPlaces: 2, fixPlaces: true, labelWidth: 20 });
+  labels.x = position.addLabel(50, 14, { name: "X:", decPlaces: 2, fixPlaces: true, labelWidth: 20, onClick: function() {setPosition('x')} });
+  labels.y = position.addLabel(50, 14, { name: "Y:", decPlaces: 2, fixPlaces: true, labelWidth: 20, onClick: function() {setPosition('y')} });
   labels.x.setPosition(0, 0);
-  labels.y = position.addLabel(50, 14, { name: "Y:", decPlaces: 2, fixPlaces: true, labelWidth: 20 });
   labels.y.setPosition(60, 0);
   position.calculateDimensions();
 
@@ -67,6 +67,19 @@ function setup() {
   // Add objects to world.
   w.add(particle, bar, field, results, position);
 
+}
+
+/**
+ * Called when the -x or -y label is clicked.
+ * Asks the user for a new component.
+ */
+function setPosition(component) {
+  var raw = prompt('Posición -' + component + ":", labels[component].value);
+  var num = parseFloat(raw);
+  if (!isNaN(num)) {
+    particle.position[component] = num;
+    particleMoved();
+  }
 }
 
 /**

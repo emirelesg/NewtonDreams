@@ -8,6 +8,7 @@ var prevChargeDragged = 0;  // Index of the previous charge being dragged.
 var visibleCharges = 2;     // Amount of charges being displayed.
 
 // p$ Objects
+var activeQ;                // Currently selected charge.
 var w;
 // var field = new p$.Shape(drawField, { angleStyle: p$.ANGLE_STYLE.RAD } );
 var results = new p$.Box( { debug: false, color: p$.BOX_COLORS.YELLOW, isDraggable: false } );
@@ -44,8 +45,8 @@ function setup() {
   w.scaleY.set(50, -1, "cm");
 
   // Configure position box.
-  labels.x = position.addLabel(50, 14, { name: "X:", decPlaces: 2, fixPlaces: true, labelWidth: 20 });
-  labels.y = position.addLabel(50, 14, { name: "Y:", decPlaces: 2, fixPlaces: true, labelWidth: 20 });
+  labels.x = position.addLabel(50, 14, { name: "X:", decPlaces: 2, fixPlaces: true, labelWidth: 20, onClick: function() {setPosition('x')} });
+  labels.y = position.addLabel(50, 14, { name: "Y:", decPlaces: 2, fixPlaces: true, labelWidth: 20, onClick: function() {setPosition('y')} });
   labels.x.setPosition(0, 0);
   labels.y.setPosition(60, 0);
   position.calculateDimensions();
@@ -168,6 +169,24 @@ function reset() {
 }
 
 /**
+ * Called when the -x or -y label is clicked.
+ * Asks the user for a new component.
+ */
+function setPosition(component) {
+
+  if (activeQ) {
+    var raw = prompt("Posición -" + component + " de " + activeQ.lowerLabel +":", labels[component].value);
+    var num = parseFloat(raw);
+    if (!isNaN(num)) {
+      activeQ.position[component] = num;
+      calculate = true;
+    }
+  }
+    
+}
+
+
+/**
  * Function used to draw the electric field.
  */
 // function drawField() {
@@ -213,11 +232,11 @@ function draw() {
 
     // Use the currently charge being dragged or the last charge that
     // was dragged.
-    var q = calculate ? charges[prevChargeDragged] :  w.mouse.dragging;
+    activeQ = calculate ? charges[prevChargeDragged] : w.mouse.dragging;
   
     // Disable flag and get the index of the selected charge q.
     calculate = false;
-    prevChargeDragged = charges.indexOf(q);
+    prevChargeDragged = charges.indexOf(activeQ);
     
     // Get the charge from the sliders.
     var q_charge = controls.q[prevChargeDragged].value * Q_UNITS;
@@ -228,9 +247,9 @@ function draw() {
       
       // Iterate through every other charge in the array.
       // Calculate force and add result to force vector to get resultant.
-      if (charges[i] !== q && charges[i].display) {
-        var dx = (q.position.x - charges[i].position.x) * p$.CM_TO_M;
-        var dy = (q.position.y - charges[i].position.y) * p$.CM_TO_M;
+      if (charges[i] !== activeQ && charges[i].display) {
+        var dx = (activeQ.position.x - charges[i].position.x) * p$.CM_TO_M;
+        var dy = (activeQ.position.y - charges[i].position.y) * p$.CM_TO_M;
         vectors.temp_force.setMag(
           Math.round((p$.K * (controls.q[i].value * Q_UNITS) * q_charge) / (dx * dx + dy * dy), 1),
           Math.atan2(dy, dx)
@@ -242,17 +261,17 @@ function draw() {
     // Set position and results labels.
     labels.force.set(vectors.force.mag());
     labels.angle.set(vectors.force.angle());
-    labels.x.set(q.position.x);
-    labels.y.set(q.position.y);
+    labels.x.set(activeQ.position.x);
+    labels.y.set(activeQ.position.y);
 
     // Change the position of the vector.
-    vectors.force.setPosition(q.position.x, q.position.y);
-    vectors.force.color = q.color;
+    vectors.force.setPosition(activeQ.position.x, activeQ.position.y);
+    vectors.force.color = activeQ.color;
 
     // Set the position of the results box.
     results.setPosition(
-      q.position.x * w.scaleX.toPx + w.axis.position.x - results.width / 2,
-      q.position.y * w.scaleY.toPx + w.axis.position.y + 30
+      activeQ.position.x * w.scaleX.toPx + w.axis.position.x - results.width / 2,
+      activeQ.position.y * w.scaleY.toPx + w.axis.position.y + 30
     );
 
     // Update field.
