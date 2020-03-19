@@ -74,7 +74,7 @@ function setup() {
  * Asks the user for a new component.
  */
 function setPosition(component) {
-  var raw = prompt('Posición -' + component + ":", labels[component].value);
+  var raw = prompt('Posición -' + component + ":", labels[component].value.trim());
   var num = parseFloat(raw);
   if (!isNaN(num)) {
     particle.position[component] = num;

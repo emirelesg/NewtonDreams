@@ -183,7 +183,7 @@ function drawField() {
  */
 function setPosition(component) {
 
-  var raw = prompt("Posición -" + component + " de " + qs.lowerLabel +":", labels[component].value);
+  var raw = prompt("Posición -" + component + " de " + qs.lowerLabel +":", labels[component].value.trim());
   var num = parseFloat(raw);
   if (!isNaN(num)) {
     qs.position[component] = num;

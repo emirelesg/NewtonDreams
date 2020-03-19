@@ -175,7 +175,7 @@ function reset() {
 function setPosition(component) {
 
   if (activeQ) {
-    var raw = prompt("Posición -" + component + " de " + activeQ.lowerLabel +":", labels[component].value);
+    var raw = prompt("Posición -" + component + " de " + activeQ.lowerLabel +":", labels[component].value.trim());
     var num = parseFloat(raw);
     if (!isNaN(num)) {
       activeQ.position[component] = num;
