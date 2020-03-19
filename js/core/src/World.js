@@ -334,17 +334,17 @@ export default class World {
       touchstart(e) {
         self.getMousePosition(e);
         self.isMouseOverElement();
+        self.mouse.down = true;
         if (self.mouse.over !== constants.OVER_NOTHING) {
           if (e.cancelable) e.preventDefault();
           self.mouse.dragging = self.elements[self.mouse.over];
-          self.mouse.down = true;
           self.mouse.inCanvas = true;
         }
       },
       touchend(e) {
+        self.mouse.down = false;
         if (self.mouse.dragging !== constants.DRAG_NOTHING) {
           if (e.cancelable) e.preventDefault();
-          self.mouse.down = false;
           self.mouse.inCanvas = false;
           self.moveElements();
         }
