@@ -48,8 +48,21 @@
         </div>
     </nav>
 
-    <main role="main">        
-        <div class="jumbotron bg-info">
+    <main role="main">     
+        <div class="jumbotron bg-warning">
+            <div class="container text-dark">
+                <h1 class="display-5 d-sm-none">COVID-19</h1>
+                <h1 class="display-4 d-none d-sm-block">COVID-19 en México</h1>
+                <p class="lead mb-3">Analiza la situación actual del COVID-19 en México con gráficas interactivas.</p>
+                <div>
+                    <a class="btn btn-light mt-3" href="http://covid19.newtondreams.com" role="button" aria-disabled="true">
+                        <span>Ir a herramienta</span>
+                        <i data-feather="chevrons-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>  
+        <!-- <div class="jumbotron bg-info">
             <div class="container text-light">
                 <h1 class="display-5 d-sm-none">Simulaciones Interactivas</h1>
                 <h1 class="display-4 d-none d-sm-block">Simulaciones Interactivas</h1>
@@ -61,7 +74,7 @@
                     </a>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="container">
             <section>
                 <div class="row section-title">
